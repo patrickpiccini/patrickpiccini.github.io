@@ -211,13 +211,13 @@ raw_string <span style="color:#f92672">=</span> base64<span style="color:#f92672
 
 </code></pre></div><h3 id="step-5--execução">Step 5 – Execução</h3>
 <p>Executando o arquivo <em>SendEmail.py,</em> abrirá uma página de seleção de usuário para autenticação.</p>
-<p><strong>Img1</strong></p>
+<p><img src="/content/images/google-auth/img1.png" alt="img1"></p>
 <p>Como meu aplicativo não foi publicado, irá aparecer uma tela de verificação para aceitar o acesso as informações confidenciais da conta do google que desejamos autenticar.</p>
-<p>Img2</p>
-<p>Img3</p>
-<p>Img4</p>
+<p><img src="/content/images/google-auth/img2.png" alt="img2"></p>
+<p><img src="/content/images/google-auth/img3.png" alt="img3"></p>
+<p><img src="/content/images/google-auth/img4.png" alt="img4"></p>
 <p>Após isso a conexão será autenticada e o email será enviado ao destinatário.</p>
-<p>Img5</p>
+<p><img src="/content/images/google-auth/img5.png" alt="img5"></p>
 <h2 id="conclusão">Conclusão</h2>
 <p>Nesse artigo foi abordado uma técnica básica de autenticação de usuário do google para aplicações de terceiros. Com apenas as fardamentas disponibilizada como o Gmail API e sua biblioteca. No decorrer do desenvolvimento percebe-se a estrutura que foi utilizada, é fácil para ser implementada em qualquer aplicação, basta adaptá-la a regra de negócio.</p>
 <p>Existem outros métodos de autenticação de usuário, e diferentes formas de desenvolver o código para a autenticação, basta saber fazer a procura certa no google que encontrará.</p>
