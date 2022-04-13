@@ -4,8 +4,8 @@
         <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="author" content="map[name:Michael Henderson]">
-<meta name="description" content="" />
+<meta name="author" content="map[name:Patrick Piccini]">
+<meta name="description" content="Voce pode clonar o repositório: email-google-auth. GoogleAuthenticator.py import os.path from google.auth.transport.requests import Request from google.oauth2.credentials import Credentials from google_auth_oauthlib.flow import InstalledAppFlow from googleapiclient.discovery import build from googleapiclient.errors import HttpError def authenticator(client_secret_file, api_service_name, api_version, *scopes): CLIENT_SECRET_FILE = client_secret_file API_SERVICE_NAME = api_service_name API_VERSION = api_version SCOPES = [scope for scope in scopes[0]] creds = None if os.path.exists(&amp;#39;token.json&amp;#39;): creds = Credentials.from_authorized_user_file( &amp;#39;token.json&amp;#39;, SCOPES) if not creds or not creds.valid: if creds and creds.expired and creds." />
 <meta name="keywords" content="" />
 <meta name="robots" content="noodp" />
 <meta name="theme-color" content="" />
@@ -14,7 +14,7 @@
 
     <title>
         
-            Nothing Yet :: Patrick Piccini 
+            Code - Email com Google Authentication :: Patrick Piccini 
         
     </title>
 
@@ -38,18 +38,18 @@
     <meta name="msapplication-TileColor" content="">
 
 
-<meta itemprop="name" content="Nothing Yet">
-<meta itemprop="description" content="">
-<meta itemprop="datePublished" content="2022-01-01T00:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2022-01-01T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="0">
+<meta itemprop="name" content="Code - Email com Google Authentication">
+<meta itemprop="description" content="Voce pode clonar o repositório: email-google-auth. GoogleAuthenticator.py import os.path from google.auth.transport.requests import Request from google.oauth2.credentials import Credentials from google_auth_oauthlib.flow import InstalledAppFlow from googleapiclient.discovery import build from googleapiclient.errors import HttpError def authenticator(client_secret_file, api_service_name, api_version, *scopes): CLIENT_SECRET_FILE = client_secret_file API_SERVICE_NAME = api_service_name API_VERSION = api_version SCOPES = [scope for scope in scopes[0]] creds = None if os.path.exists(&#39;token.json&#39;): creds = Credentials.from_authorized_user_file( &#39;token.json&#39;, SCOPES) if not creds or not creds.valid: if creds and creds.expired and creds.">
+<meta itemprop="datePublished" content="2022-04-12T21:00:50-03:00" />
+<meta itemprop="dateModified" content="2022-04-12T21:00:50-03:00" />
+<meta itemprop="wordCount" content="203">
 
 
 
 <meta itemprop="keywords" content="" />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Nothing Yet"/>
-<meta name="twitter:description" content=""/>
+<meta name="twitter:title" content="Code - Email com Google Authentication"/>
+<meta name="twitter:description" content="Voce pode clonar o repositório: email-google-auth. GoogleAuthenticator.py import os.path from google.auth.transport.requests import Request from google.oauth2.credentials import Credentials from google_auth_oauthlib.flow import InstalledAppFlow from googleapiclient.discovery import build from googleapiclient.errors import HttpError def authenticator(client_secret_file, api_service_name, api_version, *scopes): CLIENT_SECRET_FILE = client_secret_file API_SERVICE_NAME = api_service_name API_VERSION = api_version SCOPES = [scope for scope in scopes[0]] creds = None if os.path.exists(&#39;token.json&#39;): creds = Credentials.from_authorized_user_file( &#39;token.json&#39;, SCOPES) if not creds or not creds.valid: if creds and creds.expired and creds."/>
 
 
 
@@ -58,7 +58,7 @@
 
 
 
-    <meta property="article:published_time" content="2022-01-01 00:00:00 &#43;0000 UTC" />
+    <meta property="article:published_time" content="2022-04-12 21:00:50 -0300 -03" />
 
 
 
@@ -82,7 +82,7 @@
     <div class="logo">
         
             <span class="logo__mark">&gt;</span>
-            <span class="logo__text">/home/patrick_piccini</span>
+            <span class="logo__text">/home/piccini</span>
             <span class="logo__cursor" style=
                   "
                    background-color:#67a2c9;
@@ -122,14 +122,82 @@
         </div>
 
         <article>
-            <h2 class="post-title"><a href="https://patrickpiccini.github.io/codes/nothing-yet/">Nothing Yet</a></h2>
+            <h2 class="post-title"><a href="https://patrickpiccini.github.io/codes/nothing-yet/">Code - Email com Google Authentication</a></h2>
 
             
             
             
 
             <div class="post-content">
-                
+                <h3 id="voce-pode-clonar-o-repositório-email-google-authhttpsgithubcompatrickpicciniemail-google-auth">Voce pode clonar o repositório: <a href="https://github.com/patrickpiccini/email-google-auth">email-google-auth</a>.</h3>
+<h5 id="_googleauthenticatorpy_"><em>GoogleAuthenticator.py</em></h5>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">
+<span style="color:#f92672">import</span> os.path
+<span style="color:#f92672">from</span> google.auth.transport.requests <span style="color:#f92672">import</span> Request
+<span style="color:#f92672">from</span> google.oauth2.credentials <span style="color:#f92672">import</span> Credentials
+<span style="color:#f92672">from</span> google_auth_oauthlib.flow <span style="color:#f92672">import</span> InstalledAppFlow
+<span style="color:#f92672">from</span> googleapiclient.discovery <span style="color:#f92672">import</span> build
+<span style="color:#f92672">from</span> googleapiclient.errors <span style="color:#f92672">import</span> HttpError
+
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">authenticator</span>(client_secret_file, api_service_name, api_version, <span style="color:#f92672">*</span>scopes):
+    CLIENT_SECRET_FILE <span style="color:#f92672">=</span> client_secret_file
+    API_SERVICE_NAME <span style="color:#f92672">=</span> api_service_name
+    API_VERSION <span style="color:#f92672">=</span> api_version
+    SCOPES <span style="color:#f92672">=</span> [scope <span style="color:#66d9ef">for</span> scope <span style="color:#f92672">in</span> scopes[<span style="color:#ae81ff">0</span>]]
+
+    creds <span style="color:#f92672">=</span> None
+
+    <span style="color:#66d9ef">if</span> os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>exists(<span style="color:#e6db74">&#39;token.json&#39;</span>):
+        creds <span style="color:#f92672">=</span> Credentials<span style="color:#f92672">.</span>from_authorized_user_file(
+            <span style="color:#e6db74">&#39;token.json&#39;</span>, SCOPES)
+    
+    <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> creds <span style="color:#f92672">or</span> <span style="color:#f92672">not</span> creds<span style="color:#f92672">.</span>valid:
+        <span style="color:#66d9ef">if</span> creds <span style="color:#f92672">and</span> creds<span style="color:#f92672">.</span>expired <span style="color:#f92672">and</span> creds<span style="color:#f92672">.</span>refresh_token:
+            creds<span style="color:#f92672">.</span>refresh(Request())
+        <span style="color:#66d9ef">else</span>:
+            flow <span style="color:#f92672">=</span> InstalledAppFlow<span style="color:#f92672">.</span>from_client_secrets_file(
+                CLIENT_SECRET_FILE, SCOPES)
+            creds <span style="color:#f92672">=</span> flow<span style="color:#f92672">.</span>run_local_server(port<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>)
+        <span style="color:#75715e"># Save the credentials for the next run</span>
+        <span style="color:#66d9ef">with</span> open(<span style="color:#e6db74">&#39;token.json&#39;</span>, <span style="color:#e6db74">&#39;w&#39;</span>) <span style="color:#66d9ef">as</span> token:
+            token<span style="color:#f92672">.</span>write(creds<span style="color:#f92672">.</span>to_json())
+
+    <span style="color:#66d9ef">try</span>:
+        <span style="color:#75715e"># Call the Gmail API</span>
+        service <span style="color:#f92672">=</span> build(API_SERVICE_NAME, API_VERSION, credentials<span style="color:#f92672">=</span>creds)
+        <span style="color:#66d9ef">print</span>(API_SERVICE_NAME, <span style="color:#e6db74">&#39;service created successfully&#39;</span>)
+        <span style="color:#66d9ef">return</span> service
+
+    <span style="color:#66d9ef">except</span> HttpError <span style="color:#66d9ef">as</span> error:
+        <span style="color:#75715e"># TO DO(developer) - Handle errors from gmail API.</span>
+        <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;An error occurred: {}&#39;</span><span style="color:#f92672">.</span>format(error))
+</code></pre></div><h5 id="_sendemailpy_"><em>SendEmail.py</em></h5>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> base64
+<span style="color:#f92672">from</span> email <span style="color:#f92672">import</span> errors
+<span style="color:#f92672">from</span> GoogleAuthenticator <span style="color:#f92672">import</span> authenticator
+<span style="color:#f92672">from</span> email.mime.text <span style="color:#f92672">import</span> MIMEText
+
+CLIENT_SECRET_FILE <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;DocGoogle/credentials.json&#39;</span>
+API_NAME <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;gmail&#39;</span>
+API_VERSION <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;v1&#39;</span>
+SCOPES <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#39;https://mail.google.com/&#39;</span>]
+
+service <span style="color:#f92672">=</span> authenticator(CLIENT_SECRET_FILE, API_NAME, API_VERSION, SCOPES)
+
+message <span style="color:#f92672">=</span> MIMEText(<span style="color:#e6db74">&#39;Python Mail test using API Google&#39;</span>)
+message[<span style="color:#e6db74">&#39;from&#39;</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;your_email@gmail.com&#34;</span>
+message[<span style="color:#e6db74">&#39;to&#39;</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;recipient@gmail.com&#39;</span>
+message[<span style="color:#e6db74">&#39;subject&#39;</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;API Google&#39;</span>
+raw_string <span style="color:#f92672">=</span> base64<span style="color:#f92672">.</span>urlsafe_b64encode(message<span style="color:#f92672">.</span>as_string())
+
+<span style="color:#66d9ef">try</span>:
+    message <span style="color:#f92672">=</span> service<span style="color:#f92672">.</span>users()<span style="color:#f92672">.</span>messages()<span style="color:#f92672">.</span>send(userId<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;me&#39;</span>, body<span style="color:#f92672">=</span>{<span style="color:#e6db74">&#39;raw&#39;</span>: raw_string})<span style="color:#f92672">.</span>execute()
+    <span style="color:#66d9ef">print</span> (<span style="color:#e6db74">&#39;Message Id: {}&#39;</span>)<span style="color:#f92672">.</span>format(message[<span style="color:#e6db74">&#39;id&#39;</span>])
+<span style="color:#66d9ef">except</span> errors<span style="color:#f92672">.</span>HttpError <span style="color:#66d9ef">as</span> error:
+     <span style="color:#66d9ef">print</span> (<span style="color:#e6db74">&#39;An error occurred: {}&#39;</span>)<span style="color:#f92672">.</span>format(error)<span style="color:#e6db74">&#39;).format(error)</span>
+
+</code></pre></div>
             </div>
         </article>
 

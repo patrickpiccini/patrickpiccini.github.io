@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="author" content="map[name:Patrick Piccini]">
-<meta name="description" content="Table of Contents   Introdução  Pré-Requisitos Step 1 – Criar credenciais Step 2 – Instalação de bibliotecas Step 3 – Criação de código de autenticação Código Completo: Step 4 – Criação do código de envio de e-mail Código Completo: Step 5 – Execução   Conclusão  Referências     Introdução Nesse artigo irei abordar uma situação que recentemente a Google publicou referente a de login an conta google, utilizando somente o usuário e senha para se conectar em apps de terceiros." />
+<meta name="description" content="Table of Contents  Introdução  Pré-Requisitos Arquitetura   Step 1 – Criar credenciais Step 2 – Instalação de bibliotecas Step 3 – Criação de código de autenticação Step 4 – Criação do código de envio de e-mail Step 5 – Execução Código Completo Conclusão Referências   Introdução Nesse artigo irei abordar uma situação que recentemente a Google publicou referente ao login a conta Google, utilizando somente o usuário e senha para se conectar em apps de terceiros." />
 <meta name="keywords" content="" />
 <meta name="robots" content="noodp" />
 <meta name="theme-color" content="" />
@@ -14,7 +14,7 @@
 
     <title>
         
-            Email com Google Authenticaito :: Patrick Piccini 
+            Email com Google Authentication :: Patrick Piccini 
         
     </title>
 
@@ -38,18 +38,18 @@
     <meta name="msapplication-TileColor" content="">
 
 
-<meta itemprop="name" content="Email com Google Authenticaito">
-<meta itemprop="description" content="Table of Contents   Introdução  Pré-Requisitos Step 1 – Criar credenciais Step 2 – Instalação de bibliotecas Step 3 – Criação de código de autenticação Código Completo: Step 4 – Criação do código de envio de e-mail Código Completo: Step 5 – Execução   Conclusão  Referências     Introdução Nesse artigo irei abordar uma situação que recentemente a Google publicou referente a de login an conta google, utilizando somente o usuário e senha para se conectar em apps de terceiros.">
-<meta itemprop="datePublished" content="2022-04-12T12:50:50-03:00" />
-<meta itemprop="dateModified" content="2022-04-12T12:50:50-03:00" />
-<meta itemprop="wordCount" content="1334">
+<meta itemprop="name" content="Email com Google Authentication">
+<meta itemprop="description" content="Table of Contents  Introdução  Pré-Requisitos Arquitetura   Step 1 – Criar credenciais Step 2 – Instalação de bibliotecas Step 3 – Criação de código de autenticação Step 4 – Criação do código de envio de e-mail Step 5 – Execução Código Completo Conclusão Referências   Introdução Nesse artigo irei abordar uma situação que recentemente a Google publicou referente ao login a conta Google, utilizando somente o usuário e senha para se conectar em apps de terceiros.">
+<meta itemprop="datePublished" content="2022-04-12T21:00:50-03:00" />
+<meta itemprop="dateModified" content="2022-04-12T21:00:50-03:00" />
+<meta itemprop="wordCount" content="1148">
 
 
 
 <meta itemprop="keywords" content="" />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Email com Google Authenticaito"/>
-<meta name="twitter:description" content="Table of Contents   Introdução  Pré-Requisitos Step 1 – Criar credenciais Step 2 – Instalação de bibliotecas Step 3 – Criação de código de autenticação Código Completo: Step 4 – Criação do código de envio de e-mail Código Completo: Step 5 – Execução   Conclusão  Referências     Introdução Nesse artigo irei abordar uma situação que recentemente a Google publicou referente a de login an conta google, utilizando somente o usuário e senha para se conectar em apps de terceiros."/>
+<meta name="twitter:title" content="Email com Google Authentication"/>
+<meta name="twitter:description" content="Table of Contents  Introdução  Pré-Requisitos Arquitetura   Step 1 – Criar credenciais Step 2 – Instalação de bibliotecas Step 3 – Criação de código de autenticação Step 4 – Criação do código de envio de e-mail Step 5 – Execução Código Completo Conclusão Referências   Introdução Nesse artigo irei abordar uma situação que recentemente a Google publicou referente ao login a conta Google, utilizando somente o usuário e senha para se conectar em apps de terceiros."/>
 
 
 
@@ -58,7 +58,7 @@
 
 
 
-    <meta property="article:published_time" content="2022-04-12 12:50:50 -0300 -03" />
+    <meta property="article:published_time" content="2022-04-12 21:00:50 -0300 -03" />
 
 
 
@@ -82,7 +82,7 @@
     <div class="logo">
         
             <span class="logo__mark">&gt;</span>
-            <span class="logo__text">/home/patrick_piccini</span>
+            <span class="logo__text">/home/piccini</span>
             <span class="logo__cursor" style=
                   "
                    background-color:#67a2c9;
@@ -122,7 +122,7 @@
           <circle cx="12" cy="12" r="10"></circle>
           <polyline points="12 6 12 12 16 14"></polyline>
         </svg>
-        7 minutes
+        6 minutes
 
         
       </p>
@@ -130,7 +130,7 @@
 
     <article>
       <h1 class="post-title">
-        <a href="https://patrickpiccini.github.io/posts/google-auth/">Email com Google Authenticaito</a>
+        <a href="https://patrickpiccini.github.io/posts/google-auth/">Email com Google Authentication</a>
       </h1>
 
       
@@ -141,31 +141,27 @@
 
       <div class="post-content">
         <h2 id="table-of-contents">Table of Contents</h2>
-<hr>
 <ul>
 <li><a href="#introdu%C3%A7%C3%A3o">Introdução</a>
 <ul>
 <li><a href="#pr%C3%A9-requisitos">Pré-Requisitos</a></li>
+<li><a href="#a-aplica%C3%A7%C3%A3o-ter%C3%A1-a-seguinte-arquitetura">Arquitetura</a></li>
+</ul>
+</li>
 <li><a href="#step-1--criar-credenciais">Step 1 – Criar credenciais</a></li>
 <li><a href="#step-2--instala%C3%A7%C3%A3o-de-bibliotecas">Step 2 – Instalação de bibliotecas</a></li>
 <li><a href="#step-3--cria%C3%A7%C3%A3o-de-c%C3%B3digo-de-autentica%C3%A7%C3%A3o">Step 3 – Criação de código de autenticação</a></li>
-<li><a href="#c%C3%B3digo-completo">Código Completo:</a></li>
 <li><a href="#step-4--cria%C3%A7%C3%A3o-do-c%C3%B3digo-de-envio-de-e-mail">Step 4 – Criação do código de envio de e-mail</a></li>
-<li><a href="#c%C3%B3digo-completo">Código Completo:</a></li>
 <li><a href="#step-5--execu%C3%A7%C3%A3o">Step 5 – Execução</a></li>
-</ul>
-</li>
-<li><a href="#conclus%C3%A3o">Conclusão</a>
-<ul>
+<li><a href="#c%C3%B3digo-completo">Código Completo</a></li>
+<li><a href="#conclus%C3%A3o">Conclusão</a></li>
 <li><a href="#refer%C3%AAncias">Referências</a></li>
-</ul>
-</li>
 </ul>
 <hr>
 <h2 id="introdução">Introdução</h2>
-<p>Nesse artigo irei abordar uma situação que recentemente a Google publicou referente a de login an conta google, utilizando somente o usuário e senha para se conectar em apps de terceiros. Segue um trecho da publicação:</p>
-<p><em>- &quot;Para proteger sua conta, o Google vai deixar de oferecer suporte para o uso de apps ou dispositivos de terceiros que solicitam login na Conta do Google usando apenas seu nome de usuário e senha. Essa mudança será válida a partir de 30 de maio de 2022. Continue lendo para mais informações.&quot; -</em> <a href="https://support.google.com/accounts/answer/6010255?p=less-secure-apps&amp;hl=pt-BR&amp;visit_id=637824317526826001-2187211079&amp;rd=1"><em>Apps menos seguros e a Conta do Google</em></a>.)</p>
-<p>Tendo em vista que muitas aplicações do mercado utilizam esse método simples de login (usuário e senha), criei esse pequeno artigo explicando e desenvolvendo um método de autenticação a conta do google, através das APIs que o Google disponibiliza. Fazendo com que não haja a necessidade de liberar nas configurações da conta a opção de &quot;permitir apps menos seguros&quot;.</p>
+<p>Nesse artigo irei abordar uma situação que recentemente a Google publicou referente ao login a conta Google, utilizando somente o usuário e senha para se conectar em apps de terceiros. Segue um trecho da publicação:</p>
+<p><em>- &ldquo;Para proteger sua conta, o Google vai deixar de oferecer suporte para o uso de apps ou dispositivos de terceiros que solicitam login na Conta do Google usando apenas seu nome de usuário e senha. Essa mudança será válida a partir de 30 de maio de 2022. Continue lendo para mais informações&rdquo; -</em> <a href="https://support.google.com/accounts/answer/6010255?p=less-secure-apps&amp;hl=pt-BR&amp;visit_id=637824317526826001-2187211079&amp;rd=1"><em>Apps menos seguros e a Conta do Google</em></a>.)</p>
+<p>Tendo em vista que muitas aplicações do mercado utilizam esse método simples de login (usuário e senha), criei esse pequeno artigo explicando e desenvolvendo um método de autenticação a conta do google, através das APIs que o Google disponibiliza. Fazendo com que não haja a necessidade de liberar nas configurações da conta a opção de &ldquo;permitir apps menos seguros&rdquo;</p>
 <p><strong>Obs</strong>: Os exemplos de códigos apresentados nesse artigo foram todos baseados nas documentações oficiais da Google, porém refartados, trazendo a clareza e a simplicidade no desenvolvimento da aplicação.</p>
 <p>Para usar a Gmail API é necessário ter uma conta na Google Cloud Plataform, onde o cadastro pode ser feito <a href="https://console.cloud.google.com/freetrial/signup/tos?_ga=2.255782728.1788355950.1649683957-1725700722.1640005169&amp;_gac=1.61556062.1649692396.CjwKCAjwo8-SBhAlEiwAopc9W-9WErTEtw9O2DIPMgtBZHRMMb8iu52gwJgAgy-YPZidJP80yxSCahoCk94QAvD_BwE">AQUI</a>.</p>
 <h3 id="pré-requisitos">Pré-Requisitos</h3>
@@ -177,31 +173,30 @@
 <p>Gerenciamento de pacotes <a href="https://pypi.org/project/pip/">PIP</a>;</p>
 </li>
 <li>
-<p>Um projeto do Google Cloud Platform com a API ativada. Para criar um projeto e ativar uma API, consulte <a href="https://developers.google.com/workspace/guides/create-project">Criar um projeto e ativar a API</a></p>
+<p>Um projeto na Google Cloud Platform com GmailAPI ativada. Para criar um projeto e ativar uma API, consulte <a href="https://developers.google.com/workspace/guides/create-project">Criar um projeto e ativar a API</a>.</p>
 </li>
 </ul>
-<p>A aplicação terá a seguinte arquitetura:</p>
+<h4 id="a-aplicação-terá-a-seguinte-arquitetura">A aplicação terá a seguinte arquitetura:</h4>
 <pre><code>Aplication
-    ↳_GoogleAuthenticator.py_
-    ↳ _SendEmail.py_
-    ↳ _credentials.json_
+    ↳ GoogleAuthenticator.py
+    ↳ SendEmail.py
+    ↳ credentials.json
 </code></pre><h3 id="step-1--criar-credenciais">Step 1 – Criar credenciais</h3>
 <p>Para comunicação da aplicação e a API, deve ser baixado as credenciais de acesso, obtida em <strong>≡</strong> <em>&gt; APIs &amp; Services &gt; Credentials,</em> depois em Click <em>Create credentials &gt; API key.</em></p>
 <p>Para visualizar a documentação oficial acesse <a href="https://developers.google.com/workspace/guides/create-credentials">Create access credentials</a>.</p>
 <h3 id="step-2--instalação-de-bibliotecas">Step 2 – Instalação de bibliotecas</h3>
 <p>Instalar a biblioteca do Google Client.</p>
-<p>pip install &ndash;upgrade google-api-python-client google-auth-httplib2 google-auth-oauthlib pybase64 email-to</p>
-<h3 id="step-3--criação-de-código-de-autenticação">Step 3 – Criação de código de autenticação</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">pip install --upgrade google-api-python-client google-auth-httplib2 google-auth-oauthlib pybase64 email-to
+</code></pre></div><h3 id="step-3--criação-de-código-de-autenticação">Step 3 – Criação de código de autenticação</h3>
 <p>Criar um arquivo <em>GoogleAuthenticator.py</em>.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">pip install <span style="color:#f92672">--</span>upgrade google<span style="color:#f92672">-</span>api<span style="color:#f92672">-</span>python<span style="color:#f92672">-</span>client google<span style="color:#f92672">-</span>auth<span style="color:#f92672">-</span>httplib2 google<span style="color:#f92672">-</span>auth<span style="color:#f92672">-</span>oauthlib pybase64 email<span style="color:#f92672">-</span>to
-</code></pre></div><p>Ao abrir o arquivo, deve-se fazer uma sequência de importações das bibliotecas instaladas.</p>
+<p>Ao abrir o arquivo, deve-se fazer uma sequência de importações das bibliotecas instaladas.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> os.path
 <span style="color:#f92672">from</span> google.auth.transport.requests <span style="color:#f92672">import</span> Request
 <span style="color:#f92672">from</span> google.oauth2.credentials <span style="color:#f92672">import</span> Credentials
 <span style="color:#f92672">from</span> google_auth_oauthlib.flow <span style="color:#f92672">import</span> InstalledAppFlow
 <span style="color:#f92672">from</span> googleapiclient.discovery <span style="color:#f92672">import</span> build
 <span style="color:#f92672">from</span> googleapiclient.errors <span style="color:#f92672">import</span> HttpError
-</code></pre></div><p>Abaixo das importações, deverá ser criado uma definition que será chamara para ocorrer a autenticação. Nela deve conter como parâmetros, <em>client_secret_file</em>(arquivo baixado contendo as credenciais de acesso), <em>api_service_name</em>(nome do serviço de API), <em>api_version(<em>versão da API</em>)</em> e <em>scopes(<em>é responsável por solicitar o acesso as APIs do Google</em>).</em></p>
+</code></pre></div><p>Abaixo das importações, deverá ser criado uma definition que será chamara para ocorrer a autenticação. Nela deve conter como parâmetros, <em>client_secret_file</em>(arquivo baixado contendo as credenciais de acesso), <em>api_service_name</em>(nome do serviço de API), <em>api version</em>(versão da API) e <em>scopes</em>(é responsável por solicitar o acesso as APIs do Google).</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">authenticator</span>(client_secret_file, api_service_name, api_version, <span style="color:#f92672">*</span>scopes):
     CLIENT_SECRET_FILE <span style="color:#f92672">=</span> client_secret_file
     API_SERVICE_NAME <span style="color:#f92672">=</span> api_service_name
@@ -209,7 +204,7 @@
     SCOPES <span style="color:#f92672">=</span> [scope <span style="color:#66d9ef">for</span> scope <span style="color:#f92672">in</span> scopes[<span style="color:#ae81ff">0</span>]]
 
     credentials <span style="color:#f92672">=</span> None
-</code></pre></div><p>A lógica será bem simples. Primeiro deve verificar se existe no diretório o arquivo <em>token.json,</em> que é responsável por conter em seu corpo todas informações de um usuário já autenticado pela aplicação. Caso não exista, o código ira ler um arquivo chamado <em>credentials.json,</em> que dentro dele há as credenciais para a autenticação, como <em>client_id, client_secret</em> entre outras. Ambos os arquivos são atribuídos a variável &quot; <strong>credentials&quot;,</strong> que será usado na chamada da API posteriormente</p>
+</code></pre></div><p>A lógica será bem simples. Primeiro deve-se verificar se existe no diretório atual o arquivo <em>token.json,</em> que é responsável por conter em seu corpo, todas informações de um usuário já autenticado pela aplicação. Caso não exista, o código ira ler um arquivo chamado <em>credentials.json,</em> que dentro dele há as credenciais para a autenticação, como <em>client_id, client_secret</em> entre outras. Ambos os arquivos são atribuídos a variável <strong>&ldquo;credentials&rdquo;</strong> que será usado na chamada da API posteriormente.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">    <span style="color:#66d9ef">if</span> os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>exists(<span style="color:#e6db74">&#39;DocGoogle/token.json&#39;</span>):
         credentials <span style="color:#f92672">=</span> Credentials<span style="color:#f92672">.</span>from_authorized_user_file(
             <span style="color:#e6db74">&#39;DocGoogle/token.json&#39;</span>, SCOPES)
@@ -222,11 +217,11 @@
                 CLIENT_SECRET_FILE, SCOPES)
             credentials <span style="color:#f92672">=</span> flow<span style="color:#f92672">.</span>run_local_server(port<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>)
 
-</code></pre></div><p>Após a autenticação, iremos salvar as credenciais do usuário autenticado no arquivo <em>token.json,</em> para que nas próximas vezes que a aplicação seja usada, não necessite passar pelo processo de autenticação novamente.</p>
+</code></pre></div><p>Após a autenticação, iremos salvar as credenciais do usuário autenticado no arquivo <em>token.json</em>, para que nas próximas vezes que a aplicação for usada, não necessite passar pelo processo de autenticação novamente.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">        <span style="color:#75715e"># Save the credentials for the next run</span>
         <span style="color:#66d9ef">with</span> open(<span style="color:#e6db74">&#39;DocGoogle/token.json&#39;</span>, <span style="color:#e6db74">&#39;w&#39;</span>) <span style="color:#66d9ef">as</span> token:
             token<span style="color:#f92672">.</span>write(credentials<span style="color:#f92672">.</span>to_json())
-</code></pre></div><p>Agora, é necessário fazer a chamada a API do google com os arquivos <em>token.json</em> ou <em>credential.json</em> que está na variável &quot; <strong>credentials&quot;</strong> com citado anteriormente. Com a função <em>build</em> será construído um Resource Object para interagir com a API, e assim, casso as credenciais estejam corretas, retorne a confirmação do acesso ou não. Caso ocorra um erro na chamada a API, será disparado um except para o tratamento do erro.</p>
+</code></pre></div><p>Agora, é necessário fazer uma chamada a API do google com os arquivos <em>token.json</em> ou <em>credential.json</em> que está na variável <strong>&ldquo;credentials&rdquo;</strong> como citado anteriormente. Com a função <em>build</em> será construído um Resource Object para interagir com a API, e assim, retorne a confirmação ou rejeição do acesso. Caso ocorra um erro na chamada a API, será disparado um except para o tratamento do erro.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">    <span style="color:#66d9ef">try</span>:
         <span style="color:#75715e"># Call the Gmail API</span>
         service <span style="color:#f92672">=</span> build(API_SERVICE_NAME, API_VERSION, credentials<span style="color:#f92672">=</span>credentials)
@@ -236,58 +231,15 @@
     <span style="color:#66d9ef">except</span> HttpError <span style="color:#66d9ef">as</span> error:
         <span style="color:#75715e"># TO DO(developer) - Handle errors from gmail API.</span>
         <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;An error occurred: {}&#39;</span><span style="color:#f92672">.</span>format(error))
-
-</code></pre></div><h3 id="código-completo">Código Completo:</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> os.path
-<span style="color:#f92672">from</span> google.auth.transport.requests <span style="color:#f92672">import</span> Request
-<span style="color:#f92672">from</span> google.oauth2.credentials <span style="color:#f92672">import</span> Credentials
-<span style="color:#f92672">from</span> google_auth_oauthlib.flow <span style="color:#f92672">import</span> InstalledAppFlow
-<span style="color:#f92672">from</span> googleapiclient.discovery <span style="color:#f92672">import</span> build
-<span style="color:#f92672">from</span> googleapiclient.errors <span style="color:#f92672">import</span> HttpError
-
-
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">authenticator</span>(client_secret_file, api_service_name, api_version, <span style="color:#f92672">*</span>scopes):
-    CLIENT_SECRET_FILE <span style="color:#f92672">=</span> client_secret_file
-    API_SERVICE_NAME <span style="color:#f92672">=</span> api_service_name
-    API_VERSION <span style="color:#f92672">=</span> api_version
-    SCOPES <span style="color:#f92672">=</span> [scope <span style="color:#66d9ef">for</span> scope <span style="color:#f92672">in</span> scopes[<span style="color:#ae81ff">0</span>]]
-
-    creds <span style="color:#f92672">=</span> None
-
-    <span style="color:#66d9ef">if</span> os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>exists(<span style="color:#e6db74">&#39;DocGoogle/token.json&#39;</span>):
-        creds <span style="color:#f92672">=</span> Credentials<span style="color:#f92672">.</span>from_authorized_user_file(
-            <span style="color:#e6db74">&#39;DocGoogle/token.json&#39;</span>, SCOPES)
-    
-    <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> creds <span style="color:#f92672">or</span> <span style="color:#f92672">not</span> creds<span style="color:#f92672">.</span>valid:
-        <span style="color:#66d9ef">if</span> creds <span style="color:#f92672">and</span> creds<span style="color:#f92672">.</span>expired <span style="color:#f92672">and</span> creds<span style="color:#f92672">.</span>refresh_token:
-            creds<span style="color:#f92672">.</span>refresh(Request())
-        <span style="color:#66d9ef">else</span>:
-            flow <span style="color:#f92672">=</span> InstalledAppFlow<span style="color:#f92672">.</span>from_client_secrets_file(
-                CLIENT_SECRET_FILE, SCOPES)
-            creds <span style="color:#f92672">=</span> flow<span style="color:#f92672">.</span>run_local_server(port<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>)
-        <span style="color:#75715e"># Save the credentials for the next run</span>
-        <span style="color:#66d9ef">with</span> open(<span style="color:#e6db74">&#39;DocGoogle/token.json&#39;</span>, <span style="color:#e6db74">&#39;w&#39;</span>) <span style="color:#66d9ef">as</span> token:
-            token<span style="color:#f92672">.</span>write(creds<span style="color:#f92672">.</span>to_json())
-
-    <span style="color:#66d9ef">try</span>:
-        <span style="color:#75715e"># Call the Gmail API</span>
-        service <span style="color:#f92672">=</span> build(API_SERVICE_NAME, API_VERSION, credentials<span style="color:#f92672">=</span>creds)
-        <span style="color:#66d9ef">print</span>(API_SERVICE_NAME, <span style="color:#e6db74">&#39;service created successfully&#39;</span>)
-        <span style="color:#66d9ef">return</span> service
-
-    <span style="color:#66d9ef">except</span> HttpError <span style="color:#66d9ef">as</span> error:
-        <span style="color:#75715e"># TO DO(developer) - Handle errors from gmail API.</span>
-        <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;An error occurred: {}&#39;</span><span style="color:#f92672">.</span>format(error))
-
 </code></pre></div><h3 id="step-4--criação-do-código-de-envio-de-e-mail">Step 4 – Criação do código de envio de e-mail</h3>
-<p>Criar um arquivo <em>SendEmail</em>_.py_.</p>
+<p>Criar um arquivo <em>SendEmail.py</em>.</p>
+<p>Ao abrir o arquivo, deve-se fazer uma sequência de importações das bibliotecas instaladas.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> base64
 <span style="color:#f92672">from</span> email <span style="color:#f92672">import</span> errors
 <span style="color:#f92672">from</span> quickstart <span style="color:#f92672">import</span> authenticator
 <span style="color:#f92672">from</span> email.mime.text <span style="color:#f92672">import</span> MIMEText
-</code></pre></div><p>Ao abrir o arquivo, deve-se fazer uma sequência de importações das bibliotecas instaladas</p>
-<p>Nota-se que foi importado a <em>def authenticator</em> do arquivo <em>GoogleAuthenticator.py .</em></p>
-<p>É criado as variáveis <em>CLIENT_SECRET_FILE</em> que é atribuído o arquivo credential.json, <em>API_NAME</em> contendo o nome da aplicação_, API_VERSION_ com a versão, e _SCOPES_ com o link para a solicitação a API. Tudo isso é passado como parâmetro para a _def euthenticator._</p>
+</code></pre></div><p>Nota-se que foi importado a <em>def authenticator</em> do arquivo <em>GoogleAuthenticator.py .</em></p>
+<p>É criado as variáveis <em>CLIENT_SECRET_FILE</em> que é atribuído o arquivo credential.json, <em>API_NAME</em> contendo o nome da aplicação, <em>API VERSION</em> com a versão, e <em>SCOPES</em> com a url para a solicitação a API. Tudo isso é passado como parâmetro para a <em>def euthenticator.</em></p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">CLIENT_SECRET_FILE <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;DocGoogle/credentials.json&#39;</span>
 API_NAME <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;gmail&#39;</span>
 API_VERSION <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;v1&#39;</span>
@@ -301,37 +253,12 @@ message[<span style="color:#e6db74">&#39;from&#39;</span>] <span style="color:#f
 message[<span style="color:#e6db74">&#39;to&#39;</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;recipient@gmail.com&#39;</span>
 message[<span style="color:#e6db74">&#39;subject&#39;</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;API Google&#39;</span>
 raw_string <span style="color:#f92672">=</span> base64<span style="color:#f92672">.</span>urlsafe_b64encode(message<span style="color:#f92672">.</span>as_string())
-</code></pre></div><p>Nesse momento é executado o envio do email passando o response da autenticação feita na linha 11, e os demais dados preenchidos, todas essas informações foram codificadas em base64 para facilitar transferência na Internet.</p>
+</code></pre></div><p>Nesse momento é executado o envio do email passando o response da autenticação que está contida na variavel <em>service</em>, e os demais dados preenchidos. Todas essas informações foram codificadas em base64 para facilitar a transferência na Internet.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">try</span>:
     message <span style="color:#f92672">=</span> service<span style="color:#f92672">.</span>users()<span style="color:#f92672">.</span>messages()<span style="color:#f92672">.</span>send(userId<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;me&#39;</span>, body<span style="color:#f92672">=</span>{<span style="color:#e6db74">&#39;raw&#39;</span>: raw_string})<span style="color:#f92672">.</span>execute()
     <span style="color:#66d9ef">print</span> (<span style="color:#e6db74">&#39;Message Id: {}&#39;</span>)<span style="color:#f92672">.</span>format(message[<span style="color:#e6db74">&#39;id&#39;</span>])
 <span style="color:#66d9ef">except</span> errors<span style="color:#f92672">.</span>HttpError <span style="color:#66d9ef">as</span> error:
      <span style="color:#66d9ef">print</span> (<span style="color:#e6db74">&#39;An error occurred: {}&#39;</span>)<span style="color:#f92672">.</span>format(error)
-
-</code></pre></div><h3 id="código-completo-1">Código Completo:</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> base64
-<span style="color:#f92672">from</span> email <span style="color:#f92672">import</span> errors
-<span style="color:#f92672">from</span> GoogleAuthenticator <span style="color:#f92672">import</span> authenticator
-<span style="color:#f92672">from</span> email.mime.text <span style="color:#f92672">import</span> MIMEText
-
-CLIENT_SECRET_FILE <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;DocGoogle/credentials.json&#39;</span>
-API_NAME <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;gmail&#39;</span>
-API_VERSION <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;v1&#39;</span>
-SCOPES <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#39;https://mail.google.com/&#39;</span>]
-
-service <span style="color:#f92672">=</span> authenticator(CLIENT_SECRET_FILE, API_NAME, API_VERSION, SCOPES)
-
-message <span style="color:#f92672">=</span> MIMEText(<span style="color:#e6db74">&#39;Python Mail test using API Google&#39;</span>)
-message[<span style="color:#e6db74">&#39;from&#39;</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;your_email@gmail.com&#34;</span>
-message[<span style="color:#e6db74">&#39;to&#39;</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;recipient@gmail.com&#39;</span>
-message[<span style="color:#e6db74">&#39;subject&#39;</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;API Google&#39;</span>
-raw_string <span style="color:#f92672">=</span> base64<span style="color:#f92672">.</span>urlsafe_b64encode(message<span style="color:#f92672">.</span>as_string())
-
-<span style="color:#66d9ef">try</span>:
-    message <span style="color:#f92672">=</span> service<span style="color:#f92672">.</span>users()<span style="color:#f92672">.</span>messages()<span style="color:#f92672">.</span>send(userId<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;me&#39;</span>, body<span style="color:#f92672">=</span>{<span style="color:#e6db74">&#39;raw&#39;</span>: raw_string})<span style="color:#f92672">.</span>execute()
-    <span style="color:#66d9ef">print</span> (<span style="color:#e6db74">&#39;Message Id: {}&#39;</span>)<span style="color:#f92672">.</span>format(message[<span style="color:#e6db74">&#39;id&#39;</span>])
-<span style="color:#66d9ef">except</span> errors<span style="color:#f92672">.</span>HttpError <span style="color:#66d9ef">as</span> error:
-     <span style="color:#66d9ef">print</span> (<span style="color:#e6db74">&#39;An error occurred: {}&#39;</span>)<span style="color:#f92672">.</span>format(error)<span style="color:#e6db74">&#39;).format(error)</span>
 
 </code></pre></div><h3 id="step-5--execução">Step 5 – Execução</h3>
 <p>Executando o arquivo <em>SendEmail.py,</em> abrirá uma página de seleção de usuário para autenticação.</p>
@@ -342,16 +269,18 @@ raw_string <span style="color:#f92672">=</span> base64<span style="color:#f92672
 <p><img src="/images/google-auth/img4.png" alt="img4"></p>
 <p>Após isso a conexão será autenticada e o email será enviado ao destinatário.</p>
 <p><img src="/images/google-auth/img5.png" alt="img5"></p>
+<h2 id="código-completo">Código Completo</h2>
+<p><a href="/codes">Code - Email com Google Authentication</a></p>
 <h2 id="conclusão">Conclusão</h2>
-<p>Nesse artigo foi abordado uma técnica básica de autenticação de usuário do google para aplicações de terceiros. Com apenas as fardamentas disponibilizada como o Gmail API e sua biblioteca. No decorrer do desenvolvimento percebe-se a estrutura que foi utilizada, é fácil para ser implementada em qualquer aplicação, basta adaptá-la a regra de negócio.</p>
+<p>Nesse artigo foi abordado uma técnica básica de autenticação de usuário do google para aplicações de terceiros. Com apenas as ferramentas disponibilizadas pela Google como o GmailAPI e bibliotecas python. No decorrer do desenvolvimento percebe-se a estrutura que foi utilizada é fácil para ser implementada em qualquer aplicação, basta adaptá-la a regra de negócio.</p>
 <p>Existem outros métodos de autenticação de usuário, e diferentes formas de desenvolver o código para a autenticação, basta saber fazer a procura certa no google que encontrará.</p>
-<p>Espero que tenha gostado dessa publicação, e que possa usá-lo de alguma fora em seu dia a dia.</p>
+<p>Espero que tenha gostado dessa publicação, e que possa usá-la de alguma forma em seu dia a dia.</p>
 <h3 id="referências">Referências</h3>
-<p><a href="https://support.google.com/accounts/answer/6010255?p=less-secure-apps&amp;hl=pt-BR&amp;visit_id=637824317526826001-2187211079&amp;rd=1">https://support.google.com/accounts/answer/6010255?p=less-secure-apps&amp;hl=pt-BR&amp;visit_id=637824317526826001-2187211079&amp;rd=1</a>).</p>
-<p><a href="https://developers.google.com/workspace/guides/create-project">https://developers.google.com/workspace/guides/create-project</a></p>
-<p><a href="https://developers.google.com/workspace/guides/create-credentials">https://developers.google.com/workspace/guides/create-credentials</a></p>
-<p><a href="https://developers.google.com/gmail/api/quickstart/python">https://developers.google.com/gmail/api/quickstart/python</a></p>
-<p><a href="https://developers.google.com/gmail/api/guides/sending">https://developers.google.com/gmail/api/guides/sending</a></p>
+<p><a href="https://support.google.com/accounts/answer/6010255?p=less-secure-apps&amp;hl=pt-BR&amp;visit_id=637824317526826001-2187211079&amp;rd=1">Apps menos seguros e a Conta do Google</a>);</p>
+<p><a href="https://developers.google.com/workspace/guides/create-project">Create a Google Cloud project</a>;</p>
+<p><a href="https://developers.google.com/workspace/guides/create-credentials">Create access credentials</a>;</p>
+<p><a href="https://developers.google.com/gmail/api/quickstart/python">Python Quickstart</a>;</p>
+<p><a href="https://developers.google.com/gmail/api/guides/sending">Sending Email</a>.</p>
 
       </div>
     </article>
@@ -370,7 +299,7 @@ raw_string <span style="color:#f92672">=</span> base64<span style="color:#f92672
           <line x1="16" y1="17" x2="8" y2="17"></line>
           <polyline points="10 9 9 9 8 9"></polyline>
         </svg>
-        1334 Words
+        1148 Words
       </p>
 
       <p>
@@ -381,7 +310,7 @@ raw_string <span style="color:#f92672">=</span> base64<span style="color:#f92672
           <line x1="3" y1="10" x2="21" y2="10"></line>
         </svg>
         
-          2022-04-12 12:50
+          2022-04-12 21:00
         
 
          
