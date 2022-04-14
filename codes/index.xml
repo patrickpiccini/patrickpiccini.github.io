@@ -14,11 +14,11 @@
     
     <item>
       <title>Code - Email com Google Authentication</title>
-      <link>https://patrickpiccini.github.io/codes/nothing-yet/</link>
+      <link>https://patrickpiccini.github.io/codes/email-google-auth/</link>
       <pubDate>Tue, 12 Apr 2022 21:00:50 -0300</pubDate>
       
-      <guid>https://patrickpiccini.github.io/codes/nothing-yet/</guid>
-      <description>Voce pode clonar o repositório: email-google-auth. GoogleAuthenticator.py import os.path from google.auth.transport.requests import Request from google.oauth2.credentials import Credentials from google_auth_oauthlib.flow import InstalledAppFlow from googleapiclient.discovery import build from googleapiclient.errors import HttpError def authenticator(client_secret_file, api_service_name, api_version, *scopes): CLIENT_SECRET_FILE = client_secret_file API_SERVICE_NAME = api_service_name API_VERSION = api_version SCOPES = [scope for scope in scopes[0]] creds = None if os.path.exists(&amp;#39;token.json&amp;#39;): creds = Credentials.from_authorized_user_file( &amp;#39;token.json&amp;#39;, SCOPES) if not creds or not creds.valid: if creds and creds.expired and creds.</description>
+      <guid>https://patrickpiccini.github.io/codes/email-google-auth/</guid>
+      <description>GitHub: email-google-auth </description>
     </item>
     
   </channel>

@@ -146,7 +146,7 @@ raw_string <span style="color:#f92672">=</span> base64<span style="color:#f92672
 <p>Após isso a conexão será autenticada e o email será enviado ao destinatário.</p>
 <p><img src="/images/google-auth/img5.png" alt="img5"></p>
 <h2 id="código-completo">Código Completo</h2>
-<p><a href="/codes">Code - Email com Google Authentication</a></p>
+<p><a href="https://github.com/patrickpiccini/email-google-auth">Code - Email com Google Authentication</a></p>
 <h2 id="conclusão">Conclusão</h2>
 <p>Nesse artigo foi abordado uma técnica básica de autenticação de usuário do google para aplicações de terceiros. Com apenas as ferramentas disponibilizadas pela Google como o GmailAPI e bibliotecas python. No decorrer do desenvolvimento percebe-se a estrutura que foi utilizada é fácil para ser implementada em qualquer aplicação, basta adaptá-la a regra de negócio.</p>
 <p>Existem outros métodos de autenticação de usuário, e diferentes formas de desenvolver o código para a autenticação, basta saber fazer a procura certa no google que encontrará.</p>
