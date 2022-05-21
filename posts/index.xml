@@ -111,9 +111,9 @@
 <p>Criar um arquivo <em>SendEmail.py</em>.</p>
 <p>Ao abrir o arquivo, deve-se fazer uma sequência de importações das bibliotecas instaladas.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> base64
-<span style="color:#f92672">from</span> email <span style="color:#f92672">import</span> errors
 <span style="color:#f92672">from</span> quickstart <span style="color:#f92672">import</span> authenticator
 <span style="color:#f92672">from</span> email.mime.text <span style="color:#f92672">import</span> MIMEText
+<span style="color:#f92672">from</span> googleapiclient.errors <span style="color:#f92672">import</span> HttpError
 </code></pre></div><p>Nota-se que foi importado a <em>def authenticator</em> do arquivo <em>GoogleAuthenticator.py .</em></p>
 <p>É criado as variáveis <em>CLIENT_SECRET_FILE</em> que é atribuído o arquivo credential.json, <em>API_NAME</em> contendo o nome da aplicação, <em>API VERSION</em> com a versão, e <em>SCOPES</em> com a url para a solicitação a API. Tudo isso é passado como parâmetro para a <em>def euthenticator.</em></p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">CLIENT_SECRET_FILE <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;DocGoogle/credentials.json&#39;</span>
@@ -128,12 +128,12 @@ service <span style="color:#f92672">=</span> authenticator(CLIENT_SECRET_FILE, A
 message[<span style="color:#e6db74">&#39;from&#39;</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;your_email@gmail.com&#34;</span>
 message[<span style="color:#e6db74">&#39;to&#39;</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;recipient@gmail.com&#39;</span>
 message[<span style="color:#e6db74">&#39;subject&#39;</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;API Google&#39;</span>
-raw_string <span style="color:#f92672">=</span> base64<span style="color:#f92672">.</span>urlsafe_b64encode(message<span style="color:#f92672">.</span>as_string())
+raw_string <span style="color:#f92672">=</span> base64<span style="color:#f92672">.</span>urlsafe_b64encode(message<span style="color:#f92672">.</span>as_bytes())<span style="color:#f92672">.</span>decode()
 </code></pre></div><p>Nesse momento é executado o envio do email passando o response da autenticação que está contida na variavel <em>service</em>, e os demais dados preenchidos. Todas essas informações foram codificadas em base64 para facilitar a transferência na Internet.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">try</span>:
     message <span style="color:#f92672">=</span> service<span style="color:#f92672">.</span>users()<span style="color:#f92672">.</span>messages()<span style="color:#f92672">.</span>send(userId<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;me&#39;</span>, body<span style="color:#f92672">=</span>{<span style="color:#e6db74">&#39;raw&#39;</span>: raw_string})<span style="color:#f92672">.</span>execute()
     <span style="color:#66d9ef">print</span> (<span style="color:#e6db74">&#39;Message Id: {}&#39;</span>)<span style="color:#f92672">.</span>format(message[<span style="color:#e6db74">&#39;id&#39;</span>])
-<span style="color:#66d9ef">except</span> errors<span style="color:#f92672">.</span>HttpError <span style="color:#66d9ef">as</span> error:
+<span style="color:#66d9ef">except</span> HttpError <span style="color:#66d9ef">as</span> error:
      <span style="color:#66d9ef">print</span> (<span style="color:#e6db74">&#39;An error occurred: {}&#39;</span>)<span style="color:#f92672">.</span>format(error)
 
 </code></pre></div><h3 id="step-5--execução">Step 5 – Execução</h3>
