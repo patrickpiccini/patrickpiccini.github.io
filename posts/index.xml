@@ -11,16 +11,15 @@
         
         <item>
             <title>Email com Google Authentication – Refresh Token</title>
-            <link>https://patrickpiccini.github.io/posts/google-auth-2/</link>
+            <link>https://patrickpiccini.github.io/posts/google_auth-refresh-token/</link>
             <pubDate>Sun, 22 May 2022 18:00:00 -0300</pubDate>
             
-            <guid>https://patrickpiccini.github.io/posts/google-auth-2/</guid>
-            <description>Table of Contents  Table of Contents Introdução  Pré-requisitos   Step 1 – Instalação de bibliotecas Step 2 – Leitura do token.json Step 3 – Função refresh_token Step 4 – Função request_refresh_token Step 5 – Execução Código Completo Conclusão Referências   Introdução Nesse artigo irei continuar o assunto abordado na publicação Email com Google Authentication.
+            <guid>https://patrickpiccini.github.io/posts/google_auth-refresh-token/</guid>
+            <description>Table of Contents  Introdução  Pré-requisitos   Step 1 – Instalação de bibliotecas Step 2 – Leitura do token.json Step 3 – Função refresh_token Step 4 – Função request_refresh_token Step 5 – Execução Código Completo Conclusão Referências   Introdução Nesse artigo irei continuar o assunto abordado na publicação Email com Google Authentication.
 Visto que no primeiro estágio fizemos apenas uma autenticação, nos deparamos com a criação de um arquivo chamado token.</description>
             <content type="html"><![CDATA[<p><img src="/images/google-auth/refresh_token.png" alt="refresh_token"></p>
 <h2 id="table-of-contents">Table of Contents</h2>
 <ul>
-<li><a href="#table-of-contents">Table of Contents</a></li>
 <li><a href="#introdu%C3%A7%C3%A3o">Introdução</a>
 <ul>
 <li><a href="#pr%C3%A9-requisitos">Pré-requisitos</a></li>
