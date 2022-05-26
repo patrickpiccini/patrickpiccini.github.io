@@ -6,8 +6,216 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
         <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-        <lastBuildDate>Sun, 22 May 2022 18:00:00 -0300</lastBuildDate>
+        <lastBuildDate>Thu, 26 May 2022 09:00:50 -0300</lastBuildDate>
         <atom:link href="https://patrickpiccini.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+        
+        <item>
+            <title>Data Analytcs - Spotify Wrapped</title>
+            <link>https://patrickpiccini.github.io/posts/spotify_wrapped/</link>
+            <pubDate>Thu, 26 May 2022 09:00:50 -0300</pubDate>
+            
+            <guid>https://patrickpiccini.github.io/posts/spotify_wrapped/</guid>
+            <description>Table of Contents  Projeto Spotify Wrapped  O que é spotify wrapped DataSet   Exploratory Data Analysis EDA Extração Exploração Limpeza de Dados Agregação  10 artistas mais escutados. 10 musicas mais escutadas.   Visualização Storytelling   Projeto Spotify Wrapped Recentemente venho estudando a área de Data Analytics, Data Science e as várias derivações de inteligência artificial, e descobri um grande interesse por esse mundo. Foi então que decidi iniciar um pequeno projeto onde eu possa praticar meus conhecimentos adquiridos, e também mostrar como o nosso cotidiano está repleto de tecnologia aplicada sobre inteligência artificial.</description>
+            <content type="html"><![CDATA[<p><img src="/images/spotify_wrapped/data-analytics.jpg" alt="data-analytics"></p>
+<h2 id="table-of-contents">Table of Contents</h2>
+<ul>
+<li><a href="#projeto-spotify-wrapped">Projeto Spotify Wrapped</a>
+<ul>
+<li><a href="#o-que-%C3%A9-spotify-wrapped">O que é spotify wrapped</a></li>
+<li><a href="#dataset">DataSet</a></li>
+</ul>
+</li>
+<li><a href="#exploratory-data-analysis-eda">Exploratory Data Analysis EDA</a></li>
+<li><a href="#extra%C3%A7%C3%A3o">Extração</a></li>
+<li><a href="#explora%C3%A7%C3%A3o">Exploração</a></li>
+<li><a href="#limpeza-de-dados">Limpeza de Dados</a></li>
+<li><a href="#agrega%C3%A7%C3%A3o">Agregação</a>
+<ul>
+<li><a href="#abaixo-observaremos-os-10-artistas-mais-escutados">10 artistas mais escutados.</a></li>
+<li><a href="#abaixo-observaremos-as-10-musicas-mais-escutadas">10 musicas mais escutadas.</a></li>
+</ul>
+</li>
+<li><a href="#visualiza%C3%A7%C3%A3o">Visualização</a></li>
+<li><a href="#storytelling">Storytelling</a></li>
+</ul>
+<hr>
+<h2 id="projeto-spotify-wrapped">Projeto Spotify Wrapped</h2>
+<p>Recentemente venho estudando a área de Data Analytics, Data Science e as várias derivações de inteligência artificial, e descobri um grande interesse por esse mundo. Foi então que decidi iniciar um pequeno projeto onde eu possa praticar meus conhecimentos adquiridos, e também mostrar como o nosso cotidiano está repleto de tecnologia aplicada sobre inteligência artificial.</p>
+<p>O que iremos aprender:</p>
+<ul>
+<li>Extração</li>
+<li>Exploração</li>
+<li>Limpeza</li>
+<li>Agregação</li>
+<li>Storytelling</li>
+</ul>
+<h3 id="o-que-é-spotify-wrapped">O que é spotify wrapped</h3>
+<p>Hoje, venho mostrar um projeto utilizando a plataforma de streaming de música mais utilizada no mundo, o Spotify. Iremos criar um recorço semelhante ao que o Spotify disponibiliza, chamada &ldquo;Spotify Wrapped&rdquo;, que nada mais é do que uma retrospectiva das músicas, artistas entro outros, mais ouvidos durante o seu ano.</p>
+<p><img src="/images/spotify_wrapped/wrapped.png" alt="wrapped"></p>
+<h3 id="dataset">DataSet</h3>
+<p>Nesse projeto irei utilizar o meu DataSet pessoal de meu perfil do Spotify. Para conseguir as suas informações pessoais, basta ir nas <a href="https://www.spotify.com/br/account/privacy/">Configurações de Privacidade</a> da sua conta, e no final da página, seguir os passos para solicitação de seus dados. Dentro de alguns dias, você recebera por e-mail a confinação para baixas seus dados.</p>
+<p><img src="/images/spotify_wrapped/steps.png" alt="steps"></p>
+<h2 id="exploratory-data-analysis-eda">Exploratory Data Analysis (EDA)</h2>
+<p>O que faremos hoje, será trabalha com um conceito primordial para o papel de um analista de dados, a análise Exploratória de dados(EAD).</p>
+<ul>
+<li>A EAD é um processo de analisar e resumir de forma detalhada um DataSet ou conjunto de dados. O objetivo é por várias técnicas, extrair informações precisas e claras, para a extração de <em>insights</em>.</li>
+</ul>
+<p>Antes de começar a analisar, importaremos as bibliotecas que iremos utilizar, e também carregar nosso dataset.</p>
+<p>Como padrão, o spotify disponibiliza todas as informações em formato JSON, como observamos no exemplo abaixo:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
+  <span style="color:#f92672">&#34;endTime&#34;</span> : <span style="color:#e6db74">&#34;2021-04-29 03:33&#34;</span>,
+  <span style="color:#f92672">&#34;artistName&#34;</span> : <span style="color:#e6db74">&#34;Tame Impala&#34;</span>,
+  <span style="color:#f92672">&#34;trackName&#34;</span> : <span style="color:#e6db74">&#34;Let It Happen&#34;</span>,
+  <span style="color:#f92672">&#34;msPlayed&#34;</span> : <span style="color:#ae81ff">345700</span>
+}
+</code></pre></div><h3 id="como-índices-temos">Como índices temos:</h3>
+<ul>
+<li>endTime - Data e hora em que o fluxo terminou no formato UTC (Fuso Horário Universal Coordenado).</li>
+<li>artistName - Nome do &ldquo;criador&rdquo; para cada fluxo (por exemplo, o nome do artista se for uma faixa de música).</li>
+<li>trackName - Nome dos itens ouvidos ou assistidos (por exemplo, título da faixa de música ou nome do vídeo).</li>
+<li>msPlayed - “msPlayed”- Representa quantos milissegundos a faixa foi ouvida pelo usuário.</li>
+</ul>
+<h2 id="extração">Extração</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> pandas <span style="color:#f92672">as</span> pd
+<span style="color:#f92672">import</span> seaborn <span style="color:#f92672">as</span> sns
+<span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#f92672">as</span> plt
+<span style="color:#f92672">from</span> datetime <span style="color:#f92672">import</span> timedelta, datetime
+
+dataframe0 <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>read_json(<span style="color:#e6db74">&#39;./data-frame/StreamingHistory0.json&#39;</span>)
+dataframe1 <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>read_json(<span style="color:#e6db74">&#39;./data-frame/StreamingHistory1.json&#39;</span>)
+dataframe2 <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>read_json(<span style="color:#e6db74">&#39;./data-frame/StreamingHistory2.json&#39;</span>)
+<span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;dataframe0: {dataframe0.shape}</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">dataframe1: {dataframe1.shape}</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">dataframe2: {dataframe2.shape}&#34;</span>)
+</code></pre></div><pre><code class="language-ipynb" data-lang="ipynb">dataframe0: (10000, 4)
+dataframe1: (10000, 4)
+dataframe2: (7154, 4)
+</code></pre><p>Como quero fazer uma análise completa, irei concatenar dos dataframes, transformando-os apenas em um.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">sptf <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>concat([dataframe0,dataframe1,dataframe2], ignore_index<span style="color:#f92672">=</span>True)
+<span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;Novo DataFrame: {sptf.shape}&#34;</span>)
+</code></pre></div><pre><code class="language-ipynb" data-lang="ipynb">Novo DataFrame: (27154, 4)
+</code></pre><p>Como podemos ver, foi concatenado os 3 dataframes, somando um total de 27154 linhas, e 4 colunas.</p>
+<p>O que faremos agora, é olhar para os dados que temos, e explorar essas informações que temos.</p>
+<h2 id="exploração">Exploração</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">sptf<span style="color:#f92672">.</span>head()
+</code></pre></div><p><img src="/images/spotify_wrapped/img1.png" alt="img1"></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">sptf<span style="color:#f92672">.</span>columns
+</code></pre></div><pre><code class="language-iptnb" data-lang="iptnb">Index(['endTime', 'artistName', 'trackName', 'msPlayed'], dtype='object')
+</code></pre><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">sptf<span style="color:#f92672">.</span>dtypes
+</code></pre></div><pre><code class="language-ipynb" data-lang="ipynb">endTime       object
+artistName    object
+trackName     object
+msPlayed       int64
+dtype: object
+</code></pre><p>Nas colunas que são <em>object</em> podemos pressupor serem textos, e na coluna que é <em>int64</em> um número inteiro.</p>
+<ul>
+<li>Estatísticas descritivas.</li>
+</ul>
+<p>Para termos uma visão mais panorâmica do nosso DataSet podemos utilizar o comando describe(). Com ele conseguimos extrair as informações básicas como quantidade, média, minha e máxima, alguns percentuais e std. Esse comando visa, gerar estatísticas descritivas de nosso DataSet. Também pode ser aplicado individualmente com apenas uma coluna.</p>
+<p>Como ha apenas o msPlayer como um valor numérico, todos esses cálculos serão feitos apenas pobre ele.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">sptf<span style="color:#f92672">.</span>describe()
+</code></pre></div><p><img src="/images/spotify_wrapped/img2.png" alt="img2"></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">sptf<span style="color:#f92672">.</span>min()
+</code></pre></div><pre><code class="language-ipynb" data-lang="ipynb">endTime                        2021-04-29 03:33
+artistName                      #TeuFuturo Cast
+trackName      Som de chuva - dormir, relaxar  
+msPlayed                                      0
+dtype: object
+</code></pre><p>Como podemos notar acima, o valor mínimo de msPlayed é 0(Zero), então vamos verificar se essas informações estão corretas.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">msPlayed_zero <span style="color:#f92672">=</span> sptf<span style="color:#f92672">.</span>query(<span style="color:#e6db74">&#39;msPlayed &lt;= 0&#39;</span>)
+msPlayed_zero<span style="color:#f92672">.</span>head(<span style="color:#ae81ff">10</span>)
+</code></pre></div><p><img src="/images/spotify_wrapped/img3.png" alt="img3"></p>
+<p>Após uma pequena análise, podemos notar que as músicas que tem o valor 0(zero), são musicas que não tiveram o seu tempo escutado contabilizado. Com isso, caso seja feita alguma análise mais complexa futuramente, esses valores podem ser considerados <em>outliers</em>.</p>
+<p>O que são <em>outliers</em>:
+São valores que os diferencia drasticamente de todos os outros, ou que fogem do padrão dos valores, podendo causar anomalias nos resultados de algoritmos mais complexos, como uma Regressão Linear.</p>
+<p>Vejamos isso em um grafico scatter em um  diagrama de caixa:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">plt<span style="color:#f92672">.</span>figure(figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">12</span>, <span style="color:#ae81ff">6</span>))
+plt<span style="color:#f92672">.</span>scatter(sptf[<span style="color:#e6db74">&#39;msPlayed&#39;</span>], sptf[<span style="color:#e6db74">&#39;msPlayed&#39;</span>])
+plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#39;msPlayed&#39;</span>)
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;scatter:&#39;</span>)
+plt<span style="color:#f92672">.</span>show()
+
+sns<span style="color:#f92672">.</span>boxplot(y<span style="color:#f92672">=</span>sptf[<span style="color:#e6db74">&#39;msPlayed&#39;</span>])
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;boxplot:&#39;</span>)
+plt<span style="color:#f92672">.</span>show()
+</code></pre></div><h2 id="graf1imagesspotify_wrappedgraf1png"><img src="/images/spotify_wrapped/graf1.png" alt="graf1"></h2>
+<p><img src="/images/spotify_wrapped/graf2.png" alt="graf2"></p>
+<p>Verificando os gráficos, podemos notar uma coisa estranha. Existe um valor extremamente distante de todos os outros, um outlier. Porem como são os meus dados do Spotify, me questionei &ldquo;Será que tem uma música muito a mais que todas as outras?&quot;. Foi aí que fui investigar, e descobri que havia realmente escutado toda essa quantia de horas.</p>
+<h3 id="mas-esses-outliers-não-vão-desbalancear-toda-a-minha-análise">Mas esses outliers não vão desbalancear toda a minha análise?</h3>
+<p><img src="https://i.pinimg.com/originals/f1/85/3a/f1853a77c203e8bb4e6615ae7b62d325.gif" alt="img"></p>
+<p>De certa forma sim, porem às vezes as informações que precisamos estão nesses outliers, e é o nosso caso.</p>
+<p>Outra coisa que percebi, é que os dados que o spotify disponibilizou não estão 100% corretos. Pude ver músicas que já ouvido muitas vezes com o msPlayed ZERADO!</p>
+<p>Vacilou heim Spotfy&hellip;</p>
+<p>Mas tudo bem, deixamos passar dessa vez :D.</p>
+<h2 id="limpeza-de-dados">Limpeza de Dados</h2>
+<p>Agora que entendemo os dados que iremos trabalhar, muitas vezes nos deparamos com informações inconsistentes. Então devemos executar uma série de limpeza ou alteração dessas informações.</p>
+<ul>
+<li>Para verificar as linas com NaN use:</li>
+</ul>
+<p>Caso tenhamos valores valorem omissos como None, numpy.NaN, ou até mesmo Vazio, conseguimos identificá-los através do comando <em>notna()</em>, onde nos retorna a própria tabela, porem com os valores boleanos, representando se há ou não um valor NaN naquele índice.</p>
+<ul>
+<li>True  - Não tem NaN</li>
+<li>False - Tem NaN</li>
+</ul>
+<p>Iremos calcular a quantia total de informações NaN, e como podemos ver, não ha nenhum valor NaN.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">sptf<span style="color:#f92672">.</span>notna()<span style="color:#f92672">.</span>value_counts()
+</code></pre></div><pre><code class="language-ipynb" data-lang="ipynb">endTime  artistName  trackName  msPlayed
+True     True        True       True        27154
+dtype: int64
+</code></pre><p>Como não temos nenhum dado NaN, o que podemos fazer é retirar todas as músicas que tenha o msPlayed menor ou igual a 0(zero).</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">sptf <span style="color:#f92672">=</span> sptf<span style="color:#f92672">.</span>query(<span style="color:#e6db74">&#39;msPlayed &gt; 0&#39;</span>)
+
+<span style="color:#75715e"># musica com menos tempo escutado</span>
+sptf<span style="color:#f92672">.</span>query(<span style="color:#e6db74">&#39;msPlayed &lt;= 10&#39;</span>)
+</code></pre></div><p><img src="/images/spotify_wrapped/img4.png" alt="img4"></p>
+<h2 id="agregação">Agregação</h2>
+<p>Na parte de agregação, buscamos resumir os dados através de métricas e estatísticas como soma, media, etc. para extrair insigths.</p>
+<ul>
+<li>Insigths - É a capacidade de tirar conclusões sobre os dados</li>
+</ul>
+<p>O que precisaremos fazer é buscar as músicas mais ouvidas e também os artistas mais ouvidos.</p>
+<h4 id="abaixo-observaremos-os-10-artistas-mais-escutados">Abaixo observaremos os 10 artistas mais escutados.</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">artistas <span style="color:#f92672">=</span> sptf[[<span style="color:#e6db74">&#39;artistName&#39;</span>,<span style="color:#e6db74">&#39;msPlayed&#39;</span>]]<span style="color:#f92672">.</span>groupby(<span style="color:#e6db74">&#39;artistName&#39;</span>)<span style="color:#f92672">.</span>agg(<span style="color:#e6db74">&#39;sum&#39;</span>)<span style="color:#f92672">.</span>reset_index()
+artistas <span style="color:#f92672">=</span> artistas<span style="color:#f92672">.</span>sort_values(by<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;msPlayed&#39;</span> ,ascending<span style="color:#f92672">=</span>False)
+artistas_top_10 <span style="color:#f92672">=</span> artistas[:<span style="color:#ae81ff">10</span>]
+artistas_top_10
+</code></pre></div><p><img src="/images/spotify_wrapped/img5.png" alt="img5"></p>
+<h4 id="abaixo-observaremos-as-10-musicas-mais-escutadas">Abaixo observaremos as 10 musicas mais escutadas.</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">musicas <span style="color:#f92672">=</span> sptf<span style="color:#f92672">.</span>sort_values(by<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;msPlayed&#39;</span> ,ascending<span style="color:#f92672">=</span>False)
+musicas_top_10 <span style="color:#f92672">=</span> musicas[:<span style="color:#ae81ff">10</span>]
+musicas_top_10
+</code></pre></div><p><img src="/images/spotify_wrapped/img6.png" alt="img6"></p>
+<p>Vamos também criar mais uma coluna como as posição do ranking.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">positions <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#39;1º&#39;</span>,<span style="color:#e6db74">&#39;2º&#39;</span>,<span style="color:#e6db74">&#39;3º&#39;</span>,<span style="color:#e6db74">&#39;4º&#39;</span>,<span style="color:#e6db74">&#39;5º&#39;</span>,<span style="color:#e6db74">&#39;6º&#39;</span>,<span style="color:#e6db74">&#39;7º&#39;</span>,<span style="color:#e6db74">&#39;8º&#39;</span>,<span style="color:#e6db74">&#39;9º&#39;</span>,<span style="color:#e6db74">&#39;10º&#39;</span>]
+
+artistas_top_10[<span style="color:#e6db74">&#39;position&#39;</span>] <span style="color:#f92672">=</span> positions
+musicas_top_10[<span style="color:#e6db74">&#39;position&#39;</span>] <span style="color:#f92672">=</span> positions
+</code></pre></div><p>Com isso, já temos tudo que precisamos para fazer uma aplicação parecida com Spotify Wrapped.</p>
+<h2 id="visualização">Visualização</h2>
+<p>Na etapa de visualização, é buscado criar gráficos que melhor representem os insights, gerados por agregação.</p>
+<p>Para ficar um pouco mais fácil para pessoas leigas verem essas informações, iremos plotar um barplot.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">chart <span style="color:#f92672">=</span> sns<span style="color:#f92672">.</span>barplot(data<span style="color:#f92672">=</span>artistas_top_10,  x<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;artistName&#39;</span>,y<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;msPlayed&#39;</span>)
+chart<span style="color:#f92672">.</span>set_xticklabels(chart<span style="color:#f92672">.</span>get_xticklabels(), rotation<span style="color:#f92672">=</span><span style="color:#ae81ff">90</span>)
+chart<span style="color:#f92672">.</span>set(title<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;Top 10 Artistas&#39;</span>)
+artistas_top_10
+</code></pre></div><h2 id="img7imagesspotify_wrappedimg7png"><img src="/images/spotify_wrapped/img7.png" alt="img7"></h2>
+<p><img src="/images/spotify_wrapped/graf3.png" alt="graf3"></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">chart <span style="color:#f92672">=</span> sns<span style="color:#f92672">.</span>barplot(data<span style="color:#f92672">=</span>musicas_top_10, x<span style="color:#f92672">=</span>positions,y<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;msPlayed&#39;</span>)
+chart<span style="color:#f92672">.</span>set_xticklabels(chart<span style="color:#f92672">.</span>get_xticklabels(), size<span style="color:#f92672">=</span><span style="color:#ae81ff">10</span>)
+chart<span style="color:#f92672">.</span>set(title<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;Top 10 Músicas&#39;</span>)
+musicas_top_10
+</code></pre></div><h2 id="img8imagesspotify_wrappedimg8png"><img src="/images/spotify_wrapped/img8.png" alt="img8"></h2>
+<p><img src="/images/spotify_wrapped/graf4.png" alt="graf4"></p>
+<h2 id="storytelling">Storytelling</h2>
+<p>Na etapa de storytelling, buscamos organizar as conclusões que temos dos dados, através de um formato de história, para facilitar a transmissão do conhecimento.</p>
+<p>Baseado nos dados disponibilizados pelo Spotify, foi extraído os 10 artistas mais estucados, e as 10 musicas mais escutadas no último ano, sendo que:</p>
+<ul>
+<li>1 Podcast</li>
+<li>1 Autio Relaxante</li>
+<li>8 Músicas de diversos gêneros</li>
+</ul>
+<p>Nota-se que o usuário tem um gosto musical muito diversificado. Também podemos supor que o usuário possa ter alguma dificuldade para dormir, visto que a segunda música mais ouvida é relacionada ao relaxamento profundo para dormir mais facilmente. Também pode-se perceber que o usuário gosta de conhecimentos gerais, visto que escuta um Podcast com o foco na diversidade.</p>
+<p>Portanto, recomenda-se aumentar a relação do usurário com a plataforma, recomendando novos podcast, com o formato semelhante ao que já escuta. Novos sons relaxantes para manter a qualidade do sono ainda melhor, e o anúncio de novos lançamentos do artista &ldquo;Pineapple StormTv&rdquo;, sendo que ocupa duas posições de músicas mais ouvidas e está no Top 3 artistas mais escutados.</p>
+]]></content>
+        </item>
         
         <item>
             <title>Email com Google Authentication – Refresh Token</title>
