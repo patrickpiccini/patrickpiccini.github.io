@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="author" content="map[name:Patrick Piccini]">
+<meta name="description" content="Table of Contents  Criação do Compartment Criação de Usuário Criação de Grupo Criação de Policies Criação de SSH-KEY Criação de Instancia VM Resumo   Nesse primeiro passo, iremos configurar um ambiente OCI para rodar toda a aplicação em cloud.
+Criação do Compartment Iremos criar um conpartiment.
+No ícone de hamburguer na página inicial do OCI, iremos em &amp;gt; Identity &amp;gt; Security &amp;gt; compartments, e criaremos um compartimento com o nome Developmet." />
+<meta name="keywords" content="" />
+<meta name="robots" content="noodp" />
+<meta name="theme-color" content="" />
+<link rel="canonical" href="https://patrickpiccini.github.io/posts/microservice_project_step01/" />
+
+
+    <title>
+        
+            Microservice Project – Step 1 :: Patrick Piccini 
+        
+    </title>
+
+
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css" rel="stylesheet"
+    type="text/css">
+
+
+
+<link rel="stylesheet" href="https://patrickpiccini.github.io/main.4e5c639214707eff609bb55fe49e183dee42258a73bc90e4cc7b0a84f900798a.css">
+
+
+
+<link rel="apple-touch-icon" sizes="180x180" href="https://patrickpiccini.github.io/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://patrickpiccini.github.io/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="https://patrickpiccini.github.io/favicon-16x16.png">
+<link rel="manifest" href="https://patrickpiccini.github.io/site.webmanifest">
+<link rel="mask-icon" href="https://patrickpiccini.github.io/safari-pinned-tab.svg" color="">
+<link rel="shortcut icon" href="https://patrickpiccini.github.io/favicon.ico">
+<meta name="msapplication-TileColor" content="">
+
+
+<meta itemprop="name" content="Microservice Project – Step 1">
+<meta itemprop="description" content="Table of Contents  Criação do Compartment Criação de Usuário Criação de Grupo Criação de Policies Criação de SSH-KEY Criação de Instancia VM Resumo   Nesse primeiro passo, iremos configurar um ambiente OCI para rodar toda a aplicação em cloud.
+Criação do Compartment Iremos criar um conpartiment.
+No ícone de hamburguer na página inicial do OCI, iremos em &gt; Identity &gt; Security &gt; compartments, e criaremos um compartimento com o nome Developmet.">
+<meta itemprop="datePublished" content="2022-06-02T13:00:52-02:00" />
+<meta itemprop="dateModified" content="2022-06-02T13:00:52-02:00" />
+<meta itemprop="wordCount" content="544">
+
+
+
+<meta itemprop="keywords" content="" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Microservice Project – Step 1"/>
+<meta name="twitter:description" content="Table of Contents  Criação do Compartment Criação de Usuário Criação de Grupo Criação de Policies Criação de SSH-KEY Criação de Instancia VM Resumo   Nesse primeiro passo, iremos configurar um ambiente OCI para rodar toda a aplicação em cloud.
+Criação do Compartment Iremos criar um conpartiment.
+No ícone de hamburguer na página inicial do OCI, iremos em &gt; Identity &gt; Security &gt; compartments, e criaremos um compartimento com o nome Developmet."/>
+
+
+
+
+
+
+
+
+    <meta property="article:published_time" content="2022-06-02 13:00:52 -0200 -0200" />
+
+
+
+
+
+
+
+
+
+
+    </head>
+
+    
+        <body>
+    
+    
+        <div class="container">
+            <header class="header">
+    <span class="header__inner">
+        <a href="https://patrickpiccini.github.io/" style="text-decoration: none;">
+    <div class="logo">
+        
+            <span class="logo__mark">&gt;</span>
+            <span class="logo__text">/home/piccini</span>
+            <span class="logo__cursor" style=
+                  "
+                   background-color:#67a2c9;
+                   ">
+            </span>
+        
+    </div>
+</a>
+
+
+        <span class="header__right">
+            
+                <nav class="menu">
+    <ul class="menu__inner"><li><a href="https://patrickpiccini.github.io/codes/">Codes</a></li><li><a href="https://patrickpiccini.github.io/posts/">Posts</a></li><li><a href="https://patrickpiccini.github.io/about/">Whoami</a></li>
+    </ul>
+</nav>
+
+                <span class="menu-trigger">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+                    </svg>
+                </span>
+            
+        </span>
+    </span>
+</header>
+
+
+            <div class="content">
+                
+  <main class="post">
+
+    <div class="post-info">
+      <p>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock">
+          <circle cx="12" cy="12" r="10"></circle>
+          <polyline points="12 6 12 12 16 14"></polyline>
+        </svg>
+        3 minutes
+
+        
+      </p>
+    </div>
+
+    <article>
+      <h1 class="post-title">
+        <a href="https://patrickpiccini.github.io/posts/microservice_project_step01/">Microservice Project – Step 1</a>
+      </h1>
+
+      
+
+      
+
+      
+
+      <div class="post-content">
+        <p><img src="https://patrickpiccini.github.io/images/microservice_project/microservices.png" alt="microservices"></p>
+<h2 id="table-of-contents">Table of Contents</h2>
+<ul>
+<li><a href="#cria%C3%A7%C3%A3o-do-compartment">Criação do Compartment</a></li>
+<li><a href="#cria%C3%A7%C3%A3o-de-usu%C3%A1rio">Criação de Usuário</a></li>
+<li><a href="#cria%C3%A7%C3%A3o-de-grupo">Criação de Grupo</a></li>
+<li><a href="#cria%C3%A7%C3%A3o-de-policies">Criação de Policies</a></li>
+<li><a href="#cria%C3%A7%C3%A3o-de-ssh-key">Criação de SSH-KEY</a></li>
+<li><a href="#cria%C3%A7%C3%A3o-de-instancia-vm">Criação de Instancia VM</a></li>
+<li><a href="#resumo">Resumo</a></li>
+</ul>
+<hr>
+<p>Nesse primeiro passo, iremos configurar um ambiente OCI para rodar toda a aplicação em cloud.</p>
+<h2 id="criação-do-compartment">Criação do Compartment</h2>
+<p>Iremos criar um <em>conpartiment.</em></p>
+<p>No ícone de hamburguer na página inicial do OCI, iremos em &gt; Identity &gt; Security &gt; compartments, e criaremos um compartimento com o nome <strong>Developmet</strong>.</p>
+<p><img src="https://patrickpiccini.github.io/images/microservice_project/img3.jpg" alt="img3"></p>
+<h2 id="criação-de-usuário">Criação de Usuário</h2>
+<p>Após isso, criaremos um usuário de desenvolvimento para ter acesso somente ao compartimento <strong>Developmet</strong>.</p>
+<p>Novamente no menu lateral, em &gt; Identity &gt; Security &gt; users, iremos criar o usuário <strong>devel_user,</strong> com o tipo IAM USER. Esses usuários podem acessar os serviços do Oracle Cloud Infrastructure, mas nem todos os serviços do Cloud Platform. Os usuários do IAM são cenários de usuário atípico, como acesso de administrador de emergência.</p>
+<p><img src="https://patrickpiccini.github.io/images/microservice_project/img4.jpg" alt="img4"></p>
+<p><img src="https://patrickpiccini.github.io/images/microservice_project/img5.jpg" alt="img5"></p>
+<h2 id="criação-de-grupo">Criação de Grupo</h2>
+<p>No menu lateral, em &gt; Identity &gt; Security &gt; groups, criaremos um grupo com o nome de <strong>Developer_Group.</strong> Depois disso, iremos adicionar o usuário <strong>devel_user</strong> ao grupo clicando no botão &ldquo;Add user to Group&rdquo;.</p>
+<p><img src="https://patrickpiccini.github.io/images/microservice_project/img6.jpg" alt="img6"></p>
+<h2 id="criação-de-policies">Criação de Policies</h2>
+<p>Finalizando o processo de criação de usuário, grupo, e adição do usuário ao grupo, é necessário atribuir uma sequência de políticas de permissões ao grupo, para que assim, o grupo criado tenha acesso ao compartimento <em>Developer</em> para fazer as devidas interações.</p>
+<p>Vamos em &gt; Identity &gt; Security &gt; Policies</p>
+<p><img src="https://patrickpiccini.github.io/images/microservice_project/img7.jpg" alt="img7"></p>
+<p>Após ser direcionado a página de policies, selecionamos o compartimento <strong>Developmet</strong> para receber a política que criamos. Na policie, iremos permitir o Developer_Group (e todos seus usuários) a utilização de todos os recursos no compartimento OCI.</p>
+<p><img src="https://patrickpiccini.github.io/images/microservice_project/img8.jpg" alt="img8"></p>
+<p>Também será criado uma outra policie no compartimento <strong>root</strong> , para liberar o acesso ao terminal cloud shell, através dos usuários do grupo <em>Developmet.</em> Isso deverá ser feito devido ao fato de que precisaremos de uma ssh-key disponibilizada pelo usuário para conseguir criar nossa instancia no OCI.</p>
+<p><img src="https://patrickpiccini.github.io/images/microservice_project/img9.jpg" alt="img9"></p>
+<h2 id="criação-de-ssh-key">Criação de SSH-KEY</h2>
+<p>Logado no usuário <em>devel_user,</em> conectaremos a Oracle Cloud Shell para adquirir uma ssh_key que posteriormente iremos utilizar. Para isso, vamos usar alguns simples comandos para a criação dessa chave.</p>
+<p><img src="https://patrickpiccini.github.io/images/microservice_project/img10.jpg" alt="img10"></p>
+<pre><code class="language-cli" data-lang="cli">ssh-keygen – Para criação da chave
+
+cat /home/your_user/.ssh/id_rsa.pub 
+– Mostrará o conteúdo contido no arquivo id_rsa.pub,
+  que foi criado com o comando anterior
+</code></pre><p><img src="https://patrickpiccini.github.io/images/microservice_project/img11.jpg" alt="img11"></p>
+<h2 id="criação-de-instancia-vm">Criação de Instancia VM</h2>
+<p>Ainda conectado ao usuário <em>devel_user</em> criaremos uma instância, que nada mais é que uma Virtual Machine. Em &gt; compute &gt; instances &gt; create instance._
+<img src="https://patrickpiccini.github.io/images/microservice_project/img12.jpg" alt="img12"></p>
+<p>Ao criar uma instância na página de configuração da VM, devemos colar a ssh-key adquirida anteriormente no campo onde solicita essa chave. Isso é feito para que se consiga acessar a VM remotamente. As imagens do Oracle Linux, CentOS ou Ubuntu usam esse par de chaves SSH ao contrário de uma senha para autenticar um usuário.</p>
+<p><img src="https://patrickpiccini.github.io/images/microservice_project/img13.jpg" alt="img13"></p>
+<p>OBS: A configuração da instância que irei utilizar, são disponibilizadas pelo serviço <em>Oracle Cloud – Free Tier,</em> sendo ela 1 VM de computação baseadas em AMD com 1/8 OCPU** e 1 GB de memória cada.</p>
+<p>Para mais informações dos serviços Free Tier, acesse: <a href="https://www.oracle.com/br/cloud/free/">https://www.oracle.com/br/cloud/free/</a></p>
+<h2 id="resumo">Resumo</h2>
+<p>Nesse Step, começamos as criar o ambiente onde rodaremos nossa aplicação. Configuramos um compartment, usuário e grupo de usuário, que será o responsável pelo acesso ao desenvolvimento na instância OCI. Definimos algumas políticas de usuário. Também criamos uma ssh-key que utilizamos para a criação da instancia OCI.</p>
+
+      </div>
+    </article>
+
+    <hr />
+
+    <div class="post-info">
+      
+      
+
+      <p>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+          <polyline points="14 2 14 8 20 8"></polyline>
+          <line x1="16" y1="13" x2="8" y2="13"></line>
+          <line x1="16" y1="17" x2="8" y2="17"></line>
+          <polyline points="10 9 9 9 8 9"></polyline>
+        </svg>
+        544 Words
+      </p>
+
+      <p>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar">
+          <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+          <line x1="16" y1="2" x2="16" y2="6"></line>
+          <line x1="8" y1="2" x2="8" y2="6"></line>
+          <line x1="3" y1="10" x2="21" y2="10"></line>
+        </svg>
+        
+          2022-06-02 12:00
+        
+
+         
+          
+        
+      </p>
+    </div>
+
+    
+    <div class="pagination">
+        
+
+        <div class="pagination__buttons">
+            
+
+            
+            <span class="button next">
+                <a href="https://patrickpiccini.github.io/posts/microservice_project_introo/">
+                    <span class="button__text">Um projeto completo de Microservices</span>
+                    <span class="button__icon">→</span>
+                </a>
+            </span>
+            
+        </div>
+    </div>
+
+
+    
+
+    
+
+  </main>
+
+            </div>
+
+            
+                <footer class="footer">
+    
+    
+</footer>
+
+            
+        </div>
+
+        
+
+
+
+<script type="text/javascript" src="https://patrickpiccini.github.io/bundle.min.ace63d93098bf623f7c286a9084a4c22bfc482944c734f87fe0b685c7c6c7fa0ad2edb028c3b4b60d3343720c8ab490b320ad7f8edf4f6e9a6b898fc529057a9.js" integrity="sha512-rOY9kwmL9iP3woapCEpMIr/EgpRMc0&#43;H/gtoXHxsf6CtLtsCjDtLYNM0NyDIq0kLMgrX&#43;O309ummuJj8UpBXqQ=="></script>
+
+
+
+    </body>
+</html>
