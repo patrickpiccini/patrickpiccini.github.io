@@ -77,10 +77,13 @@ cat /home/your_user/.ssh/id_rsa.pub
             <pubDate>Thu, 02 Jun 2022 13:00:52 -0100</pubDate>
             
             <guid>https://patrickpiccini.github.io/posts/microservice_project_intro/</guid>
-            <description>Table of Contents  Há um tempo eu desejava entender melhor como os tão famosos microsserviços conseguem trabalhar individualmente, porém todos conectados. Foi então que decidi projetar uma pequena aplicação onde iria me aprofundar nesses conhecimentos, e que também me desafiaria a criar uma aplicação completa seguindo o Software Development Life Circle. Partindo desde a criação da ideia, até o deploy.
-Isso pode ser representado conforme o seguinte fluxo:
-Então, meu nome é Patrick Berlatto Piccini, e esse é meu projeto completo de microservices.</description>
+            <description>Table of Contents  Entendimento do problema Objetivo Arquitetura do Projeto Completo   Há um tempo eu desejava entender melhor como os tão famosos microsserviços conseguem trabalhar individualmente, porém todos conectados. Foi então que decidi projetar uma pequena aplicação onde iria me aprofundar nesses conhecimentos, e que também me desafiaria a criar uma aplicação completa seguindo o Software Development Life Circle. Partindo desde a criação da ideia, até o deploy.</description>
             <content type="html"><![CDATA[<h2 id="table-of-contents">Table of Contents</h2>
+<ul>
+<li><a href="#entendimento-do-problema">Entendimento do problema</a></li>
+<li><a href="#objetivo">Objetivo</a></li>
+<li><a href="#arquitetura-do-projeto-completo">Arquitetura do Projeto Completo</a></li>
+</ul>
 <hr>
 <p>Há um tempo eu desejava entender melhor como os tão famosos microsserviços conseguem trabalhar individualmente, porém todos conectados. Foi então que decidi projetar uma pequena aplicação onde iria me aprofundar nesses conhecimentos, e que também me desafiaria a criar uma aplicação completa seguindo o <strong>Software Development Life Circle</strong>. Partindo desde a criação da ideia, até o deploy.</p>
 <p>Isso pode ser representado conforme o seguinte fluxo:</p>
@@ -166,8 +169,6 @@ Então, meu nome é Patrick Berlatto Piccini, e esse é meu projeto completo de 
     └───rabbitmq_controller
             rabbit_worker.py
             __init__.py
-
-
 </code></pre>]]></content>
         </item>
         
