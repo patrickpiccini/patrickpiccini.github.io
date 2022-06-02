@@ -18,7 +18,8 @@
             <description>Table of Contents  Criação do Compartment Criação de Usuário Criação de Grupo Criação de Policies Criação de SSH-KEY Criação de Instancia VM Resumo   Nesse primeiro passo, iremos configurar um ambiente OCI para rodar toda a aplicação em cloud.
 Criação do Compartment Iremos criar um conpartiment.
 No ícone de hamburguer na página inicial do OCI, iremos em &amp;gt; Identity &amp;gt; Security &amp;gt; compartments, e criaremos um compartimento com o nome Developmet.</description>
-            <content type="html"><![CDATA[<h2 id="table-of-contents">Table of Contents</h2>
+            <content type="html"><![CDATA[<p><img src="/images/microservice_project/microservices.png" alt="microservices"></p>
+<h2 id="table-of-contents">Table of Contents</h2>
 <ul>
 <li><a href="#cria%C3%A7%C3%A3o-do-compartment">Criação do Compartment</a></li>
 <li><a href="#cria%C3%A7%C3%A3o-de-usu%C3%A1rio">Criação de Usuário</a></li>
@@ -78,7 +79,8 @@ cat /home/your_user/.ssh/id_rsa.pub
             
             <guid>https://patrickpiccini.github.io/posts/microservice_project_intro/</guid>
             <description>Table of Contents  Entendimento do problema Objetivo Arquitetura do Projeto Completo   Há um tempo eu desejava entender melhor como os tão famosos microsserviços conseguem trabalhar individualmente, porém todos conectados. Foi então que decidi projetar uma pequena aplicação onde iria me aprofundar nesses conhecimentos, e que também me desafiaria a criar uma aplicação completa seguindo o Software Development Life Circle. Partindo desde a criação da ideia, até o deploy.</description>
-            <content type="html"><![CDATA[<h2 id="table-of-contents">Table of Contents</h2>
+            <content type="html"><![CDATA[<p><img src="/images/microservice_project/microservices.png" alt="microservices"></p>
+<h2 id="table-of-contents">Table of Contents</h2>
 <ul>
 <li><a href="#entendimento-do-problema">Entendimento do problema</a></li>
 <li><a href="#objetivo">Objetivo</a></li>
