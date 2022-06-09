@@ -13,6 +13,16 @@
     
     
     <item>
+      <title>Microservice Project – Step 2</title>
+      <link>https://patrickpiccini.github.io/posts/microservice_project_step02/</link>
+      <pubDate>Thu, 09 Jun 2022 10:01:52 -0300</pubDate>
+      
+      <guid>https://patrickpiccini.github.io/posts/microservice_project_step02/</guid>
+      <description>Table of Contents  Entrar na Instancia via shell Instalar Docker Instalar Docker-Compose Instalar Git Resumo   Após Configurar a infraestrutura no Oracle Cloud, necessitamos fazer instalações de alguns programas que iremos utilizar. O Docker para a criação dos nossos containers de servidores e microsserviços, o Docker-Compose para facilitar a criação dos containers, e o Git, para versionamento de código.
+Como desenvolvi os códigos fora de nossa VM da OCI, o Git é o fator principal para que todos os códigos sejam disponíveis facilmente.</description>
+    </item>
+    
+    <item>
       <title>Microservice Project – Step 1</title>
       <link>https://patrickpiccini.github.io/posts/microservice_project_step01/</link>
       <pubDate>Thu, 02 Jun 2022 13:00:52 -0200</pubDate>
