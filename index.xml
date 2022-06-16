@@ -13,6 +13,16 @@
     
     
     <item>
+      <title>Microservice Project – Step 3</title>
+      <link>https://patrickpiccini.github.io/posts/microservice_project_step03/</link>
+      <pubDate>Thu, 16 Jun 2022 10:01:53 -0300</pubDate>
+      
+      <guid>https://patrickpiccini.github.io/posts/microservice_project_step03/</guid>
+      <description>Table of Contents  Criação do Docker-Compose-Services Teste na OCI Resumo   Nesse próximo passo, parto do pressuposto que meu ambiente já está configurado e com todas as instalações feitas, assim, posso começar a criar as primeiras linhas de código.
+Devemos começar criando uma pasta chamada MS-Application. Essa pasta será onde iremos criar todos os microsserviços, configuração de containers de serviço, e mais alguns detalhes, que serão mostrados no decorrer das publicações.</description>
+    </item>
+    
+    <item>
       <title>Microservice Project – Step 2</title>
       <link>https://patrickpiccini.github.io/posts/microservice_project_step02/</link>
       <pubDate>Thu, 09 Jun 2022 10:01:52 -0300</pubDate>

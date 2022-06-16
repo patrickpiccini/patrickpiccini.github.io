@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="author" content="map[name:Patrick Piccini]">
+<meta name="description" content="Table of Contents  Criação do Docker-Compose-Services Teste na OCI Resumo   Nesse próximo passo, parto do pressuposto que meu ambiente já está configurado e com todas as instalações feitas, assim, posso começar a criar as primeiras linhas de código.
+Devemos começar criando uma pasta chamada MS-Application. Essa pasta será onde iremos criar todos os microsserviços, configuração de containers de serviço, e mais alguns detalhes, que serão mostrados no decorrer das publicações." />
+<meta name="keywords" content="" />
+<meta name="robots" content="noodp" />
+<meta name="theme-color" content="" />
+<link rel="canonical" href="https://patrickpiccini.github.io/posts/microservice_project_step03/" />
+
+
+    <title>
+        
+            Microservice Project – Step 3 :: Patrick Piccini 
+        
+    </title>
+
+
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css" rel="stylesheet"
+    type="text/css">
+
+
+
+<link rel="stylesheet" href="https://patrickpiccini.github.io/main.4e5c639214707eff609bb55fe49e183dee42258a73bc90e4cc7b0a84f900798a.css">
+
+
+
+<link rel="apple-touch-icon" sizes="180x180" href="https://patrickpiccini.github.io/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://patrickpiccini.github.io/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="https://patrickpiccini.github.io/favicon-16x16.png">
+<link rel="manifest" href="https://patrickpiccini.github.io/site.webmanifest">
+<link rel="mask-icon" href="https://patrickpiccini.github.io/safari-pinned-tab.svg" color="">
+<link rel="shortcut icon" href="https://patrickpiccini.github.io/favicon.ico">
+<meta name="msapplication-TileColor" content="">
+
+
+<meta itemprop="name" content="Microservice Project – Step 3">
+<meta itemprop="description" content="Table of Contents  Criação do Docker-Compose-Services Teste na OCI Resumo   Nesse próximo passo, parto do pressuposto que meu ambiente já está configurado e com todas as instalações feitas, assim, posso começar a criar as primeiras linhas de código.
+Devemos começar criando uma pasta chamada MS-Application. Essa pasta será onde iremos criar todos os microsserviços, configuração de containers de serviço, e mais alguns detalhes, que serão mostrados no decorrer das publicações.">
+<meta itemprop="datePublished" content="2022-06-16T10:01:53-03:00" />
+<meta itemprop="dateModified" content="2022-06-16T10:01:53-03:00" />
+<meta itemprop="wordCount" content="875">
+
+
+
+<meta itemprop="keywords" content="" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Microservice Project – Step 3"/>
+<meta name="twitter:description" content="Table of Contents  Criação do Docker-Compose-Services Teste na OCI Resumo   Nesse próximo passo, parto do pressuposto que meu ambiente já está configurado e com todas as instalações feitas, assim, posso começar a criar as primeiras linhas de código.
+Devemos começar criando uma pasta chamada MS-Application. Essa pasta será onde iremos criar todos os microsserviços, configuração de containers de serviço, e mais alguns detalhes, que serão mostrados no decorrer das publicações."/>
+
+
+
+
+
+
+
+
+    <meta property="article:published_time" content="2022-06-16 10:01:53 -0300 -03" />
+
+
+
+
+
+
+
+
+
+
+    </head>
+
+    
+        <body>
+    
+    
+        <div class="container">
+            <header class="header">
+    <span class="header__inner">
+        <a href="https://patrickpiccini.github.io/" style="text-decoration: none;">
+    <div class="logo">
+        
+            <span class="logo__mark">&gt;</span>
+            <span class="logo__text">/home/piccini</span>
+            <span class="logo__cursor" style=
+                  "
+                   background-color:#67a2c9;
+                   ">
+            </span>
+        
+    </div>
+</a>
+
+
+        <span class="header__right">
+            
+                <nav class="menu">
+    <ul class="menu__inner"><li><a href="https://patrickpiccini.github.io/codes/">Codes</a></li><li><a href="https://patrickpiccini.github.io/posts/">Posts</a></li><li><a href="https://patrickpiccini.github.io/about/">Whoami</a></li>
+    </ul>
+</nav>
+
+                <span class="menu-trigger">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+                    </svg>
+                </span>
+            
+        </span>
+    </span>
+</header>
+
+
+            <div class="content">
+                
+  <main class="post">
+
+    <div class="post-info">
+      <p>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock">
+          <circle cx="12" cy="12" r="10"></circle>
+          <polyline points="12 6 12 12 16 14"></polyline>
+        </svg>
+        5 minutes
+
+        
+      </p>
+    </div>
+
+    <article>
+      <h1 class="post-title">
+        <a href="https://patrickpiccini.github.io/posts/microservice_project_step03/">Microservice Project – Step 3</a>
+      </h1>
+
+      
+
+      
+
+      
+
+      <div class="post-content">
+        <p><img src="https://patrickpiccini.github.io/images/microservice_project/microservices.png" alt="microservices"></p>
+<h2 id="table-of-contents">Table of Contents</h2>
+<ul>
+<li><a href="#cria%C3%A7%C3%A3o-do-docker-compose-services">Criação do Docker-Compose-Services</a></li>
+<li><a href="#teste-na-oci">Teste na OCI</a></li>
+<li><a href="#resumo">Resumo</a></li>
+</ul>
+<hr>
+<p>Nesse próximo passo, parto do pressuposto que meu ambiente já está configurado e com todas as instalações feitas, assim, posso começar a criar as primeiras linhas de código.</p>
+<p>Devemos começar criando uma pasta chamada <em>MS-Application.</em> Essa pasta será onde iremos criar todos os microsserviços, configuração de containers de serviço, e mais alguns detalhes, que serão mostrados no decorrer das publicações.</p>
+<p>Na raiz da pasta, criamos um arquivo chamado <em>docker-compose-services.yml.</em></p>
+<pre><code class="language-Estrutura" data-lang="Estrutura">MS-Application
+│   docker-compose-services.yml
+</code></pre><h2 id="criação-do-docker-compose-services">Criação do Docker-Compose-Services</h2>
+<p>Como vamos usar containers para praticamente tudo, será necessário que os servidores Rabbit, Redis, Postgres, e interfaces de manager sejam criadas separadamente em seus devidos containers. É necessária essa separação para que nenhum servidor dependa do outro para funcionar. Com isso, já temos os primeiros passos na criação da arquitetura de microsserviços.</p>
+<p>Para inicializar esses serviços rapidamente, iremos desenvolver um Docker-Compose e configuraremos uma <em>Network</em>, onde posteriormente estarão todos os serviços dentro dessa mesma rede.</p>
+<p>A rede foi nomeada de <em>internal-network,</em> nela, iremos configurar o endereço 10.5.0.0 sendo uma rede classe A, com uma máscara de rede /16. Também iremos definir o gateway da rede para 10.5.0.1.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-docker" data-lang="docker">version: <span style="color:#e6db74">&#34;3.7&#34;</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>networks:<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>  network-service:<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>    driver: bridge<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>    name: internal-network<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>    ipam:<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>      config:<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>        - subnet: 10.5.0.0/16<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>          gateway: 10.5.0.1<span style="color:#960050;background-color:#1e0010">
+</span></code></pre></div><p>Nos serviços, iniciamos configurando o RabbitMQ. Utilizaremos a imagem <em>rabbitmq:3-management-alpine,</em> que é uma imagem mínima do Docker baseada no Alpine Linux com um índice de pacotes completo e apenas 5 MB de tamanho. Nas variáveis de ambiente é deixado com o valor padrão o user, password e host, que será utilizado posteriormente para conectar ao manager do rabbit. Nas portas, devemos colocar 15672 para o manager e 5672 para o servidor. E por fim, iremos configurar o contêiner para ficar dentro da Network que foi criada anteriormente, apontando também um ip estático para essa instancia.</p>
+<p><a href="https://hub.docker.com/_/alpine">Alpine</a></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-docker" data-lang="docker">services:<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>  rabbitmq:<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>    image: <span style="color:#e6db74">&#34;rabbitmq:3-management-alpine&#34;</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>    environment:<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>      RABBITMQ_DEFAULT_USER: <span style="color:#e6db74">&#34;guest&#34;</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>      RABBITMQ_DEFAULT_PASS: <span style="color:#e6db74">&#34;guest&#34;</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>      RABBITMQ_DEFAULT_VHOST: <span style="color:#e6db74">&#34;/&#34;</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>    ports:<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>      - <span style="color:#e6db74">&#34;15672:15672&#34;</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>      - <span style="color:#e6db74">&#34;5672:5672&#34;</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>    labels:<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>      NAME: <span style="color:#e6db74">&#34;rabbitmq1&#34;</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>    networks:<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>      network-service:<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>        ipv4_address: 10.5.0.10<span style="color:#960050;background-color:#1e0010">
+</span></code></pre></div><p>A estrutura dos próximos serviços é bem semelhante a essa primeira, com apenas alguns detalhes como diferença. No Postgres, utilizaremos a imagem <em>postgres:13</em>, iremos indicar as variáveis padrões do user e password para conexão a instância, apontaremos a porta padrão 5432, criaremos um volume compartilhado de <em>.data</em> para <em>/data/,</em> configuraremosaNetwork com o ip estático, e um detalhe muito importante, será colocado o parâmetro <em>restart: Always</em> que fará com que a instância seja reiniciada caso pare de funcionar. Se for interrompido manualmente, ele será reiniciado somente quando o daemon do Docker for reiniciado ou o próprio contêiner for reiniciado manualmente.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-docker" data-lang="docker">  postgres:<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>    container_name: postgres_container<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>    image: postgres:13<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>    restart: always<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>    environment:<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>      POSTGRES_USER: postgres<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>      POSTGRES_PASSWORD: postgres<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>      POSTGRES_DB: baseapplication<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>    ports:<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>      - <span style="color:#e6db74">&#34;5432:5432&#34;</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>    volumes:<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>      - ./data:/data/<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>    networks:<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>      network-service:<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>        ipv4_address: 10.5.0.11<span style="color:#960050;background-color:#1e0010">
+</span></code></pre></div><p>Para ter uma parte visual do banco de dados, faremos a criação de uma instância com o PgAdmin, que poderemos conectar ao servidor do postgres via Web. Sendo assim, iremos utilizar a imagem <em>dpage/pgadmin4,</em> com as variáveis de e-mail e password para entrarmos na página web. Iremos apontar a porta de 16543/80 (external/internal), compartilharemos os volumes./data/:/data/ e ./postgres-backup:/var/lib/postgresql/backups, iremos configurar a network com um ip estático, e colaremos uma dependência no parâmetro <em>depends_on – postgres.</em> Isso fará com o a instância do PgAdmin só seja criada, após a criação da instância do postgres.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-docker" data-lang="docker">  pgadmin:<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>    container_name: pgadmin_container<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>    image: dpage/pgadmin4<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>    environment:<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>      PGADMIN_DEFAULT_EMAIL: admin@admin.com<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>      PGADMIN_DEFAULT_PASSWORD: admin<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>    ports:<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>      - <span style="color:#e6db74">&#34;16543:80&#34;</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>    depends_on:<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>      - postgres<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>    volumes:<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>      - ./data/:/data/<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>      - ./postgres-backup:/var/lib/postgresql/backups<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>    networks:<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>      network-service:<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>        ipv4_address: 10.5.0.12<span style="color:#960050;background-color:#1e0010">
+</span></code></pre></div><p>E para camada de cache, iremos criar uma instância com Redis utilizando a imagem <em>redis:alpine</em>, apontando a porta padrão 6379, e configurando a Network com um ip estático.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-docker" data-lang="docker">  redis:<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>    image: redis:alpine<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>    container_name: redis-container<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>    ports:<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>      - <span style="color:#e6db74">&#34;6379:6379&#34;</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>    networks:<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>      network-service:<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>        ipv4_address: 10.5.0.9<span style="color:#960050;background-color:#1e0010">
+</span></code></pre></div><p>No final, teremos vários containers rodando dentro de uma Rede, tendo algo parecido com a seguinte imagem:</p>
+<p><img src="https://patrickpiccini.github.io/images/microservice_project/img16.jpg" alt="img16"></p>
+<h2 id="teste-na-oci">Teste na OCI</h2>
+<p>Agora que temos pronto o Docker-Compose com todos os serviços que utilizaremos, devemos fazer um teste dentro da VM que criamos na OCI. Para conseguir compartilhar o código, faço <em>um git commit</em> de minha pasta MS-Application, e dentro da instância OCI dou um <em>git pull</em> para baixar.</p>
+<p>OBS: Não entrarei em detalhes nos comandos do git, caso tenha alguma dúvida especifica, consulte a documentação oficial: <a href="https://comandosgit.github.io/"><strong>https://comandosgit.github.io/</strong></a></p>
+<p>Dentro a instância, inicio meus serviços com o comando <em>docker-compose -f docker-compose-services.yml up,</em> e passo o nome do arquivo que deverá ser iniciado.</p>
+<p>Nesse momento começará a baixar as imagens dos contêineres.</p>
+<p><img src="https://patrickpiccini.github.io/images/microservice_project/img17.jpg" alt="img17"></p>
+<p><img src="https://patrickpiccini.github.io/images/microservice_project/img18.jpg" alt="img18"></p>
+<p><img src="https://patrickpiccini.github.io/images/microservice_project/img19.jpg" alt="img19"></p>
+<p>Agora que está tudo rodando, pude fazer um teste me conectando ao manager do RabbitMQ pela Web. Porém como a aplicação está em cloud, é necessário que nas configurações da VNC do projeto, sejam expostas as portas que iremos utilizar para nos conectar externamente.</p>
+<p><img src="https://patrickpiccini.github.io/images/microservice_project/img20.jpg" alt="img20"></p>
+<p>Na OCI, em Networking &gt; Virtual Cloud Networks &gt; sua_vnc &gt; Security List Details &gt; Ingress Rules. iremos adicionar as portas que utilizaremo</p>
+<p><img src="https://patrickpiccini.github.io/images/microservice_project/img21.jpg" alt="img21"></p>
+<p><img src="https://patrickpiccini.github.io/images/microservice_project/img22.jpg" alt="img22"></p>
+<p>Após a liberação da porta, consegui ter acesso aos meus contêineres, tanto o do rabbit quando ao pgadmin, que também liberei a porta. Percebam que para me conectar aos meus contêineres, utilizo o ip public da VM que estou utilizando.</p>
+<p><img src="https://patrickpiccini.github.io/images/microservice_project/img23.jpg" alt="img23"></p>
+<p><img src="https://patrickpiccini.github.io/images/microservice_project/img24.jpg" alt="img24"></p>
+<h2 id="resumo">Resumo</h2>
+<p>Nesse Step, criamos o arquivo <em>docker-compose-services.yml</em> que é responsável por iniciar os servidores RabbitMQ, Postgres e Redis, juntamente as interfaces PgAdmin e RabbitManager. Foram liberadas as portas dos servidores para visualização externa, e também foi feito um teste acessando as interfaces externamente à OCI, tendo sucesso na conexão.</p>
+
+      </div>
+    </article>
+
+    <hr />
+
+    <div class="post-info">
+      
+      
+
+      <p>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+          <polyline points="14 2 14 8 20 8"></polyline>
+          <line x1="16" y1="13" x2="8" y2="13"></line>
+          <line x1="16" y1="17" x2="8" y2="17"></line>
+          <polyline points="10 9 9 9 8 9"></polyline>
+        </svg>
+        875 Words
+      </p>
+
+      <p>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar">
+          <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+          <line x1="16" y1="2" x2="16" y2="6"></line>
+          <line x1="8" y1="2" x2="8" y2="6"></line>
+          <line x1="3" y1="10" x2="21" y2="10"></line>
+        </svg>
+        
+          2022-06-16 10:01
+        
+
+         
+          
+        
+      </p>
+    </div>
+
+    
+    <div class="pagination">
+        
+
+        <div class="pagination__buttons">
+            
+
+            
+            <span class="button next">
+                <a href="https://patrickpiccini.github.io/posts/microservice_project_step02/">
+                    <span class="button__text">Microservice Project – Step 2</span>
+                    <span class="button__icon">→</span>
+                </a>
+            </span>
+            
+        </div>
+    </div>
+
+
+    
+
+    
+
+  </main>
+
+            </div>
+
+            
+                <footer class="footer">
+    
+    
+</footer>
+
+            
+        </div>
+
+        
+
+
+
+<script type="text/javascript" src="https://patrickpiccini.github.io/bundle.min.ace63d93098bf623f7c286a9084a4c22bfc482944c734f87fe0b685c7c6c7fa0ad2edb028c3b4b60d3343720c8ab490b320ad7f8edf4f6e9a6b898fc529057a9.js" integrity="sha512-rOY9kwmL9iP3woapCEpMIr/EgpRMc0&#43;H/gtoXHxsf6CtLtsCjDtLYNM0NyDIq0kLMgrX&#43;O309ummuJj8UpBXqQ=="></script>
+
+
+
+    </body>
+</html>
