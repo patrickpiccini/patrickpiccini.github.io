@@ -10,12 +10,12 @@
         <atom:link href="https://patrickpiccini.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
         
         <item>
-            <title>Predição de Insuficiência Cardiaca</title>
+            <title>Predição de Insuficiência Cardíaca</title>
             <link>https://patrickpiccini.github.io/posts/predicao_de_insuficiencia_cardiaca/</link>
             <pubDate>Tue, 21 Jun 2022 20:00:52 -0100</pubDate>
             
             <guid>https://patrickpiccini.github.io/posts/predicao_de_insuficiencia_cardiaca/</guid>
-            <description>Table of Contents  DataSet Compreendendo o problema  Informações de atributo   Configuração Inicial Exploração Limpeza Discretização Visualização Quais atributos tem relação? Distribuição de algumas colunas do DataSet Calculo de Insuficiência Cardiaca Inicio de Treinamento de Modelos  Separação de Dados   Desision Tree  Medidas de seleção de atributo   Randon Fores Logistic Regression GaussianNB  Calculo do algoritmo   Matriz Confusão Cross-Validation Curva ROC Insigths   Projeto GitHub heart-failure-prediction</description>
+            <description>Table of Contents  DataSet Compreendendo o problema  Informações de atributo   Configuração Inicial Exploração Limpeza Discretização Visualização Quais atributos tem relação? Distribuição de algumas colunas do DataSet Calculo de Insuficiência Cardíaca Inicio de Treinamento de Modelos  Separação de Dados   Desision Tree  Medidas de seleção de atributo   Randon Fores Logistic Regression GaussianNB  Calculo do algoritmo   Matriz Confusão Cross-Validation Curva ROC Insigths   Projeto GitHub heart-failure-prediction</description>
             <content type="html"><![CDATA[<p><img src="/images/insuficiencia_cardiaca/img.jpg" alt="&ldquo;img&rdquo;"></p>
 <h2 id="table-of-contents">Table of Contents</h2>
 <ul>
@@ -32,7 +32,7 @@
 <li><a href="#visualiza%C3%A7%C3%A3o">Visualização</a></li>
 <li><a href="#quais-atributos-tem-rela%C3%A7%C3%A3o">Quais atributos tem relação?</a></li>
 <li><a href="#distribui%C3%A7%C3%A3o-de-algumas-colunas-do-dataset">Distribuição de algumas colunas do DataSet</a></li>
-<li><a href="#calculo-de-insufici%C3%AAncia-cardiaca">Calculo de Insuficiência Cardiaca</a></li>
+<li><a href="#calculo-de-insufici%C3%AAncia-cardiaca">Calculo de Insuficiência Cardíaca</a></li>
 <li><a href="#inicio-de-treinamento-de-modelos">Inicio de Treinamento de Modelos</a>
 <ul>
 <li><a href="#separa%C3%A7%C3%A3o-de-dados">Separação de Dados</a></li>
@@ -172,8 +172,8 @@ heart_df<span style="color:#f92672">.</span>head(<span style="color:#ae81ff">3</
 <ul>
 <li>Iremos calcular a porcentagem de casos de pessoas com Insuficiência Cardíacas e sem Insuficiência Cardía</li>
 </ul>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;paciente com Insuficiência Cardiacas:&#34;</span>, heart_df<span style="color:#f92672">.</span>query(<span style="color:#e6db74">&#39;Doenca_Cardiaca == 1&#39;</span>)<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">0</span>])
-<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;paciente sem Insuficiência Cardiaca:&#34;</span>, heart_df<span style="color:#f92672">.</span>query(<span style="color:#e6db74">&#39;Doenca_Cardiaca == 0&#39;</span>)<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">0</span>])
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;paciente com Insuficiência Cardíacas:&#34;</span>, heart_df<span style="color:#f92672">.</span>query(<span style="color:#e6db74">&#39;Doenca_Cardiaca == 1&#39;</span>)<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">0</span>])
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;paciente sem Insuficiência Cardíaca:&#34;</span>, heart_df<span style="color:#f92672">.</span>query(<span style="color:#e6db74">&#39;Doenca_Cardiaca == 0&#39;</span>)<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">0</span>])
 
 labels <span style="color:#f92672">=</span> [<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">0</span>]
 sizes <span style="color:#f92672">=</span> heart_df[<span style="color:#e6db74">&#39;Doenca_Cardiaca&#39;</span>]<span style="color:#f92672">.</span>value_counts()
@@ -184,8 +184,8 @@ ax1<span style="color:#f92672">.</span>pie(sizes, labels<span style="color:#f926
 ax1<span style="color:#f92672">.</span>axis(<span style="color:#e6db74">&#39;equal&#39;</span>)  <span style="color:#75715e"># Equal aspect ratio ensures that pie is drawn as a circle.</span>
 plt<span style="color:#f92672">.</span>show()
 </code></pre></div><ul>
-<li>paciente com Insuficiência Cardiacas: 508</li>
-<li>paciente sem Insuficiência Cardiaca: 410</li>
+<li>paciente com Insuficiência Cardíacas: 508</li>
+<li>paciente sem Insuficiência Cardíaca: 410</li>
 </ul>
 <p><img src="/images/insuficiencia_cardiaca/img7.png" alt="&ldquo;img7&rdquo;"></p>
 <h2 id="quais-atributos-tem-relação">Quais atributos tem relação?</h2>
@@ -213,7 +213,7 @@ sns<span style="color:#f92672">.</span>kdeplot(colesterol_0, ax <span style="col
 sns<span style="color:#f92672">.</span>kdeplot(colesterol_no_0, ax <span style="color:#f92672">=</span> axes[<span style="color:#ae81ff">1</span>], shade<span style="color:#f92672">=</span>True, color<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;g&#39;</span>)
 plt<span style="color:#f92672">.</span>show()
 </code></pre></div><p><img src="/images/insuficiencia_cardiaca/img10.png" alt="&ldquo;img10&rdquo;"></p>
-<h2 id="calculo-de-insuficiência-cardiaca">Calculo de Insuficiência Cardiaca</h2>
+<h2 id="calculo-de-insuficiência-cardíaca">Calculo de Insuficiência Cardíaca</h2>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">fig, axes <span style="color:#f92672">=</span> plt<span style="color:#f92672">.</span>subplots(<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">2</span>, figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">20</span>, <span style="color:#ae81ff">10</span>))
 
 sns<span style="color:#f92672">.</span>countplot(x<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Sexo&#34;</span>, hue<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Doenca_Cardiaca&#34;</span>, data<span style="color:#f92672">=</span>heart_df, ax<span style="color:#f92672">=</span>axes[<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>] ,palette<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#39;#3498DB&#39;</span>,<span style="color:#e6db74">&#39;#E74C3C&#39;</span>])
@@ -229,8 +229,8 @@ plt<span style="color:#f92672">.</span>show()
 <ul>
 <li>TA: Angina Típica, ATA: Angina Atípica, NAP: Dor Não Anginosa, ASY: Assintomática</li>
 </ul>
-<p>Nota-se que de toda a classe Tipo_Dor_Peito a que mais se destaca é o classificador ASY, que representa uma dor Assintomática, em outras palavras, uma dor com poucos sintomas, ou pouco visivel. Vemos que o risco de ter insuficiência cardiaca é extremamente alta contendo esse tipo de dor.</p>
-<p>No tipo TA, mesmo tendo um pequeno volume de dados, percebe-se que a quantidade de casos com e sem insuficiência é quase balanceado. Para esses casos deve-se ter mais atenção na hora dos diagnósticos para que o paciente não seja classificado sem a doença cardiaca.</p>
+<p>Nota-se que de toda a classe Tipo_Dor_Peito a que mais se destaca é o classificador ASY, que representa uma dor Assintomática, em outras palavras, uma dor com poucos sintomas, ou pouco visivel. Vemos que o risco de ter insuficiência cardíaca é extremamente alta contendo esse tipo de dor.</p>
+<p>No tipo TA, mesmo tendo um pequeno volume de dados, percebe-se que a quantidade de casos com e sem insuficiência é quase balanceado. Para esses casos deve-se ter mais atenção na hora dos diagnósticos para que o paciente não seja classificado sem a doença cardíaca.</p>
 <p>Devemos perceber que nos tipos NAP e ATA temos um menor volume de dados contendo Insuficiência Cardíaca comparado com ASY e TA.</p>
 <h3 id="restingecg">RestingECG</h3>
 <ul>
@@ -243,8 +243,8 @@ plt<span style="color:#f92672">.</span>show()
 <li>Exame de Teste de Esforço</li>
 <li>ST_Slope: inclinação do segmento ST do exercício de pico [Up: upsloping, Flat: flat, Down: downsloping]</li>
 </ul>
-<p>Nos resultados do ST_Slope pessoas com segmento ST maiores(UP), não tendem a ter insuficiencia cardiaca, visto que os bastimentos estão com um BPM alto.</p>
-<p>Se mesmo no Teste de esforço físico o segmento ST estiver sem muita variação(Flat), a tendência a ter insuficiência cardiaca é bem alta. A mesma coisa quando o segmento ST estiver baixo(Down).</p>
+<p>Nos resultados do ST_Slope pessoas com segmento ST maiores(UP), não tendem a ter insuficiencia cardíaca, visto que os bastimentos estão com um BPM alto.</p>
+<p>Se mesmo no Teste de esforço físico o segmento ST estiver sem muita variação(Flat), a tendência a ter insuficiência cardíaca é bem alta. A mesma coisa quando o segmento ST estiver baixo(Down).</p>
 <h3 id="conjunto-idade">Conjunto Idade</h3>
 <p>O conjunto de idade foi criado na parte de discretização justamente para categorizar cara pessoa por seu devido conjunto de idade sende eles:</p>
 <ul>
@@ -253,7 +253,7 @@ plt<span style="color:#f92672">.</span>show()
 <li>[Adulto] - 20 à 60</li>
 <li>[Idoso] - 60 à 100</li>
 </ul>
-<p>Como podemos perceber, no DataSet não ha nenhum registro de pessoas da categoria &ldquo;Criança&rdquo; e &ldquo;Adolecente&rdquo;. Nota-se que a 50% de de todos os Adultos tem alguma insuficiência cardiaca, e tambem cerca de 75% dos Idosos tambem foram diagnosticado com essa doença.</p>
+<p>Como podemos perceber, no DataSet não ha nenhum registro de pessoas da categoria &ldquo;Criança&rdquo; e &ldquo;Adolecente&rdquo;. Nota-se que a 50% de de todos os Adultos tem alguma insuficiência cardíaca, e tambem cerca de 75% dos Idosos tambem foram diagnosticado com essa doença.</p>
 <p>Iremos retirar a coluna de idade, visto que com a nova coluna de &ldquo;conjunto_idade&rdquo; poderemos utilizar facilmente no treinamento dos modelos.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">heart_df<span style="color:#f92672">.</span>drop(columns<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#39;Idade&#39;</span>], inplace<span style="color:#f92672">=</span>True)
 </code></pre></div><h2 id="inicio-de-treinamento-de-modelos">Inicio de Treinamento de Modelos</h2>
