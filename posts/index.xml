@@ -6,13 +6,13 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
         <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-        <lastBuildDate>Mon, 20 Jun 2022 13:00:52 -0100</lastBuildDate>
+        <lastBuildDate>Tue, 21 Jun 2022 20:00:52 -0100</lastBuildDate>
         <atom:link href="https://patrickpiccini.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
         
         <item>
             <title>Predição de Insuficiência Cardiaca</title>
             <link>https://patrickpiccini.github.io/posts/predicao_de_insuficiencia_cardiaca/</link>
-            <pubDate>Mon, 20 Jun 2022 13:00:52 -0100</pubDate>
+            <pubDate>Tue, 21 Jun 2022 20:00:52 -0100</pubDate>
             
             <guid>https://patrickpiccini.github.io/posts/predicao_de_insuficiencia_cardiaca/</guid>
             <description>Table of Contents  DataSet Compreendendo o problema  Informações de atributo   Configuração Inicial Exploração Limpeza Discretização Visualização Quais atributos tem relação? Distribuição de algumas colunas do DataSet Calculo de Insuficiência Cardiaca Inicio de Treinamento de Modelos  Separação de Dados   Desision Tree  Medidas de seleção de atributo   Randon Fores Logistic Regression GaussianNB  Calculo do algoritmo   Matriz Confusão Cross-Validation Curva ROC Insigths   Projeto GitHub heart-failure-prediction</description>
