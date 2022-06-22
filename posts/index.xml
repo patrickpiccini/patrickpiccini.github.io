@@ -6,8 +6,466 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
         <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-        <lastBuildDate>Thu, 16 Jun 2022 10:01:53 -0300</lastBuildDate>
+        <lastBuildDate>Mon, 20 Jun 2022 13:00:52 -0100</lastBuildDate>
         <atom:link href="https://patrickpiccini.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+        
+        <item>
+            <title>Predição de Insuficiência Cardiaca</title>
+            <link>https://patrickpiccini.github.io/posts/predicao_de_insuficiencia_cardiaca/</link>
+            <pubDate>Mon, 20 Jun 2022 13:00:52 -0100</pubDate>
+            
+            <guid>https://patrickpiccini.github.io/posts/predicao_de_insuficiencia_cardiaca/</guid>
+            <description>Table of Contents  DataSet Compreendendo o problema  Informações de atributo   Configuração Inicial Exploração Limpeza Discretização Visualização Quais atributos tem relação? Distribuição de algumas colunas do DataSet Calculo de Insuficiência Cardiaca Inicio de Treinamento de Modelos  Separação de Dados   Desision Tree  Medidas de seleção de atributo   Randon Fores Logistic Regression GaussianNB  Calculo do algoritmo   Matriz Confusão Cross-Validation Curva ROC Insigths   Projeto GitHub heart-failure-prediction</description>
+            <content type="html"><![CDATA[<p><img src="http://www.bancodasaude.com/cdn/infosaude/article/insuficiencia-cardiaca.jpg" alt="&ldquo;img&rdquo;"></p>
+<h2 id="table-of-contents">Table of Contents</h2>
+<ul>
+<li><a href="#dataset">DataSet</a></li>
+<li><a href="#compreendendo-o-problema">Compreendendo o problema</a>
+<ul>
+<li><a href="#informa%C3%A7%C3%B5es-de-atributo">Informações de atributo</a></li>
+</ul>
+</li>
+<li><a href="#configura%C3%A7%C3%A3o-inicial">Configuração Inicial</a></li>
+<li><a href="#explora%C3%A7%C3%A3o">Exploração</a></li>
+<li><a href="#limpeza">Limpeza</a></li>
+<li><a href="#discretiza%C3%A7%C3%A3o">Discretização</a></li>
+<li><a href="#visualiza%C3%A7%C3%A3o">Visualização</a></li>
+<li><a href="#quais-atributos-tem-rela%C3%A7%C3%A3o">Quais atributos tem relação?</a></li>
+<li><a href="#distribui%C3%A7%C3%A3o-de-algumas-colunas-do-dataset">Distribuição de algumas colunas do DataSet</a></li>
+<li><a href="#calculo-de-insufici%C3%AAncia-cardiaca">Calculo de Insuficiência Cardiaca</a></li>
+<li><a href="#inicio-de-treinamento-de-modelos">Inicio de Treinamento de Modelos</a>
+<ul>
+<li><a href="#separa%C3%A7%C3%A3o-de-dados">Separação de Dados</a></li>
+</ul>
+</li>
+<li><a href="#---------desision-tree-train---------">Desision Tree</a>
+<ul>
+<li><a href="#medidas-de-sele%C3%A7%C3%A3o-de-atributo">Medidas de seleção de atributo</a></li>
+</ul>
+</li>
+<li><a href="#---------randon-forest-train---------">Randon Fores</a></li>
+<li><a href="#---------logistic-regression-train---------">Logistic Regression</a></li>
+<li><a href="#---------gaussiannb-train---------">GaussianNB</a>
+<ul>
+<li><a href="#calculo-do-algoritmo">Calculo do algoritmo</a></li>
+</ul>
+</li>
+<li><a href="#matriz-confus%C3%A3o">Matriz Confusão</a></li>
+<li><a href="#cross-validation">Cross-Validation</a></li>
+<li><a href="#curva-roc">Curva ROC</a></li>
+<li><a href="#insigths">Insigths</a></li>
+</ul>
+<hr>
+<h2 id="projeto-github">Projeto GitHub</h2>
+<p><a href="https://github.com/patrickpiccini/heart-failure-prediction">heart-failure-prediction</a></p>
+<p>Olá, meu nome é Patrick Piccini, e seja bem vindo a mais um projeto de Data Science.</p>
+<p>O que iremos ver nesse Projeto:</p>
+<ul>
+<li>📚 DataSet</li>
+<li>🧠 Compreendendo o problema</li>
+<li>⛏ Analise Exploratoria de Dados</li>
+<li>🎲 Manipulação de dados</li>
+<li>📊 Visualização de dados</li>
+<li>🧮 Algoritmos de Classificação</li>
+<li>😱 Insigths</li>
+</ul>
+<h2 id="dataset">DataSet</h2>
+<p><a href="https://www.kaggle.com/datasets/fedesoriano/heart-failure-prediction">Heart Failure Prediction Dataset - Kaggle</a></p>
+<h2 id="compreendendo-o-problema">Compreendendo o problema</h2>
+<p>As doenças cardiovasculares (DCVs) são a causa número 1 de morte em todo o mundo, levando cerca de 17,9 milhões de vidas a cada ano, o que representa 31% de todas as mortes em todo o mundo. Quatro das mortes por 5CVD são devido a ataques cardíacos e derrames, e um terço dessas mortes ocorre prematuramente em pessoas com menos de 70 anos de idade. A insuficiência cardíaca é um evento comum causado por DCV e este conjunto de dados contém 11 características que podem ser usadas para prever uma possível doença cardíaca.</p>
+<p>Pessoas com doença cardiovascular ou com alto risco cardiovascular (devido à presença de um ou mais fatores de risco, como hipertensão, diabetes, hiperlipidemia ou doença já estabelecida) precisam de detecção e gerenciamento precoces, onde um modelo de aprendizado de máquina pode ser de grande ajuda.</p>
+<p><img src="https://lh3.googleusercontent.com/LkeF783CO8iu1R8Q3fB-Kqo9L2x6FWcEYa-5NijcXqgNjaD3gCuixMwzW9ciVlikGNrdI1c1_uemz7xCeqV7I8DCKjl9ZmcKXt3ql9A4Bd-DmIfKZbDFp-yI8O0uvlorXYSbrkuL=s0" alt="&ldquo;img&rdquo;"></p>
+<h3 id="informações-de-atributo">Informações de atributo</h3>
+<ul>
+<li><strong>Age:</strong> idade do paciente [anos]</li>
+<li><strong>Sex:</strong> sexo do paciente [M: Masculino, F: Feminino]</li>
+<li><strong>ChestPainType:</strong> tipo de dor no peito [TA: Angina Típica, ATA: Angina Atípica, NAP: Dor Não Anginosa, ASY: Assintomática]</li>
+<li><strong>RestingBP:</strong> pressão arterial de repouso [mm Hg]</li>
+<li><strong>Cholesterol:</strong> colesterol sérico [mm/dl]</li>
+<li><strong>FastingBS:</strong> glicemia em jejum [1: se FastingBS &gt; 120 mg/dl, 0: caso contrário]</li>
+<li><strong>RestingECG:</strong> resultados do eletrocardiograma de repouso [Normal: normal, ST: com anormalidade da onda ST-T (inversões da onda T e/ou elevação ou depressão do ST &gt; 0,05 mV), HVE: mostrando provável ou definitiva hipertrofia ventricular esquerda pelos critérios de Estes]</li>
+<li><strong>MaxHR:</strong> frequência cardíaca máxima alcançada [Valor numérico entre 60 e 202]</li>
+<li>**ExerciseAngina: angina induzida por exercício [S: Sim, N: Não]</li>
+<li><strong>Oldpeak:</strong> pico antigo = ST [Valor numérico medido em depressão]</li>
+<li><strong>ST_Slope:</strong> inclinação do segmento ST do exercício de pico [Up: upsloping, Flat: flat, Down: downsloping]</li>
+<li><strong>HeartDisease:</strong> classe de saída [1: doença cardíaca, 0: normal]</li>
+</ul>
+<h2 id="configuração-inicial">Configuração Inicial</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np 
+<span style="color:#f92672">import</span> pandas <span style="color:#f92672">as</span> pd
+<span style="color:#f92672">import</span> seaborn <span style="color:#f92672">as</span> sns
+<span style="color:#f92672">from</span> sklearn <span style="color:#f92672">import</span> tree
+<span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#f92672">as</span> plt
+<span style="color:#f92672">from</span> sklearn.naive_bayes <span style="color:#f92672">import</span> GaussianNB
+<span style="color:#f92672">from</span> sklearn.tree <span style="color:#f92672">import</span> DecisionTreeClassifier
+<span style="color:#f92672">from</span> sklearn.model_selection <span style="color:#f92672">import</span> train_test_split, cross_val_score
+<span style="color:#f92672">from</span> sklearn.linear_model <span style="color:#f92672">import</span> LogisticRegression
+<span style="color:#f92672">from</span> sklearn.ensemble <span style="color:#f92672">import</span> RandomForestClassifier
+<span style="color:#f92672">from</span> sklearn.metrics <span style="color:#f92672">import</span> accuracy_score,precision_score,recall_score,f1_score, classification_report, confusion_matrix, ConfusionMatrixDisplay, RocCurveDisplay, precision_recall_fscore_support
+
+heart_df <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>read_csv(<span style="color:#e6db74">&#39;./dataset/heart.csv&#39;</span>, sep<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;,&#39;</span>)
+</code></pre></div><ul>
+<li>Iremos renomear o nome das colunas para Português, onde facilitará na hora do entendimento da informação dos dados.</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">columns <span style="color:#f92672">=</span> {
+    <span style="color:#e6db74">&#39;Age&#39;</span>: <span style="color:#e6db74">&#39;Idade&#39;</span>,
+    <span style="color:#e6db74">&#39;Sex&#39;</span>: <span style="color:#e6db74">&#39;Sexo&#39;</span>, 
+    <span style="color:#e6db74">&#39;ChestPainType&#39;</span>: <span style="color:#e6db74">&#39;Tipo_Dor_Peito&#39;</span>, 
+    <span style="color:#e6db74">&#39;RestingBP&#39;</span>: <span style="color:#e6db74">&#39;RepousoPA&#39;</span>, 
+    <span style="color:#e6db74">&#39;Cholesterol&#39;</span>: <span style="color:#e6db74">&#39;Colesterol&#39;</span>, 
+    <span style="color:#e6db74">&#39;FastingBS&#39;</span>: <span style="color:#e6db74">&#39;FastingBS&#39;</span>,
+    <span style="color:#e6db74">&#39;RestingECG&#39;</span>: <span style="color:#e6db74">&#39;RestingECG&#39;</span>, 
+    <span style="color:#e6db74">&#39;MaxHR&#39;</span>: <span style="color:#e6db74">&#39;Frequencia_Cardiaca_Max&#39;</span>, 
+    <span style="color:#e6db74">&#39;ExerciseAngina&#39;</span>: <span style="color:#e6db74">&#39;Exercicio_Angina&#39;</span>, 
+    <span style="color:#e6db74">&#39;Oldpeak&#39;</span>: <span style="color:#e6db74">&#39;Pico_Antigo&#39;</span>, 
+    <span style="color:#e6db74">&#39;ST_Slope&#39;</span>: <span style="color:#e6db74">&#39;ST_Slope&#39;</span>,
+    <span style="color:#e6db74">&#39;HeartDisease&#39;</span>: <span style="color:#e6db74">&#39;Doenca_Cardiaca&#39;</span>
+}
+
+heart_df <span style="color:#f92672">=</span> heart_df<span style="color:#f92672">.</span>rename(columns<span style="color:#f92672">=</span>columns)
+heart_df<span style="color:#f92672">.</span>head(<span style="color:#ae81ff">5</span>)
+</code></pre></div><p><img src="/images/insuficiencia_cardiaca/img1.png" alt="&ldquo;img1&rdquo;"></p>
+<h2 id="exploração">Exploração</h2>
+<ul>
+<li>Verificaremos a quantidade de colunas e linhas existentes no DataSet.</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;Colunas: </span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#39;</span> <span style="color:#f92672">%</span> heart_df<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">1</span>])
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;Linhas: </span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#39;</span> <span style="color:#f92672">%</span> heart_df<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">0</span>])
+</code></pre></div><ul>
+<li>Colunas: 12</li>
+<li>Linhas: 918</li>
+</ul>
+<p>Com o comando <strong>&ldquo;describe&rdquo;</strong>, iremos obter um resumo de estatísticas descritivas do DataFrame. Isso inclui média, contagem, desvio padrão, percentis e valores mín.-máx. de todos os recursos. Com o <strong>&quot;.T&rdquo;</strong> apenas iremos rotacionar o resultado do <strong>&ldquo;describe&rdquo;</strong>.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">heart_df<span style="color:#f92672">.</span>describe()<span style="color:#f92672">.</span>T
+</code></pre></div><p><img src="/images/insuficiencia_cardiaca/img2.png" alt="&ldquo;img2&rdquo;"></p>
+<p>Abaixo veremos mais algumas informações referentes a cada coluna do DataFrame.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">heart_df<span style="color:#f92672">.</span>info()
+</code></pre></div><p><img src="/images/insuficiencia_cardiaca/img3.png" alt="&ldquo;img3&rdquo;"></p>
+<h2 id="limpeza">Limpeza</h2>
+<p>Percebemos que não existem valores NaN em nosso DataSet, porém, existem muitos valores do colesterol igual a 0 (Zero). Visto isso, para não perdermos informações, substituiremos os valores de 0 (Zero) para um valor &ldquo;Saudável&rdquo; sendo 130.</p>
+<p>Para termos uma visualização de como irá influenciar a limpeza de dados, iremos salvar os dois estados da coluna colesterol, para posteriormente plotarmos um grafico.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">print</span>(heart_df<span style="color:#f92672">.</span>notna()<span style="color:#f92672">.</span>value_counts())
+</code></pre></div><p><img src="/images/insuficiencia_cardiaca/img4.png" alt="&ldquo;img4&rdquo;"></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">colesterol_0 <span style="color:#f92672">=</span> heart_df<span style="color:#f92672">.</span>Colesterol
+heart_df<span style="color:#f92672">.</span>Colesterol <span style="color:#f92672">=</span> heart_df<span style="color:#f92672">.</span>Colesterol<span style="color:#f92672">.</span>replace(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">130</span>)
+colesterol_no_0 <span style="color:#f92672">=</span> heart_df<span style="color:#f92672">.</span>Colesterol
+</code></pre></div><h2 id="discretização">Discretização</h2>
+<p>Formar conjuntos de idade para classificação.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;Idade máxima: &#39;</span>,heart_df<span style="color:#f92672">.</span>Idade<span style="color:#f92672">.</span>max())
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;Idade MINIMA: &#39;</span>,heart_df<span style="color:#f92672">.</span>Idade<span style="color:#f92672">.</span>min())
+</code></pre></div><ul>
+<li>Idade máxima:  77</li>
+<li>Idade MINIMA:  28</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">bins <span style="color:#f92672">=</span> [<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">12</span>,<span style="color:#ae81ff">20</span>,<span style="color:#ae81ff">60</span>,<span style="color:#ae81ff">100</span>]
+labels <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#39;crianca&#39;</span>,<span style="color:#e6db74">&#39;adolecente&#39;</span>,<span style="color:#e6db74">&#39;adulto&#39;</span>,<span style="color:#e6db74">&#39;idoso&#39;</span>]
+conjuto_idade <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>cut(heart_df[<span style="color:#e6db74">&#39;Idade&#39;</span>]<span style="color:#f92672">.</span>to_numpy(), bins<span style="color:#f92672">=</span>bins, labels<span style="color:#f92672">=</span>labels)
+
+heart_df[<span style="color:#e6db74">&#39;conjunto_idade&#39;</span>] <span style="color:#f92672">=</span> conjuto_idade
+
+heart_df<span style="color:#f92672">.</span>head(<span style="color:#ae81ff">3</span>)
+</code></pre></div><p><img src="/images/insuficiencia_cardiaca/img5.png" alt="&ldquo;img5&rdquo;"></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">heart_df<span style="color:#f92672">.</span>conjunto_idade<span style="color:#f92672">.</span>value_counts()
+</code></pre></div><p><img src="/images/insuficiencia_cardiaca/img6.png" alt="&ldquo;img6&rdquo;"></p>
+<h1 id="visualização">Visualização</h1>
+<p>Nesse passo da AED iremos plotar alguns gráficos onde consiguiremos ter uma análise das informações um pouco mais dinâmica, e com isso conseguiremos criar alguns insigths de nossas informações</p>
+<ul>
+<li>Iremos calcular a porcentagem de casos de pessoas com Insuficiência Cardíacas e sem Insuficiência Cardía</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;paciente com Insuficiência Cardiacas:&#34;</span>, heart_df<span style="color:#f92672">.</span>query(<span style="color:#e6db74">&#39;Doenca_Cardiaca == 1&#39;</span>)<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">0</span>])
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;paciente sem Insuficiência Cardiaca:&#34;</span>, heart_df<span style="color:#f92672">.</span>query(<span style="color:#e6db74">&#39;Doenca_Cardiaca == 0&#39;</span>)<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">0</span>])
+
+labels <span style="color:#f92672">=</span> [<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">0</span>]
+sizes <span style="color:#f92672">=</span> heart_df[<span style="color:#e6db74">&#39;Doenca_Cardiaca&#39;</span>]<span style="color:#f92672">.</span>value_counts()
+explode <span style="color:#f92672">=</span> (<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0.1</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>)
+
+fig1, ax1 <span style="color:#f92672">=</span> plt<span style="color:#f92672">.</span>subplots()
+ax1<span style="color:#f92672">.</span>pie(sizes, labels<span style="color:#f92672">=</span>labels, autopct<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">%1.1f%%</span><span style="color:#e6db74">&#39;</span>,shadow<span style="color:#f92672">=</span>True, startangle<span style="color:#f92672">=</span><span style="color:#ae81ff">90</span> ,colors<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#39;#E74C3C&#39;</span>,<span style="color:#e6db74">&#39;#3498DB&#39;</span>])
+ax1<span style="color:#f92672">.</span>axis(<span style="color:#e6db74">&#39;equal&#39;</span>)  <span style="color:#75715e"># Equal aspect ratio ensures that pie is drawn as a circle.</span>
+plt<span style="color:#f92672">.</span>show()
+</code></pre></div><ul>
+<li>paciente com Insuficiência Cardiacas: 508</li>
+<li>paciente sem Insuficiência Cardiaca: 410</li>
+</ul>
+<p><img src="/images/insuficiencia_cardiaca/img7.png" alt="&ldquo;img7&rdquo;"></p>
+<h2 id="quais-atributos-tem-relação">Quais atributos tem relação?</h2>
+<p>Através de uma HeatMap (Mapa de calor), verificaremos quais as relações que os atributos tem com a coluna alvo, que no nosso caso é a _DoencaCardiaca</p>
+<p>Podemos ver que a Doença Cardíaca tem grande relação com uma &ldquo;Pico_Antigo&rdquo; alta e tambem uma relação com &ldquo;Idade&rdquo;. Há uma relação boa com &ldquo;&quot;,&ldquo;FastingBS&rdquo; e &ldquo;RepousoPA&rdquo;.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">plt<span style="color:#f92672">.</span>figure(figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">10</span>,<span style="color:#ae81ff">6</span>))
+
+sns<span style="color:#f92672">.</span>heatmap(heart_df<span style="color:#f92672">.</span>corr(), annot<span style="color:#f92672">=</span>True, cmap <span style="color:#f92672">=</span><span style="color:#e6db74">&#34;RdYlBu&#34;</span>)
+plt<span style="color:#f92672">.</span>show()
+</code></pre></div><p><img src="/images/insuficiencia_cardiaca/img8.png" alt="&ldquo;img8&rdquo;"></p>
+<h2 id="distribuição-de-algumas-colunas-do-dataset">Distribuição de algumas colunas do DataSet</h2>
+<p>Vendo os gráficos plotados, conseguimos perceber o volume de informações sobre determinado valor, de acordo com sua coluna.</p>
+<p>Uma coisa que podemos notar no gráfico do colesterol, é que há uma grande quantidade de dados com o valor 0 ou negativo. Fazendo um pesquisa rápida na internet, entende-se que existe certo consenso de que valores do LDL-Colesterol (¨colesterol ruim”) menores que 40 mg/dl no sangue são considerados baixos, entretanto, estudos recentes não demonstraram efeitos colaterais graves mesmo quando esse valor foi reduzido até 25mg/dl. Sendo assim, esses dados zeros ou negativos certamente estão errados, e com isso, podemos tratá-los como Outliers.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">fig, axes <span style="color:#f92672">=</span> plt<span style="color:#f92672">.</span>subplots(<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>, figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">20</span>, <span style="color:#ae81ff">10</span>))
+sns<span style="color:#f92672">.</span>kdeplot(heart_df[<span style="color:#e6db74">&#39;Idade&#39;</span>], ax <span style="color:#f92672">=</span> axes[<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>] ,shade<span style="color:#f92672">=</span>True, color<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;r&#39;</span>)
+sns<span style="color:#f92672">.</span>kdeplot(heart_df[<span style="color:#e6db74">&#39;RepousoPA&#39;</span>], ax <span style="color:#f92672">=</span> axes[<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>], shade<span style="color:#f92672">=</span>True, color<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;rebeccapurple&#39;</span>)
+sns<span style="color:#f92672">.</span>kdeplot(heart_df[<span style="color:#e6db74">&#39;Colesterol&#39;</span>], ax <span style="color:#f92672">=</span> axes[<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">2</span>], shade<span style="color:#f92672">=</span>True, color<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;g&#39;</span>)
+sns<span style="color:#f92672">.</span>kdeplot(heart_df[<span style="color:#e6db74">&#39;Frequencia_Cardiaca_Max&#39;</span>], ax <span style="color:#f92672">=</span> axes[<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>], shade<span style="color:#f92672">=</span>True, color<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;darkorange&#39;</span>)
+sns<span style="color:#f92672">.</span>kdeplot(heart_df[<span style="color:#e6db74">&#39;Pico_Antigo&#39;</span>], ax <span style="color:#f92672">=</span> axes[<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>], shade<span style="color:#f92672">=</span>True, color<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;blue&#39;</span>)
+plt<span style="color:#f92672">.</span>show()
+</code></pre></div><p><img src="/images/insuficiencia_cardiaca/img9.png" alt="&ldquo;img9&rdquo;"></p>
+<p>Antes de continuarmos, vamos ver a diferença dos gráficos referente ao Colesterol, visto que tivemos alguns valores modificados no passo de Limpeza dos dados. Apenas relembrando, trocamos os valores 0 do colesterol, para um valor &ldquo;saudável&rdquo;, sendo esse 130.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">fig, axes <span style="color:#f92672">=</span> plt<span style="color:#f92672">.</span>subplots(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">5</span>))
+sns<span style="color:#f92672">.</span>kdeplot(colesterol_0, ax <span style="color:#f92672">=</span> axes[<span style="color:#ae81ff">0</span>], shade<span style="color:#f92672">=</span>True, color<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;r&#39;</span>)
+sns<span style="color:#f92672">.</span>kdeplot(colesterol_no_0, ax <span style="color:#f92672">=</span> axes[<span style="color:#ae81ff">1</span>], shade<span style="color:#f92672">=</span>True, color<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;g&#39;</span>)
+plt<span style="color:#f92672">.</span>show()
+</code></pre></div><p><img src="/images/insuficiencia_cardiaca/img10.png" alt="&ldquo;img10&rdquo;"></p>
+<h2 id="calculo-de-insuficiência-cardiaca">Calculo de Insuficiência Cardiaca</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">fig, axes <span style="color:#f92672">=</span> plt<span style="color:#f92672">.</span>subplots(<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">2</span>, figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">20</span>, <span style="color:#ae81ff">10</span>))
+
+sns<span style="color:#f92672">.</span>countplot(x<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Sexo&#34;</span>, hue<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Doenca_Cardiaca&#34;</span>, data<span style="color:#f92672">=</span>heart_df, ax<span style="color:#f92672">=</span>axes[<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>] ,palette<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#39;#3498DB&#39;</span>,<span style="color:#e6db74">&#39;#E74C3C&#39;</span>])
+sns<span style="color:#f92672">.</span>countplot(x<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Tipo_Dor_Peito&#34;</span>, hue<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Doenca_Cardiaca&#34;</span>, data<span style="color:#f92672">=</span>heart_df, ax<span style="color:#f92672">=</span>axes[<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>] ,palette<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#39;#3498DB&#39;</span>,<span style="color:#e6db74">&#39;#E74C3C&#39;</span>])
+sns<span style="color:#f92672">.</span>countplot(x<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;RestingECG&#34;</span>, hue<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Doenca_Cardiaca&#34;</span>, data<span style="color:#f92672">=</span>heart_df, ax<span style="color:#f92672">=</span>axes[<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>] ,palette<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#39;#3498DB&#39;</span>,<span style="color:#e6db74">&#39;#E74C3C&#39;</span>])
+sns<span style="color:#f92672">.</span>countplot(x<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;ST_Slope&#34;</span>, hue<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Doenca_Cardiaca&#34;</span>, data<span style="color:#f92672">=</span>heart_df, ax<span style="color:#f92672">=</span>axes[<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>] ,palette<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#39;#3498DB&#39;</span>,<span style="color:#e6db74">&#39;#E74C3C&#39;</span>])
+sns<span style="color:#f92672">.</span>countplot(x<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;conjunto_idade&#34;</span>, hue<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Doenca_Cardiaca&#34;</span>, data<span style="color:#f92672">=</span>heart_df, ax<span style="color:#f92672">=</span>axes[<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">0</span>] ,palette<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#39;#3498DB&#39;</span>,<span style="color:#e6db74">&#39;#E74C3C&#39;</span>])
+plt<span style="color:#f92672">.</span>show()
+</code></pre></div><p><img src="/images/insuficiencia_cardiaca/img11.png" alt="&ldquo;img11&rdquo;"></p>
+<h3 id="grafico-sexo">Grafico Sexo</h3>
+<p>odemos perceber que Homens tem maiores chances de ter Insuficiencia Cardíaca mesmo que tenham maior volume de dados. Já as Mulheres tem grandes chances de NÃO ter algum problema cardíaco. Nota-se que os valores de casos sem a doença chega a ser 3/4 do conjunto de Mulheres</p>
+<h3 id="grafico-tipo-de-dor-no-peito">Grafico Tipo de dor no peito</h3>
+<ul>
+<li>TA: Angina Típica, ATA: Angina Atípica, NAP: Dor Não Anginosa, ASY: Assintomática</li>
+</ul>
+<p>Nota-se que de toda a classe Tipo_Dor_Peito a que mais se destaca é o classificador ASY, que representa uma dor Assintomática, em outras palavras, uma dor com poucos sintomas, ou pouco visivel. Vemos que o risco de ter insuficiência cardiaca é extremamente alta contendo esse tipo de dor.</p>
+<p>No tipo TA, mesmo tendo um pequeno volume de dados, percebe-se que a quantidade de casos com e sem insuficiência é quase balanceado. Para esses casos deve-se ter mais atenção na hora dos diagnósticos para que o paciente não seja classificado sem a doença cardiaca.</p>
+<p>Devemos perceber que nos tipos NAP e ATA temos um menor volume de dados contendo Insuficiência Cardíaca comparado com ASY e TA.</p>
+<h3 id="restingecg">RestingECG</h3>
+<ul>
+<li>Resultados do eletrocardiograma de repouso
+[Normal: normal, ST: com anormalidade da onda ST-T (inversões da onda T e/ou elevação ou depressão do ST &gt; 0,05 mV), HVE: mostrando provável ou definitiva hipertrofia ventricular esquerda pelos critérios de Estes]</li>
+</ul>
+<p>dentifica-se que a maioria dos pacientes, independente do resultado do eletrocardiograma, possuem chances de ter algum problema cardíaco.</p>
+<h3 id="grafico-st_stope">Grafico ST_Stope</h3>
+<ul>
+<li>Exame de Teste de Esforço</li>
+<li>ST_Slope: inclinação do segmento ST do exercício de pico [Up: upsloping, Flat: flat, Down: downsloping]</li>
+</ul>
+<p>Nos resultados do ST_Slope pessoas com segmento ST maiores(UP), não tendem a ter insuficiencia cardiaca, visto que os bastimentos estão com um BPM alto.</p>
+<p>Se mesmo no Teste de esforço físico o segmento ST estiver sem muita variação(Flat), a tendência a ter insuficiência cardiaca é bem alta. A mesma coisa quando o segmento ST estiver baixo(Down).</p>
+<h3 id="conjunto-idade">Conjunto Idade</h3>
+<p>O conjunto de idade foi criado na parte de discretização justamente para categorizar cara pessoa por seu devido conjunto de idade sende eles:</p>
+<ul>
+<li>[Criança - 0 à 12</li>
+<li>[Adolecente] - 12 à 20</li>
+<li>[Adulto] - 20 à 60</li>
+<li>[Idoso] - 60 à 100</li>
+</ul>
+<p>Como podemos perceber, no DataSet não ha nenhum registro de pessoas da categoria &ldquo;Criança&rdquo; e &ldquo;Adolecente&rdquo;. Nota-se que a 50% de de todos os Adultos tem alguma insuficiência cardiaca, e tambem cerca de 75% dos Idosos tambem foram diagnosticado com essa doença.</p>
+<p>Iremos retirar a coluna de idade, visto que com a nova coluna de &ldquo;conjunto_idade&rdquo; poderemos utilizar facilmente no treinamento dos modelos.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">heart_df<span style="color:#f92672">.</span>drop(columns<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#39;Idade&#39;</span>], inplace<span style="color:#f92672">=</span>True)
+</code></pre></div><h2 id="inicio-de-treinamento-de-modelos">Inicio de Treinamento de Modelos</h2>
+<p><img src="https://i0.wp.com/memetizando.com.br/wp-content/uploads/2020/03/meme-eu-na-academia.gif" alt="&ldquo;gif&rdquo;"></p>
+<h3 id="separação-de-dados">Separação de Dados</h3>
+<p>Antes de começarmos a criar qualquer modelo, precisaremos separar os dados do Dataframe em dois grupos, um de Treino e outro de Teste.</p>
+<ul>
+<li>
+<p>Dados de Treino
+Os dados de treino são responsáveis por serem as informações que o Algoritmo de Machine Learnig usara para a criação de um modelo. No nosso caso utilizamos 70% do DataSet para o treinamento.</p>
+</li>
+<li>
+<p>Dados de Teste
+Os dados de teste são aplicados ao modelo criado, simulando previsões reais que o modelo realizará, fazendo com que seja verificado o desempenho real do modelo. Utilizaremos 30% do DataSet para Teste.</p>
+</li>
+<li>
+<p>Separando dados de Treino e Teste para criação de modelos.</p>
+</li>
+<li>
+<p>Alterando o type das informações para &lsquo;Category&rsquo;.</p>
+</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">y <span style="color:#f92672">=</span> heart_df[<span style="color:#e6db74">&#39;Doenca_Cardiaca&#39;</span>]<span style="color:#f92672">.</span>values
+heart_df<span style="color:#f92672">.</span>drop(columns<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#39;Doenca_Cardiaca&#39;</span>], inplace<span style="color:#f92672">=</span>True)
+
+X <span style="color:#f92672">=</span> heart_df
+
+X_train, X_test, y_train, y_test <span style="color:#f92672">=</span> train_test_split(X, y, test_size<span style="color:#f92672">=</span><span style="color:#ae81ff">0.3</span>, random_state<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>, stratify<span style="color:#f92672">=</span>y)
+
+<span style="color:#66d9ef">for</span> c <span style="color:#f92672">in</span> X_test<span style="color:#f92672">.</span>columns:
+    <span style="color:#66d9ef">if</span> type(X_test[c]<span style="color:#f92672">.</span>iloc[<span style="color:#ae81ff">0</span>]) <span style="color:#f92672">==</span> str:
+        X_test[c] <span style="color:#f92672">=</span> X_test[c]<span style="color:#f92672">.</span>astype(<span style="color:#e6db74">&#39;category&#39;</span>)
+        X_test[c] <span style="color:#f92672">=</span> X_test[c]<span style="color:#f92672">.</span>cat<span style="color:#f92672">.</span>codes
+        
+<span style="color:#66d9ef">for</span> c <span style="color:#f92672">in</span> X_train<span style="color:#f92672">.</span>columns:
+    <span style="color:#66d9ef">if</span> type(X_train[c]<span style="color:#f92672">.</span>iloc[<span style="color:#ae81ff">0</span>]) <span style="color:#f92672">==</span> str:
+        X_train[c] <span style="color:#f92672">=</span> X_train[c]<span style="color:#f92672">.</span>astype(<span style="color:#e6db74">&#39;category&#39;</span>)
+        X_train[c] <span style="color:#f92672">=</span> X_train[c]<span style="color:#f92672">.</span>cat<span style="color:#f92672">.</span>codes
+</code></pre></div><h2 id="---------desision-tree-train---------">&mdash;&mdash;&ndash; Desision Tree Train &mdash;&mdash;&ndash;</h2>
+<p><img src="https://c.tenor.com/sndiWcujL3kAAAAC/cyanide-and-happiness-ladder.gif" alt=""></p>
+<p>O algoritmo Árvore de Decisão pertence à família de algoritmos de aprendizado SUPERVISIONADO. Ao contrário de outros algoritmos de aprendizado supervisionado, o algoritmo de árvore de decisão também pode ser usado para resolver problemas de regressão e classificação . O objetivo de usar uma Árvore de Decisão é criar um modelo de treinamento que possa ser usado para prever a classe ou valor da variável de destino aprendendo regras de decisão simples inferidas de dados anteriores (dados de treinamento). Em Árvores de Decisão, para prever um rótulo de classe para um registro, começamos da raiz da árvore. Comparamos os valores do atributo root com o atributo do registro. Com base na comparação, seguimos o ramo correspondente a esse valor e saltamos para o próximo nó.</p>
+<h3 id="medidas-de-seleção-de-atributo">Medidas de seleção de atributo</h3>
+<p>Se o conjunto de dados consiste em N atributos, decidir qual atributo colocar na raiz ou em diferentes níveis da árvore como nós internos é uma etapa complicada. Apenas selecionar aleatoriamente qualquer nó para ser a raiz não pode resolver o problema. Se seguirmos uma abordagem aleatória, isso pode nos dar resultados ruins com baixa precisão.</p>
+<p>Nesses cassos usamos alguns critérios para fazer calculos diferentes na hora da distribuição, sendo algum deles:</p>
+<p><img src="/images/insuficiencia_cardiaca/img12.png" alt="img12"></p>
+<ul>
+<li><em><strong>p(i/t)</strong></em>  &ndash;&gt; peso = quantia de indice da classe/ quantia todal de indices</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">tree_view <span style="color:#f92672">=</span> DecisionTreeClassifier(criterion<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;gini&#39;</span>,random_state<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>, max_depth<span style="color:#f92672">=</span><span style="color:#ae81ff">4</span>)
+
+<span style="color:#75715e"># .fit é o comando de treinamento(lembre de fitness. o que treina)</span>
+model <span style="color:#f92672">=</span> tree_view<span style="color:#f92672">.</span>fit(X_train, y_train)
+prediction_tree_train <span style="color:#f92672">=</span> model<span style="color:#f92672">.</span>predict(X_train)
+accuracy <span style="color:#f92672">=</span> accuracy_score(y_train, prediction_tree_train)
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;Valor Acuracia: &#39;</span>,accuracy)
+</code></pre></div><h4 id="valor-acuracia--0881619937694704">Valor Acuracia:  0.881619937694704</h4>
+<h2 id="---------decision-tree-test---------">&mdash;&mdash;&ndash; Decision Tree Test &mdash;&mdash;&ndash;</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">tree_view_test <span style="color:#f92672">=</span> DecisionTreeClassifier(criterion<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;gini&#39;</span>,random_state<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>, max_depth<span style="color:#f92672">=</span><span style="color:#ae81ff">4</span>)
+
+prediction_tree_test <span style="color:#f92672">=</span> model<span style="color:#f92672">.</span>predict(X_test)
+accuracy <span style="color:#f92672">=</span> accuracy_score(y_test, prediction_tree_test)
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;Valor Acuracia: &#39;</span>,accuracy)
+</code></pre></div><h4 id="valor-acuracia--08297101449275363">Valor Acuracia:  0.8297101449275363</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">nome_features <span style="color:#f92672">=</span> X_test<span style="color:#f92672">.</span>columns
+
+plt<span style="color:#f92672">.</span>figure(figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">24</span>,<span style="color:#ae81ff">11</span>))
+
+plt<span style="color:#f92672">.</span>title(<span style="color:#e6db74">&#39;teste&#39;</span>)
+tree<span style="color:#f92672">.</span>plot_tree(model, label<span style="color:#f92672">=</span>None, node_ids<span style="color:#f92672">=</span>True, rounded<span style="color:#f92672">=</span>True, fontsize<span style="color:#f92672">=</span><span style="color:#ae81ff">9</span>, feature_names<span style="color:#f92672">=</span>nome_features, filled<span style="color:#f92672">=</span>True, class_names<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#39;0&#39;</span>,<span style="color:#e6db74">&#39;1&#39;</span>], proportion<span style="color:#f92672">=</span>True)
+<span style="color:#75715e"># plt.savefig(&#39;decision_tree.png&#39;, format=&#39;png&#39;)</span>
+plt<span style="color:#f92672">.</span>show()
+</code></pre></div><p><img src="/images/insuficiencia_cardiaca/img13.png" alt="img13"></p>
+<h2 id="---------randon-forest-train---------">&mdash;&mdash;&ndash; Randon Forest Train &mdash;&mdash;&ndash;</h2>
+<p>O algoritmo Random Forest é um tipo de ensemble learning, método que gera muitos classificadores e combina o seu resultado.</p>
+<p>No caso do Random Forest, ele gera vários decision trees, cada um com suas particularidades e combinada o resultado da classificação de todos eles. Essa combinação de modelos, torna ele um algoritmo muito mais poderoso do que o Decision Tree</p>
+<p><img src="/images/insuficiencia_cardiaca/img14.png" alt="img14"></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">SEED<span style="color:#f92672">=</span><span style="color:#ae81ff">42</span>
+randon_forest <span style="color:#f92672">=</span> RandomForestClassifier(max_depth<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span>, random_state <span style="color:#f92672">=</span> SEED)
+
+model_rando_forest <span style="color:#f92672">=</span> randon_forest<span style="color:#f92672">.</span>fit(X_train, y_train)
+prediction_rf_train <span style="color:#f92672">=</span> model_rando_forest<span style="color:#f92672">.</span>predict(X_train)
+
+accuracy <span style="color:#f92672">=</span> accuracy_score(y_train, prediction_rf_train)
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;Valor Acuracia: &#39;</span>,accuracy)
+</code></pre></div><h4 id="valor-acuracia--09003115264797508">Valor Acuracia:  0.9003115264797508</h4>
+<h2 id="---------randon-rorest-test---------">&mdash;&mdash;&ndash; Randon Rorest Test &mdash;&mdash;&ndash;</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">prediction_rf <span style="color:#f92672">=</span> model_rando_forest<span style="color:#f92672">.</span>predict(X_test)
+
+accuracy <span style="color:#f92672">=</span> accuracy_score(y_test, prediction_rf)
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;Valor Acuracia: &#39;</span>,accuracy)
+</code></pre></div><h4 id="valor-acuracia--08623188405797102">Valor Acuracia:  0.8623188405797102</h4>
+<h2 id="---------logistic-regression-train---------">&mdash;&mdash;&ndash; Logistic Regression Train &mdash;&mdash;&ndash;</h2>
+<p>Regressão logística pode ser definido como uma técnica estatística que busca produzir (usando um conjunto de observações) um modelo que possibilita predizer os valores tomados por uma variável categórica.</p>
+<p>Como no algoritmos da Regressão Logistica as variáveis são independentes, são analisados os resultados binários e sendo direcionada a uma das duas categorias. As variáveis independentes podem ser categóricas ou numéricas, mas a variável dependente é sempre categórica. Escrito assim:</p>
+<p>P(Y=1|X) ou P(Y=0|X)</p>
+<p>Isso pode ser usado para calcular a probabilidade de uma palavra ter uma conotação positiva ou negativa (0, 1 ou em uma escala intermediária). Ou pode ser usado para determinar o objeto contido em uma foto (árvore, flor, grama, etc.), com cada objeto dado uma probabilidade entre 0 e 1.</p>
+<p><img src="/images/insuficiencia_cardiaca/img15.png" alt="img15"></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">logistic_regression <span style="color:#f92672">=</span> LogisticRegression(max_iter <span style="color:#f92672">=</span> <span style="color:#ae81ff">1000</span> ,random_state <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>)
+model_logistic_regression <span style="color:#f92672">=</span> logistic_regression<span style="color:#f92672">.</span>fit(X_train, y_train)
+prediction_lr_train <span style="color:#f92672">=</span> model_logistic_regression<span style="color:#f92672">.</span>predict(X_train)
+
+y_accuracy <span style="color:#f92672">=</span> accuracy_score(y_train, prediction_lr_train)
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Acurácia:&#34;</span>, y_accuracy)
+</code></pre></div><h4 id="acurácia-08411214953271028">Acurácia: 0.8411214953271028</h4>
+<h2 id="---------logistic-regression-test---------">&mdash;&mdash;&ndash; Logistic Regression Test &mdash;&mdash;&ndash;</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">prediction_lr_test <span style="color:#f92672">=</span> model_logistic_regression<span style="color:#f92672">.</span>predict(X_test)
+y_accuracy <span style="color:#f92672">=</span> accuracy_score(y_test, prediction_lr_test)
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Acurácia:&#34;</span>, y_accuracy)
+</code></pre></div><h4 id="acurácia-08405797101449275">Acurácia: 0.8405797101449275</h4>
+<h2 id="---------gaussiannb-train---------">&mdash;&mdash;&ndash; GaussianNB Train &mdash;&mdash;&ndash;</h2>
+<p>O Teorema de Bayes é usada para o cálculo da probabilidade de um evento dado que outro evento já ocorreu, o que é chamado de probabilidade condicional.</p>
+<p>A grande questão do Teorema de Bayes é que eu preciso ter alguma informação anterior, ou seja, preciso saber que um determinado evento já ocorreu e qual a probabilidade desse evento.</p>
+<h4 id="calculo-do-algoritmo">Calculo do algoritmo</h4>
+<p><img src="/images/insuficiencia_cardiaca/img16.png" alt="img16"></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">gnb <span style="color:#f92672">=</span> GaussianNB()
+modelo_gaucianNB <span style="color:#f92672">=</span> gnb<span style="color:#f92672">.</span>fit(X_train, y_train)
+
+preds_naivebaies_train <span style="color:#f92672">=</span> modelo_gaucianNB<span style="color:#f92672">.</span>predict(X_train)
+
+y_accuracy <span style="color:#f92672">=</span> accuracy_score(y_train, preds_naivebaies_train)
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Acurácia:&#34;</span>, y_accuracy)
+</code></pre></div><h4 id="acurácia-08426791277258567">Acurácia: 0.8426791277258567</h4>
+<h2 id="---------gaussiannb-train----------1">&mdash;&mdash;&ndash; GaussianNB Train &mdash;&mdash;&ndash;</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">reds_naivebaies_teste <span style="color:#f92672">=</span> modelo_gaucianNB<span style="color:#f92672">.</span>predict(X_test)
+y_accuracy <span style="color:#f92672">=</span> accuracy_score(y_test, reds_naivebaies_teste)
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Acurácia:&#34;</span>, y_accuracy)
+</code></pre></div><h4 id="acurácia-08333333333333334">Acurácia: 0.8333333333333334</h4>
+<p>Criação de objeto de classificadores</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">classifiers <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#39;Arvore&#39;</span>: DecisionTreeClassifier(random_state<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>, max_depth<span style="color:#f92672">=</span><span style="color:#ae81ff">4</span>),
+               <span style="color:#e6db74">&#39;Random Forest&#39;</span>: RandomForestClassifier(max_depth<span style="color:#f92672">=</span> <span style="color:#ae81ff">5</span>, random_state <span style="color:#f92672">=</span> SEED),
+               <span style="color:#e6db74">&#39;Naive Bayes&#39;</span>: GaussianNB(),
+               <span style="color:#e6db74">&#39;Regressão Logistica&#39;</span>: LogisticRegression(max_iter <span style="color:#f92672">=</span> <span style="color:#ae81ff">1000</span> ,random_state <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>),
+              }
+
+<span style="color:#66d9ef">for</span> c <span style="color:#f92672">in</span> X_train<span style="color:#f92672">.</span>columns:
+    <span style="color:#66d9ef">if</span> X_train[c]<span style="color:#f92672">.</span>dtype <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;object&#34;</span>:
+        X_train[c] <span style="color:#f92672">=</span> X_train[c]<span style="color:#f92672">.</span>astype(<span style="color:#e6db74">&#39;category&#39;</span>)
+        X_train[c] <span style="color:#f92672">=</span> X_train[c]<span style="color:#f92672">.</span>cat<span style="color:#f92672">.</span>codes  
+
+<span style="color:#66d9ef">for</span> clf <span style="color:#f92672">in</span> classifiers<span style="color:#f92672">.</span>items():
+    clf[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">.</span>fit(X_train, y_train)
+    preds <span style="color:#f92672">=</span> clf[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">.</span>predict(X_test)
+    score <span style="color:#f92672">=</span> accuracy_score(preds, y_test)
+    <span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">------{clf[0]}------&#39;</span>)
+    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Acurácia:&#34;</span>,accuracy_score(y_test, preds))
+    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Precisão:&#34;</span>,precision_score(y_test, preds))
+    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Recall:&#34;</span>,recall_score(y_test, preds))
+    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;F1:&#34;</span>,f1_score(y_test, preds))
+</code></pre></div><p><img src="/images/insuficiencia_cardiaca/img17.png" alt="img17"></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">preds <span style="color:#f92672">=</span> []
+clf_trained <span style="color:#f92672">=</span> []
+names<span style="color:#f92672">=</span>[]
+<span style="color:#66d9ef">for</span> clf <span style="color:#f92672">in</span> classifiers<span style="color:#f92672">.</span>items():
+    clf_atual <span style="color:#f92672">=</span> clf[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">.</span>fit(X_train, y_train)
+    clf_trained<span style="color:#f92672">.</span>append(clf_atual)
+
+    pred_atual<span style="color:#f92672">=</span>clf[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">.</span>predict(X_test)
+    preds<span style="color:#f92672">.</span>append(pred_atual)
+    names<span style="color:#f92672">.</span>append(clf[<span style="color:#ae81ff">0</span>])
+    
+    <span style="color:#66d9ef">print</span>(precision_recall_fscore_support(y_test, pred_atual, average<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;macro&#39;</span>))
+</code></pre></div><p>(0.8289915966386554, 0.832855093256815, 0.8290616311094128, None)
+(0.8611037056784858, 0.8598756575801052, 0.8604428358526719, None)
+(0.8346729708431836, 0.8385142674956161, 0.8330176767676768, None)
+(0.8409914404243028, 0.8450502152080345, 0.8401684653856278, None)</p>
+<h3 id="matriz-confusão">Matriz Confusão</h3>
+<p><img src="/images/insuficiencia_cardiaca/img18.png" alt="img18"></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">fig, axs <span style="color:#f92672">=</span>  plt<span style="color:#f92672">.</span>subplots(<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>, figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">15</span>, <span style="color:#ae81ff">10</span>))
+position <span style="color:#f92672">=</span> [axs[<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>],axs[<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">1</span>],axs[<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">0</span>],axs[<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">1</span>]]
+
+<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(len(classifiers)):
+    cm <span style="color:#f92672">=</span> confusion_matrix(y_test, preds[i], labels<span style="color:#f92672">=</span>clf_trained[i]<span style="color:#f92672">.</span>classes_)
+    disp <span style="color:#f92672">=</span> ConfusionMatrixDisplay(confusion_matrix<span style="color:#f92672">=</span>cm, display_labels<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#34;Terá&#34;</span>, <span style="color:#e6db74">&#34;Não terá&#34;</span>])
+    position[i]<span style="color:#f92672">.</span>set_title(names[i])
+    disp<span style="color:#f92672">.</span>plot(ax<span style="color:#f92672">=</span>position[i])
+    
+plt<span style="color:#f92672">.</span>show()
+</code></pre></div><p><img src="/images/insuficiencia_cardiaca/img19.png" alt="img19"></p>
+<h2 id="cross-validation">Cross-Validation</h2>
+<p>A escolha da validação cruzada correta depende do conjunto de dados com o qual você está lidando, e a escolha da validação cruzada em um conjunto de dados pode ou não se aplicar a outros conjuntos de dados. No entanto, existem alguns tipos de técnicas de validação cruzada que são as mais populares e amplamente utilizadas. Esses incluem:</p>
+<ul>
+<li>validação cruzada k-fold.</li>
+<li>validação cruzada estratificada em k-fold A validação cruzada é dividir os dados de treinamento em algumas partes. Treinamos o modelo em algumas dessas peças e testamos nas demais.</li>
+</ul>
+<p><img src="/images/insuficiencia_cardiaca/img20.png" alt="img20"></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> classifiers<span style="color:#f92672">.</span>items():
+    scores_dt <span style="color:#f92672">=</span> cross_val_score(i[<span style="color:#ae81ff">1</span>], X_test, y_test, scoring<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;accuracy&#39;</span>, cv<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span>)
+    <span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">---- {i[0]} ----&#39;</span>)
+    <span style="color:#66d9ef">print</span>(scores_dt)
+</code></pre></div><p><img src="/images/insuficiencia_cardiaca/img21.png" alt="img21"></p>
+<h2 id="curva-roc">Curva ROC</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">ax <span style="color:#f92672">=</span> plt<span style="color:#f92672">.</span>gca()
+<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(len(classifiers)):
+    clf <span style="color:#f92672">=</span> classifiers[names[i]]      
+    rfc_disp <span style="color:#f92672">=</span> RocCurveDisplay<span style="color:#f92672">.</span>from_estimator(clf, X_test, y_test, ax<span style="color:#f92672">=</span>ax, alpha<span style="color:#f92672">=</span><span style="color:#ae81ff">0.7</span>)
+plt<span style="color:#f92672">.</span>show()
+    
+clf2 <span style="color:#f92672">=</span> classifiers[<span style="color:#e6db74">&#39;Random Forest&#39;</span>]
+svc_disp <span style="color:#f92672">=</span> RocCurveDisplay<span style="color:#f92672">.</span>from_estimator(clf2, X_test, y_test)
+svc_disp<span style="color:#f92672">.</span>plot(ax<span style="color:#f92672">=</span>ax, alpha<span style="color:#f92672">=</span><span style="color:#ae81ff">0.8</span>)
+plt<span style="color:#f92672">.</span>show()
+</code></pre></div><p><img src="/images/insuficiencia_cardiaca/img22.png" alt="img22"></p>
+<h2 id="insigths">Insigths</h2>
+<p>Após toda a análise do problema e entendimento de algumas hipóteses vistas na etapa de Visualização, criamos o conjunto de treino e testes e aplicamos em diferentes algoritmos. Iniciamos o treinamento dos algoritmos com a tradicional Decision Tree, partindo para Random Forest, GussianNB e Logistic Regression. Para a precisão dos resultados dos treinamentos, aplicamos uma camada de Cross-Validation onde os modelos passaram por diferentes conjuntos de dados, resultando em score variados para validarmos a qualidade dos modelos.</p>
+<p>Após essa validação, identificamos que o modelo Random Forest se destacou com uma Acurácia media de 0.88 e uma derivação de 0.05, sendo o melhor resultado da acurácia de todos os algoritmos.</p>
+<p>Como estamos predizendo um problema de saúde, devemos ter o seguinte pensamento: caso o paciente vá a um médico é melhor que ele seja diagnosticado com uma doença cardíaca e previna, porem ele NÃO tem nenhum problema. Do que ele seja diagnosticado que não tem uma doença cardíaca, e, na verdade, ele TEM problema cardíaco.</p>
+<p>Logo, compreendemos que em nossos algoritmos devem conter um BAIXO índice de falsos negativos(FN). Analisando a matriz confusão, nota-se que dentre os quatro algoritmos, apenas um se destaca por conter poucos falsos negativos(FN), a Random Forest. Nota-se que enquanto os outros modelos chegam a 30 ou 32 FN, a Random Forest chega diminuir quase pela metade, chegando aos 18 FN.</p>
+<p>Para compararmos as probabilidades de acerto desses Falsos Negativos, devemos olhar para o maior Score de Recall, e novamente a Random Fores se destaca com seus 0.88 de assertividade.</p>
+<p>Com isso, entendemos que para predizermos a insuficiência cardíaca de um paciente, podemos utilizar nosso modelo treinado com Random Forest visto que comparamos os resultados de suas predições, e também testamos a qualidade do modelo comprovando a sua eficácia em seus resultados.</p>
+<p>Espero que tenha aproveitado todo o desenvolvimento do projeto, e que sua leitura tenha agregado conhecimentos.</p>
+]]></content>
+        </item>
         
         <item>
             <title>Microservice Project – Step 3</title>
