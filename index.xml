@@ -13,6 +13,15 @@
     
     
     <item>
+      <title>Microservice Project – Step 4</title>
+      <link>https://patrickpiccini.github.io/posts/microservice_project_step04/</link>
+      <pubDate>Thu, 23 Jun 2022 18:01:54 -0300</pubDate>
+      
+      <guid>https://patrickpiccini.github.io/posts/microservice_project_step04/</guid>
+      <description>Table of Contents  Requirements Criação API Dockerfile Docker-Compose Resumo   Nesse passo, iremos começar a criar o rosto da API. Irei explicar como estruturei as rotas para a conexão utilizando Flask, e como funciona o disparo das funções das rotas. Criaremos a própria imagem para futuramente rodar a aplicação utilizando Dockerfile, juntamente a um Docker-Compose para subir as instancias Docker. Por fim, farei um teste de conexão localmente as rotas que criei.</description>
+    </item>
+    
+    <item>
       <title>Predição de Insuficiência Cardíaca</title>
       <link>https://patrickpiccini.github.io/posts/predicao_de_insuficiencia_cardiaca/</link>
       <pubDate>Tue, 21 Jun 2022 20:00:52 -0100</pubDate>
@@ -96,15 +105,6 @@ Visto que no primeiro estágio fizemos apenas uma autenticação, nos deparamos 
       
       <guid>https://patrickpiccini.github.io/posts/google-auth/</guid>
       <description>Table of Contents  Introdução  Pré-Requisitos Arquitetura   Step 1 – Criar credenciais Step 2 – Instalação de bibliotecas Step 3 – Criação de código de autenticação Step 4 – Criação do código de envio de e-mail Step 5 – Execução Código Completo Conclusão Referências   Introdução Nesse artigo irei abordar uma situação que recentemente a Google publicou referente ao login a conta Google, utilizando somente o usuário e senha para se conectar em apps de terceiros.</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>https://patrickpiccini.github.io/about/</link>
-      <pubDate>Wed, 09 Apr 2014 00:00:00 +0000</pubDate>
-      
-      <guid>https://patrickpiccini.github.io/about/</guid>
-      <description>Hi there, I&amp;rsquo;m Patrick Berlatto Piccini! Working with Back-End Development since 2020, I have developed medium-scale projects for large companies such as Ambev, Renner, LTD, Vivara, among others. Also, I developed solutions and innovations for the largest software house in Latin America, Linx, with companies such as Shell, Ipiranga, Rede Graal, among many others, using their systems. Most of my experience comes down to Python, Node.js SQL, NoSQL, API-Rest and Microservices.</description>
     </item>
     
   </channel>

@@ -6,8 +6,109 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
         <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-        <lastBuildDate>Tue, 21 Jun 2022 20:00:52 -0100</lastBuildDate>
+        <lastBuildDate>Thu, 23 Jun 2022 18:01:54 -0300</lastBuildDate>
         <atom:link href="https://patrickpiccini.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+        
+        <item>
+            <title>Microservice Project – Step 4</title>
+            <link>https://patrickpiccini.github.io/posts/microservice_project_step04/</link>
+            <pubDate>Thu, 23 Jun 2022 18:01:54 -0300</pubDate>
+            
+            <guid>https://patrickpiccini.github.io/posts/microservice_project_step04/</guid>
+            <description>Table of Contents  Requirements Criação API Dockerfile Docker-Compose Resumo   Nesse passo, iremos começar a criar o rosto da API. Irei explicar como estruturei as rotas para a conexão utilizando Flask, e como funciona o disparo das funções das rotas. Criaremos a própria imagem para futuramente rodar a aplicação utilizando Dockerfile, juntamente a um Docker-Compose para subir as instancias Docker. Por fim, farei um teste de conexão localmente as rotas que criei.</description>
+            <content type="html"><![CDATA[<p><img src="/images/microservice_project/microservices.png" alt="microservices"></p>
+<h2 id="table-of-contents">Table of Contents</h2>
+<ul>
+<li><a href="#requirements">Requirements</a></li>
+<li><a href="#cria%C3%A7%C3%A3o-api">Criação API</a></li>
+<li><a href="#dockerfile">Dockerfile</a></li>
+<li><a href="#docker-compose">Docker-Compose</a></li>
+<li><a href="#resumo">Resumo</a></li>
+</ul>
+<hr>
+<p>Nesse passo, iremos começar a criar o rosto da API. Irei explicar como estruturei as rotas para a conexão utilizando Flask, e como funciona o disparo das funções das rotas. Criaremos a própria imagem para futuramente rodar a aplicação utilizando Dockerfile, juntamente a um Docker-Compose para subir as instancias Docker. Por fim, farei um teste de conexão localmente as rotas que criei.</p>
+<p>No diretório raiz, criaremos a pasta API com os seguintes arquivos:</p>
+<pre><code class="language-Estrutura" data-lang="Estrutura">MS-application
+└───API
+    │   docker-compose-api.yml
+    │   Dockerfile
+    │   requirements.txt
+    │   server.py
+</code></pre><h2 id="requirements">Requirements</h2>
+<p>No arquivo <em>requeriments.txt</em> ficarão todas as instalações de bibliotecas e framework que serão utilizadas na aplicação da API. As bibliotecas devem ficar separadas por linha, visto que usaremos um comando para uma instalação recursiva.</p>
+<pre><code class="language-requirements" data-lang="requirements">requirements.txt
+   psycopg2-binary
+   Flask-Caching
+   threaded
+   flask
+   redis
+   pika
+   uuid
+</code></pre><p>Comando para instalação:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">pip install -r requeriments.txt
+</code></pre></div><h2 id="criação-api">Criação API</h2>
+<p>Dentro o arquivo <em>server.py</em> iremos criar uma espécie de API-Gateway, onde ela será responsável apenas por distribuir as informações para as filas do rabbit. Cada rota terá sua funcionalidade, como <strong>create_user</strong> para criar um usuário, e <strong>show_all_user</strong> para mostrar todos os usuários. A mesma lógica será aplicada referente aos <strong>orders</strong> , como <strong>create_order, list_order</strong> e assim sucessivamente.</p>
+<p>Mostrarei apenas a criação de uma das rotas, pois a estrutura será a mesma para todas as outras, basta alterar o nome da rota e função que será disparada após acessá-la.</p>
+<p>Primeiro, deve-se importar o framework <strong>Flask</strong> juntamente a funcionalidade <strong>request.</strong></p>
+<p>Devemos criar uma classe chamada <strong>Api_server</strong> e instanciar o Flask a variável <strong>app.</strong> Após isso, para definir uma rota iremos utilizar o @app.route(&quot;rota&quot;, method), onde apontaremos /user/create_user/ como destino, sendo o <strong>POST</strong> o único método que essa rota irá aceitar.</p>
+<p>Abaixo da rota fica a função que será disparada após ser acessada, que nomearemos de <strong>create_user().</strong> Dentro da 'def', faremos uma verificação se o method é o mesmo que esperamos nessa função. Caso isso seja atendido, coloquei como teste, um return que apenas mostrará o que enviamos no corpo da requisição. Caso não atenda, será mostrado um erro referente ao método enviado.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> flask <span style="color:#f92672">import</span> Flask, request
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Api_server</span>():
+    app <span style="color:#f92672">=</span> Flask(__name__)
+
+    <span style="color:#a6e22e">@app.route</span>(<span style="color:#e6db74">&#34;/user/create_user/&#34;</span>, methods<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#39;POST&#39;</span>]) <span style="color:#75715e"># &lt;- rota que será acessada</span>
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">create_user</span>(): <span style="color:#75715e"># &lt;- metodo que será disparado ao acessar a rota acima </span>
+        <span style="color:#66d9ef">if</span> request<span style="color:#f92672">.</span>method <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;POST&#39;</span>:
+            payload <span style="color:#f92672">=</span> request<span style="color:#f92672">.</span>get_json()
+
+            <span style="color:#66d9ef">return</span> {<span style="color:#e6db74">&#39;Status&#39;</span>: <span style="color:#ae81ff">200</span>, <span style="color:#e6db74">&#39;Message&#39;</span>: payload}
+        <span style="color:#66d9ef">else</span>:
+            <span style="color:#66d9ef">return</span> {<span style="color:#e6db74">&#39;Status&#39;</span>: <span style="color:#ae81ff">404</span>, <span style="color:#e6db74">&#39;Message&#39;</span>: <span style="color:#e6db74">&#39;Erro no envio do method&#39;</span>}
+</code></pre></div><p>Para executar o servidor, nas ultimas linhas iremos instanciar a classe que criamos, e utilizaremos o comando app.run(host, porta), para definir o host e porta que irá rodar a API.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;__main__&#39;</span>:
+
+    APP <span style="color:#f92672">=</span> Api_server()
+    APP<span style="color:#f92672">.</span>app<span style="color:#f92672">.</span>run(<span style="color:#e6db74">&#39;0.0.0.0&#39;</span>, <span style="color:#ae81ff">7000</span>)
+</code></pre></div><p>Para testar, executei o arquivo <em>server.py</em> e enviei um JSON como corpo da requisição para a rota que criei anteriormente, juntamente ao método POST:</p>
+<p><img src="/images/microservice_project/img25.jpg" alt="img25"></p>
+<p><img src="/images/microservice_project/img26.jpg" alt="img26"></p>
+<p>OBS: Criei todas as demais rotas, mas não irei exemplificar cada uma delas pois a funcionalidade é a mesma. Se tiverem curiosidade, basta ir ao repositório da aplicação e olhar as outras rotas.</p>
+<h2 id="dockerfile">Dockerfile</h2>
+<p>No arquivo <em>Dockerfile</em> iremos criar uma imagem personalizada, adequada a aplicação que criaremos:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-docker" data-lang="docker"><span style="color:#66d9ef">FROM</span><span style="color:#e6db74"> python:3.8-alpine                  &lt;- Imagem base utilizada</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">COPY</span> . /app/                            &lt;- cópia da pasta API para /app/<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">ENV</span> HOST<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;10.0.0.34&#39;</span>                    &lt;- ip privado <span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">ENV</span> HOST_DATABASE<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;10.5.0.11&#39;</span>           &lt;- ip <span style="color:#66d9ef">do</span> postgres<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">ENV</span> CACHE_TYPE<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;redis&#39;</span>                  &lt;- type <span style="color:#66d9ef">do</span> redis<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">ENV</span> CACHE_REDIS_HOST<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;10.0.0.25&#39;</span>        &lt;- ip <span style="color:#66d9ef">do</span> redis<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">ENV</span> CACHE_REDIS_PORT<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;6379&#39;</span>             &lt;- porta <span style="color:#66d9ef">do</span> redis<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">ENV</span> CACHE_REDIS_DB<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>
+
+<span style="color:#66d9ef">EXPOSE</span><span style="color:#e6db74"> 7000                             &lt;- porta que será a API</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">WORKDIR</span><span style="color:#e6db74"> /app                            &lt;- diretório de trabalho</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">RUN</span> pip install --upgrade pip           &lt;- instalação <span style="color:#66d9ef">do</span> pip<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">RUN</span> pip install -r requirements.txt     &lt;- instalação das libs<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">CMD</span> python server.py                    &lt;- comando para iniciar a API<span style="color:#960050;background-color:#1e0010">
+</span></code></pre></div><h2 id="docker-compose">Docker-Compose</h2>
+<p>O Docker-Compose para subir a aplicação é bem simples. Terá apenas um service onde irá rodar o Dockerfile no '<em>build: . '</em>.A exposição da porta 7000, que será a porta da API, e apontamento da Network que foi criada no Docker-Compose, onde é preciso especificar que a rede que estará sendo utilizada é externa, na parte <em>external: true</em></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-docker" data-lang="docker">version: <span style="color:#e6db74">&#34;3.7&#34;</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>services:<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>  api:<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>    build: .<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>    ports:<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>      - <span style="color:#e6db74">&#34;7000:7000&#34;</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>    networks:<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>      - internal-network<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>networks:<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>    internal-network:<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>        external: true<span style="color:#960050;background-color:#1e0010">
+</span></code></pre></div><h2 id="resumo">Resumo</h2>
+<p>Nesse Step, criamos o arquivo <em>requeriments.txt</em> que é responsável por conter todas as bibliotecas que iremos utilizar. Foi explicado como funciona o sistema de rotas do Flask e também criamos uma rota como exemplificar. Por fim, desenvolvemos os arquivos Dockerfile e Docker-Compose, que serão responsáveis pela inicialização da API.</p>
+]]></content>
+        </item>
         
         <item>
             <title>Predição de Insuficiência Cardíaca</title>
