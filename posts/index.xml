@@ -6,8 +6,157 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
         <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-        <lastBuildDate>Thu, 23 Jun 2022 18:01:54 -0300</lastBuildDate>
+        <lastBuildDate>Thu, 30 Jun 2022 18:01:55 -0300</lastBuildDate>
         <atom:link href="https://patrickpiccini.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+        
+        <item>
+            <title>Microservice Project – Step 5</title>
+            <link>https://patrickpiccini.github.io/posts/microservice_project_step05/</link>
+            <pubDate>Thu, 30 Jun 2022 18:01:55 -0300</pubDate>
+            
+            <guid>https://patrickpiccini.github.io/posts/microservice_project_step05/</guid>
+            <description>Table of Contents  Postgres  Create_tables   Rabbit MQ Redis Resumo   Como visto no Step4, foi iniciado os primeiros passos para interagir com a API gateway, e foi criado as configurações para a inicialização do container, quando for subir para a OCI.
+Nesse passo, mostrarei como configurar a conexão com os servidores do Rabbit, Redis e Postgres, e como planejei a arquitetura de pastas e módulos para ter uma aplicação organizada.</description>
+            <content type="html"><![CDATA[<p><img src="/images/microservice_project/microservices.png" alt="microservices"></p>
+<h2 id="table-of-contents">Table of Contents</h2>
+<ul>
+<li><a href="#postgres">Postgres</a>
+<ul>
+<li><a href="#create%5C_tables">Create_tables</a></li>
+</ul>
+</li>
+<li><a href="#rabbit-mq">Rabbit MQ</a></li>
+<li><a href="#redis">Redis</a></li>
+<li><a href="#resumo">Resumo</a></li>
+</ul>
+<hr>
+<p>Como visto no Step4, foi iniciado os primeiros passos para interagir com a API gateway, e foi criado as configurações para a inicialização do container, quando for subir para a OCI.</p>
+<p>Nesse passo, mostrarei como configurar a conexão com os servidores do Rabbit, Redis e Postgres, e como planejei a arquitetura de pastas e módulos para ter uma aplicação organizada.</p>
+<p>Dentro da pasta API, devemos criar uma subpasta chamada config com os seguintes arquivos:</p>
+<pre><code class="language-Estrutura" data-lang="Estrutura">MS-application
+└───API
+    │   docker-compose-api.yml
+    │   Dockerfile
+    │   requirements.txt
+    │   server.py
+    │
+    ├───config
+    │       database_connection.py
+    │       rabbitmq_connection.py
+    │       redis_connection.py
+    │       __init__.py
+</code></pre><h2 id="postgres">Postgres</h2>
+<p>Antes de continuar, deve-se ter certeza de que executou todas as instalações das bibliotecas, contidas no arquivo <em>requeriments.txt.</em></p>
+<p>Para começarmos, devemos importar os módulos _psycopg2_e <em>os,</em> que iremos utilizar para a conexão.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> psycopg2<span style="color:#f92672">,</span> os
+</code></pre></div><p>Como teremos que apontar o host do servidor Postgres para nossa aplicação, na criação do Dockerfile foi criado uma variável de ambiente chamada HOST_DATABASE, contendo o ip privado da instância da OCI. Porém, essa variável de ambiente só será utilizada em Produção. Sendo assim, criei uma variável dentro do arquivo <em>database_connection.py</em> contendo o ip público, somente para fins de desenvolvimento em Homologação, utilizando os serviços que já estão rodando.</p>
+<p>Já que nos conectaremos a um banco de dados, essa deve ser uma das primeiras coisas que deve acontecer quando a API for inicializada. Para isso, criaremos uma classe chamada <em>ConnectionDatabase(),</em> onde em seu <em>__init__</em> iremos fazer esse processo de conexão.</p>
+<p>Dentro da função connect da biblioteca psycopg2, vamos colocar os parâmetros <em>host,</em> que serão o ip da instancia OCI, <em>port</em> contendo a numeração padrão da porta postgres (já foi liberada a porta no OCI para a conexão externa), <em>batabase</em>, contendo o nome do banco, <em>user</em> e <em>password,</em> contendo usuário e senha que foi colocado na imagem que subimos do postgres.</p>
+<p>Após o apontamento dos parâmetros obrigatórios para a conexão, criaremos um atributo chamado <em>cursor,</em> que será o responsável por executar qualquer interação com o banco de dados. Logo abaixo há um método <em>create_tables</em>, que criaremos logo em seguida. Para finalizar, tudo isso está dentro de um try-except, para caso haja alguma falha na conexão, seja lançado um except com o erro.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># HOST_DATABSE = os.environ[&#39;HOST_DATABASE&#39;]</span>
+HOST_DATABSE <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;144.22.193.219&#39;</span>
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ConnectionDatabase</span>():
+
+    <span style="color:#66d9ef">def</span> __init__(self):
+        <span style="color:#66d9ef">try</span>:
+            self<span style="color:#f92672">.</span>connection  <span style="color:#f92672">=</span> psycopg2<span style="color:#f92672">.</span>connect(
+                host<span style="color:#f92672">=</span>HOST_DATABSE,
+                port<span style="color:#f92672">=</span><span style="color:#ae81ff">5432</span>,
+                database<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;baseapplication&#34;</span>,
+                user<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;postgres&#34;</span>,
+                password<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;postgres&#34;</span>)
+            self<span style="color:#f92672">.</span>cursor <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>connection<span style="color:#f92672">.</span>cursor()
+            <span style="color:#75715e"># start tables</span>
+            self<span style="color:#f92672">.</span>create_tables()
+            <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;[✓] Connected to Postgres&#39;</span>)
+        <span style="color:#66d9ef">except</span> <span style="color:#a6e22e">Exception</span> <span style="color:#66d9ef">as</span> error:
+            <span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#39;[X] CONNECTING POSTGRES ERROR: {error}&#39;</span>)
+</code></pre></div><h3 id="create_tables">Create_tables</h3>
+<p>Antes de começar a fazer a função que criará as tabelas, vamos analisar o que precisará ser feito com o modelo ER abaixo:</p>
+<p><img src="/images/microservice_project/img27.png" alt="img27"></p>
+<p>Iremos criar uma estrutura simples. Serão duas tabelas, <em>users</em> e <em>orders</em>. Nelas conterão seus atributos, com seus determinados tipos. Note que na tabela orders, iremos herdar um atributo da tabela user, que será o <em>user_id</em>, onde na tabela user é a PrimaryKey. Já na tabela orders, o atributo herdado é o <em>user_id</em>, que será tratado como uma chave estrangeira (ForeignKey).</p>
+<p>Em relação a cardinalidade vamos ter 1 usuário pode ter vários orders, e 1 order pode ter somente um usuário, representados pelos símbolos abaixo.</p>
+<p><img src="/images/microservice_project/img28.jpg" alt="img28"></p>
+<p>Após essa análise, devemos criar o método <em>create­_table, e criar as tabelas.</em> Para executar comandos SQL através da biblioteca, basta escrever em uma string o comando SQL que deseja executar, e passar como parâmetro para função <em>execute.</em> Visto isso, primeiramente criaremos um select da versão do Postgres, para que toda a vez que seja iniciado a conexão, seja mostrado a versão. Logo após, devemos criar um atributo contendo toda a query de criação das duas tabelas, baseada do modelo ER visto anteriormente. Sendo assim, como método já foi chamado no <em>__init__,</em> será criado as tabelas ao instanciar a classe <strong>ConnectionDatabase</strong>.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">create_tables</span>(self):
+        self<span style="color:#f92672">.</span>cursor<span style="color:#f92672">.</span>execute(<span style="color:#e6db74">&#34;SELECT version();&#34;</span>)
+        record <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>cursor<span style="color:#f92672">.</span>fetchone()
+        <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;[✓] You are connected to - &#34;</span>, record)
+
+        create_table_query <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&#39;&#39;
+</span><span style="color:#e6db74">            CREATE TABLE IF NOT EXISTS users (
+</span><span style="color:#e6db74">                user_id SERIAL NOT NULL,
+</span><span style="color:#e6db74">                nick_name varchar(50) UNIQUE NOT NULL,
+</span><span style="color:#e6db74">                password varchar(256) NOT NULL,
+</span><span style="color:#e6db74">                full_name varchar(50) NOT NULL,
+</span><span style="color:#e6db74">                cpf varchar(11) NOT NULL,
+</span><span style="color:#e6db74">                email varchar(50) NOT NULL,
+</span><span style="color:#e6db74">                phone_number varchar(50) NOT NULL,
+</span><span style="color:#e6db74">                created_at TIMESTAMP,
+</span><span style="color:#e6db74">                updated_at TIMESTAMP,
+</span><span style="color:#e6db74">                PRIMARY KEY (user_id)
+</span><span style="color:#e6db74">            );
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">            CREATE TABLE IF NOT EXISTS orders (
+</span><span style="color:#e6db74">                order_id SERIAL NOT NULL,
+</span><span style="color:#e6db74">                user_id integer NOT NULL,
+</span><span style="color:#e6db74">                item_description varchar(256) NOT NULL,
+</span><span style="color:#e6db74">                item_quantity integer NOT NULL,
+</span><span style="color:#e6db74">                item_price integer NOT NULL,
+</span><span style="color:#e6db74">                total_value integer NOT NULL,
+</span><span style="color:#e6db74">                created_at TIMESTAMP,
+</span><span style="color:#e6db74">                updated_at TIMESTAMP,
+</span><span style="color:#e6db74">                PRIMARY KEY (order_id),
+</span><span style="color:#e6db74">                FOREIGN KEY(user_id) REFERENCES users(user_id)
+</span><span style="color:#e6db74">            );&#39;&#39;&#39;</span>
+        
+        self<span style="color:#f92672">.</span>cursor<span style="color:#f92672">.</span>execute(create_table_query)
+        self<span style="color:#f92672">.</span>connection<span style="color:#f92672">.</span>commit()
+        <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;[✓] Created tables on DataBase&#39;</span>)
+</code></pre></div><h2 id="rabbit-mq">Rabbit MQ</h2>
+<p>O Rabbit é um message borker open source fácil e leve de ser implementado, tanto local, quanto em nuvem. O rabbit suporta vários tipos de protocolo de mensagens, para haver facilidade na comunicação entre aplicações. Existem muitos outros recursos, porém, não irei detalhar eles nesse projeto.</p>
+<p>Nesse momento, faremos somente a conexão com o servidor Rabbit, onde usaremos uma variável de ambiente como no postgres, no entanto ela será a HOST, contida no <strong>Dockerfile</strong>. Da mesma forma que na conexão do postgres, criei uma variável estática contendo o ip público, somente para desenvolver a aplicação local, utilizando o servidor que já estão rodando os serviços.</p>
+<p>Começamos com a importação das bibliotecas necessárias e o apontamento da variável com o IP Público da instancia OCI.</p>
+<p>import pika, os</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> pika<span style="color:#f92672">,</span> os
+
+<span style="color:#75715e"># HOST_RABBIT = os.environ[&#39;HOST&#39;]</span>
+HOST_DATABSE <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;144.22.193.219&#39;</span>
+</code></pre></div><p>Agora iremos criar uma classe chamada <em>RabbitConnection(),</em> e faremos a conexão no método <em>__init__.</em> Utilizando o função de conexão da biblioteca pika chamada <em>BlockingConnection(),</em> passaremos como parâmetros, através do metodo <em>ConnectionParameters()</em> o host, contida na variável HOST_RABBIT, e a porta padrão 5672. Em seguida, será criado um atributo chamado <em>channel</em>, que será responsável por executar toda e qualquer interação com o servidor rabbit, tudo isso foi criado em um try-catch, para caso haja alguma falha na conexão, seja lançado um except com o erro</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">RabbitConnection</span>():
+
+    <span style="color:#66d9ef">def</span> __init__(self) :
+        <span style="color:#66d9ef">try</span>:
+            self<span style="color:#f92672">.</span>connection <span style="color:#f92672">=</span> pika<span style="color:#f92672">.</span>BlockingConnection(
+                pika<span style="color:#f92672">.</span>ConnectionParameters(host<span style="color:#f92672">=</span>HOST_RABBIT, port<span style="color:#f92672">=</span><span style="color:#ae81ff">5672</span>))
+            self<span style="color:#f92672">.</span>channel <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>connection<span style="color:#f92672">.</span>channel()
+            <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;[✓] Connected to RabbitMQ server&#39;</span>)
+            
+        <span style="color:#66d9ef">except</span> <span style="color:#a6e22e">Exception</span> <span style="color:#66d9ef">as</span> error:
+            <span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#39;[X] CONNECTING RABBIT MQ ERROR: {error}&#39;</span>)
+</code></pre></div><h2 id="redis">Redis</h2>
+<p>Redis é um armazenamento de estrutura de dados na memória de código aberto (licenciado BSD), usado como banco de dados, cache, agente de mensagens e mecanismo de streaming. Um dos serviços que se destaca é o cache, que iremos utilizar nessa aplicação.</p>
+<p>Para criar a conexão com o servidor Redis, utilizaremos a variável de ambiente CACHE_REDIS_HOST, porém, para a fim de desenvolvimento, criarei uma variável local contendo o ip público da instancia.</p>
+<p>Nessa configuração, iremos fazer algo um pouco diferente. Como o Redis e Flask conseguem trabalhar juntos ativamente, a configuração para a conexão ao servidor, será feita através do arquivo principal <em>server.py</em>. Contudo, será demonstrado como fazer isso no próximo passo.</p>
+<p>No momento a configuração será a seguinte: Importar a biblioteca <em>os,</em> criar uma classe chamada <em>BaseConfig(),</em> e dentro dela, apontar as variáveis de ambiente contidas no Dockerfile, veja:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> os
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">BaseConfig</span>(object):
+    CACHE_TYPE <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>environ[<span style="color:#e6db74">&#39;CACHE_TYPE&#39;</span>]
+    CACHE_REDIS_HOST <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>environ[<span style="color:#e6db74">&#39;CACHE_REDIS_HOST&#39;</span>]
+    CACHE_REDIS_PORT <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>environ[<span style="color:#e6db74">&#39;CACHE_REDIS_PORT&#39;</span>]
+    CACHE_REDIS_DB <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>environ[<span style="color:#e6db74">&#39;CACHE_REDIS_DB&#39;</span>]
+</code></pre></div><p>Como testarei localmente para homologação, criarei a mesma classe, porém, com atributos com valor estático do servidor.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">BaseConfig</span>(object):
+    CACHE_TYPE <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;redis&#39;</span> 
+    CACHE_REDIS_HOST <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;144.22.193.219&#39;</span>
+    CACHE_REDIS_PORT <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;6379&#39;</span>
+    CACHE_REDIS_DB <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</code></pre></div><h2 id="resumo">Resumo</h2>
+<p>Nesse Step, criamos as conexões com os servidores Rabbit, Redis e Postgres que já estavam rodando a instancia da OCI. Criamos a conexão com o Postgres. Foi explanado o modelo de entidade relacional que posteriormente foi desenvolvido, criando as devidas tabelas planejadas. Vimos um breve resumo do que é o rabbit e criamos a conexão com o servidor que está rodando na OCI. E por fim, apontado a conexão com o Redis, porém não utilizaremos nesse momento.</p>
+]]></content>
+        </item>
         
         <item>
             <title>Microservice Project – Step 4</title>

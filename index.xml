@@ -13,6 +13,16 @@
     
     
     <item>
+      <title>Microservice Project – Step 5</title>
+      <link>https://patrickpiccini.github.io/posts/microservice_project_step05/</link>
+      <pubDate>Thu, 30 Jun 2022 18:01:55 -0300</pubDate>
+      
+      <guid>https://patrickpiccini.github.io/posts/microservice_project_step05/</guid>
+      <description>Table of Contents  Postgres  Create_tables   Rabbit MQ Redis Resumo   Como visto no Step4, foi iniciado os primeiros passos para interagir com a API gateway, e foi criado as configurações para a inicialização do container, quando for subir para a OCI.
+Nesse passo, mostrarei como configurar a conexão com os servidores do Rabbit, Redis e Postgres, e como planejei a arquitetura de pastas e módulos para ter uma aplicação organizada.</description>
+    </item>
+    
+    <item>
       <title>Microservice Project – Step 4</title>
       <link>https://patrickpiccini.github.io/posts/microservice_project_step04/</link>
       <pubDate>Thu, 23 Jun 2022 18:01:54 -0300</pubDate>
@@ -96,15 +106,6 @@ Visto que no primeiro estágio fizemos apenas uma autenticação, nos deparamos 
       
       <guid>https://patrickpiccini.github.io/codes/</guid>
       <description>2022  Predição de Insuficiência Cardiaca    Um projeto completo de Microservices    Data Analytcs - Spotify Wrapped    Code - Email com Google Authentication – Refresh Token    Code - Email com Google Authentication  </description>
-    </item>
-    
-    <item>
-      <title>Email com Google Authentication</title>
-      <link>https://patrickpiccini.github.io/posts/google-auth/</link>
-      <pubDate>Tue, 12 Apr 2022 21:00:50 -0300</pubDate>
-      
-      <guid>https://patrickpiccini.github.io/posts/google-auth/</guid>
-      <description>Table of Contents  Introdução  Pré-Requisitos Arquitetura   Step 1 – Criar credenciais Step 2 – Instalação de bibliotecas Step 3 – Criação de código de autenticação Step 4 – Criação do código de envio de e-mail Step 5 – Execução Código Completo Conclusão Referências   Introdução Nesse artigo irei abordar uma situação que recentemente a Google publicou referente ao login a conta Google, utilizando somente o usuário e senha para se conectar em apps de terceiros.</description>
     </item>
     
   </channel>
