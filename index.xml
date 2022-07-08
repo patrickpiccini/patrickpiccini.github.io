@@ -13,6 +13,15 @@
     
     
     <item>
+      <title>Microservice Project – Step 6</title>
+      <link>https://patrickpiccini.github.io/posts/microservice_project_step06/</link>
+      <pubDate>Thu, 07 Jul 2022 09:01:56 -0300</pubDate>
+      
+      <guid>https://patrickpiccini.github.io/posts/microservice_project_step06/</guid>
+      <description>Table of Contents  Queues Consumo da classe RabbitQueue e ConnectionDatabase Routes Resumo da Funcionalidade   Nessa etapa, criaremos as filas que necessitamos para a comunicação com os microservices. Iremos instanciar a classe de configuração do Rabbit para inicializar juntamente com a API, estabelecendo uma conexão, e criando automaticamente as filas para consumo. Veremos também como funciona o recurso RPC, que irei detalhar posteriormente como funciona. Também, será explicado cada funcionalidade da criação da fila do rabbit que utilizaremos.</description>
+    </item>
+    
+    <item>
       <title>Microservice Project – Step 5</title>
       <link>https://patrickpiccini.github.io/posts/microservice_project_step05/</link>
       <pubDate>Thu, 30 Jun 2022 18:01:55 -0300</pubDate>
@@ -97,15 +106,6 @@ No ícone de hamburguer na página inicial do OCI, iremos em &amp;gt; Identity &
       <guid>https://patrickpiccini.github.io/posts/google_auth-refresh-token/</guid>
       <description>Table of Contents  Introdução  Pré-requisitos   Step 1 – Instalação de bibliotecas Step 2 – Leitura do token.json Step 3 – Função refresh_token Step 4 – Função request_refresh_token Step 5 – Execução Código Completo Conclusão Referências   Introdução Nesse artigo irei continuar o assunto abordado na publicação Email com Google Authentication.
 Visto que no primeiro estágio fizemos apenas uma autenticação, nos deparamos com a criação de um arquivo chamado token.</description>
-    </item>
-    
-    <item>
-      <title>Codes</title>
-      <link>https://patrickpiccini.github.io/codes/</link>
-      <pubDate>Tue, 12 Apr 2022 21:00:50 -0300</pubDate>
-      
-      <guid>https://patrickpiccini.github.io/codes/</guid>
-      <description>2022  Predição de Insuficiência Cardiaca    Um projeto completo de Microservices    Data Analytcs - Spotify Wrapped    Code - Email com Google Authentication – Refresh Token    Code - Email com Google Authentication  </description>
     </item>
     
   </channel>

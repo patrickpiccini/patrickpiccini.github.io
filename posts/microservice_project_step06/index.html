@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="author" content="map[name:Patrick Piccini]">
+<meta name="description" content="Table of Contents  Queues Consumo da classe RabbitQueue e ConnectionDatabase Routes Resumo da Funcionalidade   Nessa etapa, criaremos as filas que necessitamos para a comunicação com os microservices. Iremos instanciar a classe de configuração do Rabbit para inicializar juntamente com a API, estabelecendo uma conexão, e criando automaticamente as filas para consumo. Veremos também como funciona o recurso RPC, que irei detalhar posteriormente como funciona. Também, será explicado cada funcionalidade da criação da fila do rabbit que utilizaremos." />
+<meta name="keywords" content="" />
+<meta name="robots" content="noodp" />
+<meta name="theme-color" content="" />
+<link rel="canonical" href="https://patrickpiccini.github.io/posts/microservice_project_step06/" />
+
+
+    <title>
+        
+            Microservice Project – Step 6 :: Patrick Piccini 
+        
+    </title>
+
+
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css" rel="stylesheet"
+    type="text/css">
+
+
+
+<link rel="stylesheet" href="https://patrickpiccini.github.io/main.4e5c639214707eff609bb55fe49e183dee42258a73bc90e4cc7b0a84f900798a.css">
+
+
+
+<link rel="apple-touch-icon" sizes="180x180" href="https://patrickpiccini.github.io/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://patrickpiccini.github.io/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="https://patrickpiccini.github.io/favicon-16x16.png">
+<link rel="manifest" href="https://patrickpiccini.github.io/site.webmanifest">
+<link rel="mask-icon" href="https://patrickpiccini.github.io/safari-pinned-tab.svg" color="">
+<link rel="shortcut icon" href="https://patrickpiccini.github.io/favicon.ico">
+<meta name="msapplication-TileColor" content="">
+
+
+<meta itemprop="name" content="Microservice Project – Step 6">
+<meta itemprop="description" content="Table of Contents  Queues Consumo da classe RabbitQueue e ConnectionDatabase Routes Resumo da Funcionalidade   Nessa etapa, criaremos as filas que necessitamos para a comunicação com os microservices. Iremos instanciar a classe de configuração do Rabbit para inicializar juntamente com a API, estabelecendo uma conexão, e criando automaticamente as filas para consumo. Veremos também como funciona o recurso RPC, que irei detalhar posteriormente como funciona. Também, será explicado cada funcionalidade da criação da fila do rabbit que utilizaremos.">
+<meta itemprop="datePublished" content="2022-07-07T09:01:56-03:00" />
+<meta itemprop="dateModified" content="2022-07-07T09:01:56-03:00" />
+<meta itemprop="wordCount" content="1614">
+
+
+
+<meta itemprop="keywords" content="" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Microservice Project – Step 6"/>
+<meta name="twitter:description" content="Table of Contents  Queues Consumo da classe RabbitQueue e ConnectionDatabase Routes Resumo da Funcionalidade   Nessa etapa, criaremos as filas que necessitamos para a comunicação com os microservices. Iremos instanciar a classe de configuração do Rabbit para inicializar juntamente com a API, estabelecendo uma conexão, e criando automaticamente as filas para consumo. Veremos também como funciona o recurso RPC, que irei detalhar posteriormente como funciona. Também, será explicado cada funcionalidade da criação da fila do rabbit que utilizaremos."/>
+
+
+
+
+
+
+
+
+    <meta property="article:published_time" content="2022-07-07 09:01:56 -0300 -03" />
+
+
+
+
+
+
+
+
+
+
+    </head>
+
+    
+        <body>
+    
+    
+        <div class="container">
+            <header class="header">
+    <span class="header__inner">
+        <a href="https://patrickpiccini.github.io/" style="text-decoration: none;">
+    <div class="logo">
+        
+            <span class="logo__mark">&gt;</span>
+            <span class="logo__text">/home/piccini</span>
+            <span class="logo__cursor" style=
+                  "
+                   background-color:#67a2c9;
+                   ">
+            </span>
+        
+    </div>
+</a>
+
+
+        <span class="header__right">
+            
+                <nav class="menu">
+    <ul class="menu__inner"><li><a href="https://patrickpiccini.github.io/codes/">Codes</a></li><li><a href="https://patrickpiccini.github.io/posts/">Posts</a></li><li><a href="https://patrickpiccini.github.io/about/">Whoami</a></li>
+    </ul>
+</nav>
+
+                <span class="menu-trigger">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+                    </svg>
+                </span>
+            
+        </span>
+    </span>
+</header>
+
+
+            <div class="content">
+                
+  <main class="post">
+
+    <div class="post-info">
+      <p>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock">
+          <circle cx="12" cy="12" r="10"></circle>
+          <polyline points="12 6 12 12 16 14"></polyline>
+        </svg>
+        8 minutes
+
+        
+      </p>
+    </div>
+
+    <article>
+      <h1 class="post-title">
+        <a href="https://patrickpiccini.github.io/posts/microservice_project_step06/">Microservice Project – Step 6</a>
+      </h1>
+
+      
+
+      
+
+      
+
+      <div class="post-content">
+        <p><img src="https://patrickpiccini.github.io/images/microservice_project/microservices.png" alt="microservices"></p>
+<h2 id="table-of-contents">Table of Contents</h2>
+<ul>
+<li><a href="#queues">Queues</a></li>
+<li><a href="#consumo-da-classe-rabbitqueue-e-connectiondatabase">Consumo da classe RabbitQueue e ConnectionDatabase</a></li>
+<li><a href="#routes">Routes</a></li>
+<li><a href="#resumo-da-funcionalidade">Resumo da Funcionalidade</a></li>
+</ul>
+<hr>
+<p>Nessa etapa, criaremos as filas que necessitamos para a comunicação com os microservices. Iremos instanciar a classe de configuração do Rabbit para inicializar juntamente com a API, estabelecendo uma conexão, e criando automaticamente as filas para consumo. Veremos também como funciona o recurso RPC, que irei detalhar posteriormente como funciona. Também, será explicado cada funcionalidade da criação da fila do rabbit que utilizaremos. Por fim, mostrarei no manager, a parte visual de como irá ficar nossas filas. No final dessa etapa, será resumido como funcionará o código, por uma visão geral.</p>
+<p>Dentro da pasta API, crie uma subpasta chamada rabbitmq_controller com o arquivo rabbit_queues.py.</p>
+<pre><code class="language-Estrutura" data-lang="Estrutura">MS-application
+└───API
+    │   docker-compose-api.yml
+    │   Dockerfile
+    │   requirements.txt
+    │   server.py
+    │
+    ├───config
+    │       database_connection.py
+    │       rabbitmq_connection.py
+    │       redis_connection.py
+    │       __init__.py
+    │
+    └───rabbitmq_controller
+            rabbit_queues.py
+            __init__.py
+</code></pre><h2 id="queues">Queues</h2>
+<p>O que iremos criar será algo relativamente simples. Como vamos ter os microservices <em>users</em> e <em>orders,</em> nossa API terá que se comunicar com eles de alguma maneira. Para isso, utilizaremos o message broker do rabbit. A ideia é termos duas filas para comunicação entre API/Serviço, porém existe um pequeno detalhe, como em alguns casos que iremos fazer uma consulta no banco de dados, desejando enviar um response ao usuário. Nas filas do rabbit existe um sistema de ACK para confirmação de entrega de mensagens ao destinatário, porém é algo simples, não podendo ter uma personalização da mensagem de confirmação.</p>
+<p>O que precisaremos fazer, será utilizar um recurso chamado Remote Procedure Call (RPC). Que consiste em um remetente enviar uma mensagem e aguardar o destinatário processar a informação, para que depois possa retornar uma resposta. Resumindo, uma comunicação assíncrona. Sendo assim, será necessária uma fila auxiliar para transmitir esse response. Abaixo há uma ilustração da arquitetura que iremos criar.</p>
+<p><img src="https://patrickpiccini.github.io/images/microservice_project/img29.png" alt="img27"></p>
+<p>Agora que temos a arquitetura do que precisamos construir, podemos começar.</p>
+<p>Primeiramente precisamos fazer a sequência de imports das bibliotecas, e importar a classe da configuração do rabbit, que fizemos no passo anterior.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> pika<span style="color:#f92672">,</span> uuid<span style="color:#f92672">,</span> threading<span style="color:#f92672">,</span> time
+<span style="color:#f92672">from</span> config.rabbitmq_connection <span style="color:#f92672">import</span> RabbitConnection
+</code></pre></div><p>Logo após, vamos criar uma classe chamada <em>RabbitQueue(),</em> contendo duas variáveis que iremos utilizar posteriormente.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">RabbitQueue</span>():
+    internal_lock <span style="color:#f92672">=</span> threading<span style="color:#f92672">.</span>Lock()
+    queue <span style="color:#f92672">=</span> {}
+</code></pre></div><p>No método __init__.py vamos ter crias o seguinte atributo. Primeiro precisamos instanciar a classe de conexão com o servidor Rabbit para posteriormente criar as filas. Por enquanto precisamos saber só disso, os demais atributos irão ser abordados posteriormente.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">    <span style="color:#66d9ef">def</span> __init__(self) :
+        self<span style="color:#f92672">.</span>RMQ <span style="color:#f92672">=</span> RabbitConnection()
+        result <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>RMQ<span style="color:#f92672">.</span>channel<span style="color:#f92672">.</span>queue_declare(queue<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;&#39;</span>, exclusive<span style="color:#f92672">=</span>True)
+        self<span style="color:#f92672">.</span>callback_queue <span style="color:#f92672">=</span> result<span style="color:#f92672">.</span>method<span style="color:#f92672">.</span>queue
+        self<span style="color:#f92672">.</span>_create_process_thread()
+</code></pre></div><p>Agora, criaremos um método chamado <em>create_queues()</em>, pra criar as filas que precisamos consumir. Para isso será utilizado a o atributo channel, da classe de conexão, e a função queue_declare, para declarar as filas.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">create_queues</span>(self):
+        self<span style="color:#f92672">.</span>RMQ<span style="color:#f92672">.</span>channel<span style="color:#f92672">.</span>queue_declare(queue<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;user&#39;</span>)
+        self<span style="color:#f92672">.</span>RMQ<span style="color:#f92672">.</span>channel<span style="color:#f92672">.</span>queue_declare(queue<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;order&#39;</span>)
+        
+        <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;     [✓] Queues created successful!&#39;</span>)
+</code></pre></div><p>Vamos criar agora, o método chamado _<em>create_process_thread(),</em> ele será responsável por criar uma thread de processamento, fazendo com que o consumo de diferentes processos seja independente.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">_create_process_thread</span>(self):
+        thread <span style="color:#f92672">=</span> threading<span style="color:#f92672">.</span>Thread(target<span style="color:#f92672">=</span>self<span style="color:#f92672">.</span>_process_data_events)
+        thread<span style="color:#f92672">.</span>setDaemon(True)
+        thread<span style="color:#f92672">.</span>start()
+</code></pre></div><p>No método <em>rpc_async()</em>, terá como parâmetros o <strong>payload</strong> , que será passado a informação que será lançado na fila, e o parâmetro <strong>route,</strong> que será o nome da fila que será utilizada.</p>
+<p>Nesse método faremos a configuração da fila de controle, que citei anteriormente. Para isso, será criado um ID para fila, utilizando a biblioteca <em>uuid.</em></p>
+<p>No with, será verificado a variável <em>internal_lock</em> que criamos, nela é atribuído um bloqueio primitivo. Uma vez que um thread adquiriu um bloqueio, as tentativas subsequentes de adquiri-lo bloqueiam, até que ele seja liberado. Após isso, será passada a <em>route</em> com o nome da rota, e como propriedade há um <em>reply_to</em>, que é um recurso que permite que clientes RPC (solicitação/resposta) evitem declarar uma fila de resposta por solicitação, comumente usados para nomear uma fila de retorno de chamada. Nele é passado o atributo <em>callback_queue</em> que foi criado no __init__.</p>
+<p>Também há o <em>correlation_id</em>, que é útil para correlacionar respostas RPC com solicitações. É passado o id criado anteriormente, que será o nome da fila de controle.</p>
+<p>E por fim, o body, contendo a informação passada através do payload.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">rpc_async</span>(self, payload, route):
+        corr_id <span style="color:#f92672">=</span> str(uuid<span style="color:#f92672">.</span>uuid4())
+        self<span style="color:#f92672">.</span>queue[corr_id] <span style="color:#f92672">=</span> None
+        <span style="color:#66d9ef">with</span> self<span style="color:#f92672">.</span>internal_lock:
+            self<span style="color:#f92672">.</span>RMQ<span style="color:#f92672">.</span>channel<span style="color:#f92672">.</span>basic_publish(exchange<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;&#39;</span>,
+                                       routing_key<span style="color:#f92672">=</span>route,
+                                       properties<span style="color:#f92672">=</span>pika<span style="color:#f92672">.</span>BasicProperties(
+                                           reply_to<span style="color:#f92672">=</span>self<span style="color:#f92672">.</span>callback_queue,
+                                           correlation_id<span style="color:#f92672">=</span>corr_id,
+                                       ),
+                                       body<span style="color:#f92672">=</span>payload)
+        <span style="color:#66d9ef">return</span> corr_id       
+</code></pre></div><p>No método <em>_on_response()</em> será apenas armazenado o response da fila em um dicionário, passado como key, a ID que foi criado no metodo <em>rpc_async,</em> e no value o body do response.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">_on_response</span>(self, ch, method, props, body):
+        <span style="color:#e6db74">&#34;&#34;&#34;On response we simply store the result in a local dictionary.&#34;&#34;&#34;</span>
+        self<span style="color:#f92672">.</span>queue[props<span style="color:#f92672">.</span>correlation_id] <span style="color:#f92672">=</span> body        
+</code></pre></div><p>O método <em>_process_data_events(),</em> será responsável por ser uma espécie de vigia de eventos da fila de controle, e marcar um ACK ao evento, para consumi-lo.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">_process_data_events</span>(self):
+        self<span style="color:#f92672">.</span>RMQ<span style="color:#f92672">.</span>channel<span style="color:#f92672">.</span>basic_consume(
+            queue<span style="color:#f92672">=</span>self<span style="color:#f92672">.</span>callback_queue,
+            on_message_callback<span style="color:#f92672">=</span>self<span style="color:#f92672">.</span>_on_response, 
+            auto_ack<span style="color:#f92672">=</span>True,
+        )
+
+        <span style="color:#66d9ef">while</span> True:
+            <span style="color:#66d9ef">with</span> self<span style="color:#f92672">.</span>internal_lock:
+                self<span style="color:#f92672">.</span>RMQ<span style="color:#f92672">.</span>connection<span style="color:#f92672">.</span>process_data_events()
+                time<span style="color:#f92672">.</span>sleep(<span style="color:#ae81ff">0.1</span>)
+</code></pre></div><h2 id="consumo-da-classe-rabbitqueue-e-connectiondatabase">Consumo da classe RabbitQueue e ConnectionDatabase</h2>
+<p>Agora, só precisamos apontar a classe <strong>RabbitQueue</strong> no arquivo <em>server.py</em> para que possamos começar a consumir as filas que criamos.</p>
+<p>Antes de tudo, devemos importar todas as bibliotecas que precisaremos.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> json<span style="color:#f92672">,</span>time
+<span style="color:#f92672">from</span> flask <span style="color:#f92672">import</span> Flask, request
+<span style="color:#f92672">from</span> config.database_connection <span style="color:#f92672">import</span> ConnectionDatabase
+<span style="color:#f92672">from</span> rabbitmq_controller.rabbit_queues <span style="color:#f92672">import</span> RabbitQueue
+</code></pre></div><p>Fora da classe <em>Api_server</em> iremos instanciar <strong>RabbitQueue</strong> que criamos, a uma variável chamada <em>rabbit_queues</em>. Ela ficará fora da classe pois queremos que ela seja vista globalmente no arquivo. Dentro da classe <em>Api_server,</em> criaremos o construtor __init__ e chamaremos o método <em>create_queues,</em> para criar as filas, e também iremos chamar a classe <strong>ConnectionDatabase</strong> ,criada no Step5. Isso será responsável por se conectar aos dois servidores de serviço e criar as tabelas no banco, e filas no rabbit.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">rabbit_queues <span style="color:#f92672">=</span> RabbitQueue()
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Api_server</span>():
+    app <span style="color:#f92672">=</span> Flask(__name__)
+    
+    ConnectionDatabase()
+    rabbit_queues<span style="color:#f92672">.</span>create_queues()
+</code></pre></div><p>Uma pergunta que você pode estar se questionando é &quot;porque não criar o atributo <em>app</em> e a criação das filas do rabbitdentro de um __init__?&quot;.</p>
+<p>Bom, na maioria dos projetos que podem ser encontrado na internet relacionada ao Flask, você simplesmente irá se deparar com um arquivo com uma rota chamando uma função abaixo, sem segredos em relação a isso. Podemos compreender que o Flask não foi feito para seguir os padrões de Orientação a Objetos, tanto que é, que se você tentar colocar um &quot;self&quot;, na def abaixo da rota, simplesmente não irá funcionar. Visto isso, apenas atribui a estrutura de rotas e funções dentro de uma classe como uma boa prática, porém, não é necessário fazer isso caso você não queira.</p>
+<p>Agora, respondendo à pergunta, o simples fato de colocar um &quot;self&quot; antes do <em>app</em> ou da <em>criação das filas</em>, já faria com que todo o código parasse de funcionar, visto que no marcador @ não iria identificar o &quot;self.app&quot; que foi criado no init.</p>
+<h2 id="routes">Routes</h2>
+<p>Na chamada das routes, precisaremos invocar o método <em>rpc_async</em> para que possamos enviar o playload para a fila desejada. Para isso, utilizarei o mesmo exemplo que foi utilizado no Step4, com a rota /user/create_user/.</p>
+<p>Chamaremos o método <em>rpc_async,</em> passando como parâmetros o payload recebido na requisição, e a string &quot;user&quot;, que será a fila que será enviada a mensagem. Tudo isso será atribuído para uma variável chamada <em>corr_id,</em> que terá como return o <em>correlation_id</em>. Após isso, ficará sendo verificado o atributo <em>queue,</em> da classe <strong>RabbitQueue,</strong> se contêm alguma informação. Caso tenha, essa informação será retornada ao usuário.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#a6e22e">@app.route</span>(<span style="color:#e6db74">&#34;/user/create_user/&#34;</span>, methods<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#39;POST&#39;</span>])
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">create_user</span>():
+        <span style="color:#66d9ef">if</span> request<span style="color:#f92672">.</span>method <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;POST&#39;</span>:
+            payload <span style="color:#f92672">=</span> request<span style="color:#f92672">.</span>get_json()
+
+            corr_id <span style="color:#f92672">=</span> rabbit_queues<span style="color:#f92672">.</span>rpc_async(json<span style="color:#f92672">.</span>dumps(payload),<span style="color:#e6db74">&#34;user&#34;</span>)
+            <span style="color:#66d9ef">while</span> rabbit_queues<span style="color:#f92672">.</span>queue[corr_id] <span style="color:#f92672">is</span> None:
+                time<span style="color:#f92672">.</span>sleep(<span style="color:#ae81ff">0.1</span>)
+
+            <span style="color:#66d9ef">return</span> {<span style="color:#e6db74">&#39;Status&#39;</span>: <span style="color:#ae81ff">200</span>, <span style="color:#e6db74">&#39;Message&#39;</span>: json<span style="color:#f92672">.</span>loads(rabbit_queues<span style="color:#f92672">.</span>queue[corr_id])}
+        <span style="color:#66d9ef">else</span>:
+            <span style="color:#66d9ef">return</span> {<span style="color:#e6db74">&#39;Status&#39;</span>: <span style="color:#ae81ff">404</span>, <span style="color:#e6db74">&#39;Message&#39;</span>: <span style="color:#e6db74">&#39;Erro no envio do method&#39;</span>}
+</code></pre></div><h2 id="resumo-da-funcionalidade">Resumo da Funcionalidade</h2>
+<p>E chegamos ao fim do envio de mensagens a fila. Como podem perceber, são muitas coisas divergentes sendo processadas, enviadas e recebidas ao mesmo tempo, podendo ser um pouco complexo de entender inicialmente. Basta montar o condigo na ordem que foi mostrada acima, e olhá-lo de uma visão panorâmica, que as peças se encaixarão.</p>
+<p>Para facilitar um pouco mais, vou resumir em tópicos o que vai acontecer quando enviarmos uma mensagem para alguma fila.</p>
+<ol>
+<li>Será chamado o método <strong>rpc_async</strong> passando a mensagem e a fila que deverá ser enviada.</li>
+<li>No <strong>__init__</strong> da classe <strong>RabbitQueue,</strong> estabelecemos uma conexão com servidor Rabbit, e declaramos um <strong>callback_queue</strong> exclusivamente para receber resposta da fila de controle. É criada uma thead que ficará monitorando a fila de controle.</li>
+<li>No <strong>rpc_async</strong> é onde será feita a solicitação RPC.</li>
+<li>Dentro do <strong>rpc_async</strong> é gerado um <strong>correlation_id</strong> exclusivo e o salvamos. O método <strong>_on_response</strong> usará esse valor para criar um dicionário, que será atribuído a <em>key.</em></li>
+<li>Também no método <strong>rpc_async,</strong> publicamos a mensagem com duas propriedades, <em>reply_to</em> e <em>correlation_id</em>.</li>
+<li>O <strong>callback_queue</strong> será marcado para que possamos receber respostas RPC.</li>
+<li>O <strong>_process_data_events</strong> , terá a função de ficar monitorando a fila de controle para poder gravar o response do parâmetro <em>on_message_callback</em>, passado para o <strong>_on_response</strong>.</li>
+<li>No <strong>_on_response</strong> , será montado um dicionário, que irá conter o <em>correlation_id</em> e o <em>body</em> capturado da fila de controle. O body será o response da fila.</li>
+<li>Por fim, no arquivo <em>server.py,</em> será verificado se a variável <em>queue</em> contém alguma informação para ser repassada como response da requisição a API.</li>
+</ol>
+<p>Agora que já fizemos tanto a parte de conexão e criação das tabelas do banco de dados, quanto a conexão e criação das filas do rabbit, vou fazer um teste inicializando a API, verificando se todas as coisas que criamos estão rodando como deveriam.</p>
+<p>Como quero testar utilizando os servidores que já estão rodando na instância OCI, liberei as portas dos serviços para que eu possa fazer o teste localmente de meu computador.</p>
+<p><img src="https://patrickpiccini.github.io/images/microservice_project/img30.jpg" alt="img30"></p>
+<p>Após rodar a API aparecerão algumas informações como a conexão com o rabbit e a criação das filas feitas, e também informações sobre o Flask.</p>
+<p><img src="https://patrickpiccini.github.io/images/microservice_project/img31.jpg" alt="img31"></p>
+<p>Já na Manager do rabbit podemos ver a criação das filas <em>order</em> e <em>user</em>, juntamente com a fila de controle.</p>
+<p><img src="https://patrickpiccini.github.io/images/microservice_project/img32.jpg" alt="img32"></p>
+<p>E no PgAdmin fiz um select para verificar se as tabelas foram criadas.</p>
+<p><img src="https://patrickpiccini.github.io/images/microservice_project/img33.jpg" alt="img33"></p>
+<p><img src="https://patrickpiccini.github.io/images/microservice_project/img34.jpg" alt="img34"></p>
+
+      </div>
+    </article>
+
+    <hr />
+
+    <div class="post-info">
+      
+      
+
+      <p>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+          <polyline points="14 2 14 8 20 8"></polyline>
+          <line x1="16" y1="13" x2="8" y2="13"></line>
+          <line x1="16" y1="17" x2="8" y2="17"></line>
+          <polyline points="10 9 9 9 8 9"></polyline>
+        </svg>
+        1614 Words
+      </p>
+
+      <p>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar">
+          <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+          <line x1="16" y1="2" x2="16" y2="6"></line>
+          <line x1="8" y1="2" x2="8" y2="6"></line>
+          <line x1="3" y1="10" x2="21" y2="10"></line>
+        </svg>
+        
+          2022-07-07 09:01
+        
+
+         
+          
+        
+      </p>
+    </div>
+
+    
+    <div class="pagination">
+        
+
+        <div class="pagination__buttons">
+            
+
+            
+            <span class="button next">
+                <a href="https://patrickpiccini.github.io/posts/microservice_project_step05/">
+                    <span class="button__text">Microservice Project – Step 5</span>
+                    <span class="button__icon">→</span>
+                </a>
+            </span>
+            
+        </div>
+    </div>
+
+
+    
+
+    
+
+  </main>
+
+            </div>
+
+            
+                <footer class="footer">
+    
+    
+</footer>
+
+            
+        </div>
+
+        
+
+
+
+<script type="text/javascript" src="https://patrickpiccini.github.io/bundle.min.ace63d93098bf623f7c286a9084a4c22bfc482944c734f87fe0b685c7c6c7fa0ad2edb028c3b4b60d3343720c8ab490b320ad7f8edf4f6e9a6b898fc529057a9.js" integrity="sha512-rOY9kwmL9iP3woapCEpMIr/EgpRMc0&#43;H/gtoXHxsf6CtLtsCjDtLYNM0NyDIq0kLMgrX&#43;O309ummuJj8UpBXqQ=="></script>
+
+
+
+    </body>
+</html>
