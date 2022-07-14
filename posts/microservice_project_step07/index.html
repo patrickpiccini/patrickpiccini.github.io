@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="author" content="map[name:Patrick Piccini]">
+<meta name="description" content="Table of Contents  Config Requeriments Docker-Compose Dockerfile Main.py Resumo   Agora vamos para o próximo nível da nossa aplicação. Como já temos a API pré-configurada com as filas e as tabelas do banco criados, começaremos a criar os microservices para consumi-las. A arquitetura do serviço será bem semelhante ao que criamos na API, contendo requirements, dockerfile, docker-compose, pasta de config e mais algumas coisas.
+Na pasta raiz da aplicação MS-Application, vamos criar os seguintes arquivos:" />
+<meta name="keywords" content="" />
+<meta name="robots" content="noodp" />
+<meta name="theme-color" content="" />
+<link rel="canonical" href="https://patrickpiccini.github.io/posts/microservice_project_step07/" />
+
+
+    <title>
+        
+            Microservice Project – Step 7 :: Patrick Piccini 
+        
+    </title>
+
+
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css" rel="stylesheet"
+    type="text/css">
+
+
+
+<link rel="stylesheet" href="https://patrickpiccini.github.io/main.4e5c639214707eff609bb55fe49e183dee42258a73bc90e4cc7b0a84f900798a.css">
+
+
+
+<link rel="apple-touch-icon" sizes="180x180" href="https://patrickpiccini.github.io/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://patrickpiccini.github.io/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="https://patrickpiccini.github.io/favicon-16x16.png">
+<link rel="manifest" href="https://patrickpiccini.github.io/site.webmanifest">
+<link rel="mask-icon" href="https://patrickpiccini.github.io/safari-pinned-tab.svg" color="">
+<link rel="shortcut icon" href="https://patrickpiccini.github.io/favicon.ico">
+<meta name="msapplication-TileColor" content="">
+
+
+<meta itemprop="name" content="Microservice Project – Step 7">
+<meta itemprop="description" content="Table of Contents  Config Requeriments Docker-Compose Dockerfile Main.py Resumo   Agora vamos para o próximo nível da nossa aplicação. Como já temos a API pré-configurada com as filas e as tabelas do banco criados, começaremos a criar os microservices para consumi-las. A arquitetura do serviço será bem semelhante ao que criamos na API, contendo requirements, dockerfile, docker-compose, pasta de config e mais algumas coisas.
+Na pasta raiz da aplicação MS-Application, vamos criar os seguintes arquivos:">
+<meta itemprop="datePublished" content="2022-07-14T09:01:57-03:00" />
+<meta itemprop="dateModified" content="2022-07-14T09:01:57-03:00" />
+<meta itemprop="wordCount" content="525">
+
+
+
+<meta itemprop="keywords" content="" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Microservice Project – Step 7"/>
+<meta name="twitter:description" content="Table of Contents  Config Requeriments Docker-Compose Dockerfile Main.py Resumo   Agora vamos para o próximo nível da nossa aplicação. Como já temos a API pré-configurada com as filas e as tabelas do banco criados, começaremos a criar os microservices para consumi-las. A arquitetura do serviço será bem semelhante ao que criamos na API, contendo requirements, dockerfile, docker-compose, pasta de config e mais algumas coisas.
+Na pasta raiz da aplicação MS-Application, vamos criar os seguintes arquivos:"/>
+
+
+
+
+
+
+
+
+    <meta property="article:published_time" content="2022-07-14 09:01:57 -0300 -03" />
+
+
+
+
+
+
+
+
+
+
+    </head>
+
+    
+        <body>
+    
+    
+        <div class="container">
+            <header class="header">
+    <span class="header__inner">
+        <a href="https://patrickpiccini.github.io/" style="text-decoration: none;">
+    <div class="logo">
+        
+            <span class="logo__mark">&gt;</span>
+            <span class="logo__text">/home/piccini</span>
+            <span class="logo__cursor" style=
+                  "
+                   background-color:#67a2c9;
+                   ">
+            </span>
+        
+    </div>
+</a>
+
+
+        <span class="header__right">
+            
+                <nav class="menu">
+    <ul class="menu__inner"><li><a href="https://patrickpiccini.github.io/codes/">Codes</a></li><li><a href="https://patrickpiccini.github.io/posts/">Posts</a></li><li><a href="https://patrickpiccini.github.io/about/">Whoami</a></li>
+    </ul>
+</nav>
+
+                <span class="menu-trigger">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+                    </svg>
+                </span>
+            
+        </span>
+    </span>
+</header>
+
+
+            <div class="content">
+                
+  <main class="post">
+
+    <div class="post-info">
+      <p>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock">
+          <circle cx="12" cy="12" r="10"></circle>
+          <polyline points="12 6 12 12 16 14"></polyline>
+        </svg>
+        3 minutes
+
+        
+      </p>
+    </div>
+
+    <article>
+      <h1 class="post-title">
+        <a href="https://patrickpiccini.github.io/posts/microservice_project_step07/">Microservice Project – Step 7</a>
+      </h1>
+
+      
+
+      
+
+      
+
+      <div class="post-content">
+        <p><img src="https://patrickpiccini.github.io/images/microservice_project/microservices.png" alt="microservices"></p>
+<h2 id="table-of-contents">Table of Contents</h2>
+<ul>
+<li><a href="#config">Config</a></li>
+<li><a href="#requeriments">Requeriments</a></li>
+<li><a href="#docker-compose">Docker-Compose</a></li>
+<li><a href="#dockerfile">Dockerfile</a></li>
+<li><a href="#mainpy">Main.py</a></li>
+<li><a href="#resumo">Resumo</a></li>
+</ul>
+<hr>
+<p>Agora vamos para o próximo nível da nossa aplicação. Como já temos a API pré-configurada com as filas e as tabelas do banco criados, começaremos a criar os microservices para consumi-las. A arquitetura do serviço será bem semelhante ao que criamos na API, contendo <em>requirements</em>, <em>dockerfile</em>, <em>docker-compose</em>, pasta de <em>config</em> e mais algumas coisas.</p>
+<p>Na pasta raiz da aplicação MS-Application, vamos criar os seguintes arquivos:</p>
+<pre><code class="language-Estrutura" data-lang="Estrutura">MS-application
+└───MS1
+    │   docker-compose-microservice1.yml
+    │   Dockerfile
+    │   main.py
+    │   requirements.txt
+    │
+    ├───config
+    │       database_connection.py
+    │       rabbitmq_connection.py
+    │       __init__.py
+</code></pre><h2 id="config">Config</h2>
+<p>Na pasta <strong>config</strong> , os arquivos <em>database_connection.py</em> e <em>rabbitmq_connection.py</em> são exatamente as mesmas configurações dos arquivos contido na API, então apenas vamos copiar aos arquivos da API.</p>
+<h2 id="requeriments">Requeriments</h2>
+<p>No arquivo <em>requeriments.txt</em> ficarão todas as instalações de bibliotecas e framework que serão utilizados na aplicação do microservices. As bibliotecas devem ficar separadas por linha, visto que usaremos um comando para uma instalação recursiva.</p>
+<pre><code class="language-requirements" data-lang="requirements">requirements.txt
+   psycopg2-binary
+   argon2-cffi
+   flask
+   pika
+</code></pre><p>Comando para instalação:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">pip install -r requeriments.txt
+</code></pre></div><h2 id="docker-compose">Docker-Compose</h2>
+<p>No arquivo <em>docker-compose-microservice1.yml,</em> configuraremos a inicialização da imagem do serviço. Será feito o Build da imagem que criaremos posteriormente, apontado a Network que criamos juntamente aos serviços logo no início do projeto.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-docker" data-lang="docker">version: <span style="color:#e6db74">&#34;3.7&#34;</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>services:<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>  microservice1:<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>    build: .<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>    networks:<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>      - internal-network<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>networks:<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>    internal-network:<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>        external: true<span style="color:#960050;background-color:#1e0010">
+</span></code></pre></div><h2 id="dockerfile">Dockerfile</h2>
+<p>No arquivo Dockerfile iremos configurar a imagem de nosso primeiro microservices, contendo as variáveis de ambiente adequadas para o serviço. Diferente da imagem do python que usamos na API, no microservice precisaremos instalar a imagem completa do python, sendo ela: python:3.8.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-docker" data-lang="docker"><span style="color:#66d9ef">FROM</span><span style="color:#e6db74"> python:3.8</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">COPY</span> . /app/<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">ENV</span> HOST<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;10.0.0.25&#39;</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">ENV</span> HOST_DATABASE<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;10.5.0.11&#39;</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">WORKDIR</span><span style="color:#e6db74"> /app</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">RUN</span> pip install --upgrade pip<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">RUN</span> pip install -r requirements.txt<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">CMD</span> python main.py<span style="color:#960050;background-color:#1e0010">
+</span></code></pre></div><h2 id="mainpy">Main.py</h2>
+<p>O arquivo <em>main.py</em> será responsável por interceptar as mensagens enviadas para a fila de usuário.</p>
+<p>Primeiramente, devemos importar os arquivos de conexão com o postgres e rabbit. Após isso, criaremos a classe <em>Main(),</em> onde no método <em>__init__,</em> chamaremos as conexões com os servidores.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> config.database_connection <span style="color:#f92672">import</span> ConnectionDatabase
+<span style="color:#f92672">from</span> config.rabbitmq_connection <span style="color:#f92672">import</span> ConnectionRabbitMq
+<span style="color:#f92672">from</span> rabbitmq_controller.rabbit_worker <span style="color:#f92672">import</span> RabbitWorker
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Main</span>():
+
+    <span style="color:#66d9ef">def</span> __init__(self):
+        self<span style="color:#f92672">.</span>PSQL <span style="color:#f92672">=</span> ConnectionDatabase()
+        self<span style="color:#f92672">.</span>RMQ <span style="color:#f92672">=</span> ConnectionRabbitMq()
+        self<span style="color:#f92672">.</span>RMQ_WORKER <span style="color:#f92672">=</span> RabbitWorker()
+</code></pre></div><p>Feito isso, criaremos um método chamado <em>consume_queue,</em> que consumirá a fila que desejamos. Nesse caso será <em>user,</em> e posteriormente o consumo disparará uma função para o processamento do dado recebido da fila. Nesse momento não iremos criar a função de processamento, porem iremos apenas nomeá-la no lugar correto.</p>
+<p>Com o comando <em>basic_consume</em> consumiremos a fila <em>user</em>, no on_message_callback será disparado a função para o processamento da informação recebida na fila.</p>
+<p>Com o comando <em>start_consuming,</em> é processado o evento de I/O até que todos as mensagens sejam processadas.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">consume_queue</span>(self):
+        self<span style="color:#f92672">.</span>RMQ<span style="color:#f92672">.</span>channel<span style="color:#f92672">.</span>basic_qos(prefetch_count<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+        self<span style="color:#f92672">.</span>RMQ<span style="color:#f92672">.</span>channel<span style="color:#f92672">.</span>basic_consume(queue<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;user&#39;</span>, on_message_callback<span style="color:#f92672">=</span>self<span style="color:#f92672">.</span>RMQ_WORKER<span style="color:#f92672">.</span>callback)
+
+        <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;     [⇄] Waiting for messages. To exit press CTRL+C&#39;</span>)
+        self<span style="color:#f92672">.</span>RMQ<span style="color:#f92672">.</span>channel<span style="color:#f92672">.</span>start_consuming()
+</code></pre></div><p>Finalizaremos com a chamada do método <em>consume_queue</em> para inicializar o serviço.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;__main__&#39;</span>:
+
+    MA <span style="color:#f92672">=</span> Main()
+    MA<span style="color:#f92672">.</span>consume_queue()
+</code></pre></div><h2 id="resumo">Resumo</h2>
+<p>Nesse Step criamos nosso primeiro microservices para o processamento dos dados recebidos através da fila de usuário. Copiamos os arquivos de conexão <em>database_connection.py</em> e <em>rabbitmq_connection.py</em> da API, visto que é a mesma conexão que precisaremos fazer nos microservices. Também criamos o arquivo <em>main.py</em> que será o responsável por inicializar o serviço e disparar o método <em>consume_queue,</em> que como o próprio nome diz, irá consumir a fila de usuários.</p>
+
+      </div>
+    </article>
+
+    <hr />
+
+    <div class="post-info">
+      
+      
+
+      <p>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+          <polyline points="14 2 14 8 20 8"></polyline>
+          <line x1="16" y1="13" x2="8" y2="13"></line>
+          <line x1="16" y1="17" x2="8" y2="17"></line>
+          <polyline points="10 9 9 9 8 9"></polyline>
+        </svg>
+        525 Words
+      </p>
+
+      <p>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar">
+          <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+          <line x1="16" y1="2" x2="16" y2="6"></line>
+          <line x1="8" y1="2" x2="8" y2="6"></line>
+          <line x1="3" y1="10" x2="21" y2="10"></line>
+        </svg>
+        
+          2022-07-14 09:01
+        
+
+         
+          
+        
+      </p>
+    </div>
+
+    
+    <div class="pagination">
+        
+
+        <div class="pagination__buttons">
+            
+
+            
+            <span class="button next">
+                <a href="https://patrickpiccini.github.io/posts/microservice_project_step06/">
+                    <span class="button__text">Microservice Project – Step 6</span>
+                    <span class="button__icon">→</span>
+                </a>
+            </span>
+            
+        </div>
+    </div>
+
+
+    
+
+    
+
+  </main>
+
+            </div>
+
+            
+                <footer class="footer">
+    
+    
+</footer>
+
+            
+        </div>
+
+        
+
+
+
+<script type="text/javascript" src="https://patrickpiccini.github.io/bundle.min.ace63d93098bf623f7c286a9084a4c22bfc482944c734f87fe0b685c7c6c7fa0ad2edb028c3b4b60d3343720c8ab490b320ad7f8edf4f6e9a6b898fc529057a9.js" integrity="sha512-rOY9kwmL9iP3woapCEpMIr/EgpRMc0&#43;H/gtoXHxsf6CtLtsCjDtLYNM0NyDIq0kLMgrX&#43;O309ummuJj8UpBXqQ=="></script>
+
+
+
+    </body>
+</html>

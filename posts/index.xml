@@ -6,8 +6,105 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
         <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-        <lastBuildDate>Thu, 07 Jul 2022 09:01:56 -0300</lastBuildDate>
+        <lastBuildDate>Thu, 14 Jul 2022 09:01:57 -0300</lastBuildDate>
         <atom:link href="https://patrickpiccini.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+        
+        <item>
+            <title>Microservice Project – Step 7</title>
+            <link>https://patrickpiccini.github.io/posts/microservice_project_step07/</link>
+            <pubDate>Thu, 14 Jul 2022 09:01:57 -0300</pubDate>
+            
+            <guid>https://patrickpiccini.github.io/posts/microservice_project_step07/</guid>
+            <description>Table of Contents  Config Requeriments Docker-Compose Dockerfile Main.py Resumo   Agora vamos para o próximo nível da nossa aplicação. Como já temos a API pré-configurada com as filas e as tabelas do banco criados, começaremos a criar os microservices para consumi-las. A arquitetura do serviço será bem semelhante ao que criamos na API, contendo requirements, dockerfile, docker-compose, pasta de config e mais algumas coisas.
+Na pasta raiz da aplicação MS-Application, vamos criar os seguintes arquivos:</description>
+            <content type="html"><![CDATA[<p><img src="/images/microservice_project/microservices.png" alt="microservices"></p>
+<h2 id="table-of-contents">Table of Contents</h2>
+<ul>
+<li><a href="#config">Config</a></li>
+<li><a href="#requeriments">Requeriments</a></li>
+<li><a href="#docker-compose">Docker-Compose</a></li>
+<li><a href="#dockerfile">Dockerfile</a></li>
+<li><a href="#mainpy">Main.py</a></li>
+<li><a href="#resumo">Resumo</a></li>
+</ul>
+<hr>
+<p>Agora vamos para o próximo nível da nossa aplicação. Como já temos a API pré-configurada com as filas e as tabelas do banco criados, começaremos a criar os microservices para consumi-las. A arquitetura do serviço será bem semelhante ao que criamos na API, contendo <em>requirements</em>, <em>dockerfile</em>, <em>docker-compose</em>, pasta de <em>config</em> e mais algumas coisas.</p>
+<p>Na pasta raiz da aplicação MS-Application, vamos criar os seguintes arquivos:</p>
+<pre><code class="language-Estrutura" data-lang="Estrutura">MS-application
+└───MS1
+    │   docker-compose-microservice1.yml
+    │   Dockerfile
+    │   main.py
+    │   requirements.txt
+    │
+    ├───config
+    │       database_connection.py
+    │       rabbitmq_connection.py
+    │       __init__.py
+</code></pre><h2 id="config">Config</h2>
+<p>Na pasta <strong>config</strong> , os arquivos <em>database_connection.py</em> e <em>rabbitmq_connection.py</em> são exatamente as mesmas configurações dos arquivos contido na API, então apenas vamos copiar aos arquivos da API.</p>
+<h2 id="requeriments">Requeriments</h2>
+<p>No arquivo <em>requeriments.txt</em> ficarão todas as instalações de bibliotecas e framework que serão utilizados na aplicação do microservices. As bibliotecas devem ficar separadas por linha, visto que usaremos um comando para uma instalação recursiva.</p>
+<pre><code class="language-requirements" data-lang="requirements">requirements.txt
+   psycopg2-binary
+   argon2-cffi
+   flask
+   pika
+</code></pre><p>Comando para instalação:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">pip install -r requeriments.txt
+</code></pre></div><h2 id="docker-compose">Docker-Compose</h2>
+<p>No arquivo <em>docker-compose-microservice1.yml,</em> configuraremos a inicialização da imagem do serviço. Será feito o Build da imagem que criaremos posteriormente, apontado a Network que criamos juntamente aos serviços logo no início do projeto.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-docker" data-lang="docker">version: <span style="color:#e6db74">&#34;3.7&#34;</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>services:<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>  microservice1:<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>    build: .<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>    networks:<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>      - internal-network<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>networks:<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>    internal-network:<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>        external: true<span style="color:#960050;background-color:#1e0010">
+</span></code></pre></div><h2 id="dockerfile">Dockerfile</h2>
+<p>No arquivo Dockerfile iremos configurar a imagem de nosso primeiro microservices, contendo as variáveis de ambiente adequadas para o serviço. Diferente da imagem do python que usamos na API, no microservice precisaremos instalar a imagem completa do python, sendo ela: python:3.8.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-docker" data-lang="docker"><span style="color:#66d9ef">FROM</span><span style="color:#e6db74"> python:3.8</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">COPY</span> . /app/<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">ENV</span> HOST<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;10.0.0.25&#39;</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">ENV</span> HOST_DATABASE<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;10.5.0.11&#39;</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">WORKDIR</span><span style="color:#e6db74"> /app</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">RUN</span> pip install --upgrade pip<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">RUN</span> pip install -r requirements.txt<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">CMD</span> python main.py<span style="color:#960050;background-color:#1e0010">
+</span></code></pre></div><h2 id="mainpy">Main.py</h2>
+<p>O arquivo <em>main.py</em> será responsável por interceptar as mensagens enviadas para a fila de usuário.</p>
+<p>Primeiramente, devemos importar os arquivos de conexão com o postgres e rabbit. Após isso, criaremos a classe <em>Main(),</em> onde no método <em>__init__,</em> chamaremos as conexões com os servidores.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> config.database_connection <span style="color:#f92672">import</span> ConnectionDatabase
+<span style="color:#f92672">from</span> config.rabbitmq_connection <span style="color:#f92672">import</span> ConnectionRabbitMq
+<span style="color:#f92672">from</span> rabbitmq_controller.rabbit_worker <span style="color:#f92672">import</span> RabbitWorker
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Main</span>():
+
+    <span style="color:#66d9ef">def</span> __init__(self):
+        self<span style="color:#f92672">.</span>PSQL <span style="color:#f92672">=</span> ConnectionDatabase()
+        self<span style="color:#f92672">.</span>RMQ <span style="color:#f92672">=</span> ConnectionRabbitMq()
+        self<span style="color:#f92672">.</span>RMQ_WORKER <span style="color:#f92672">=</span> RabbitWorker()
+</code></pre></div><p>Feito isso, criaremos um método chamado <em>consume_queue,</em> que consumirá a fila que desejamos. Nesse caso será <em>user,</em> e posteriormente o consumo disparará uma função para o processamento do dado recebido da fila. Nesse momento não iremos criar a função de processamento, porem iremos apenas nomeá-la no lugar correto.</p>
+<p>Com o comando <em>basic_consume</em> consumiremos a fila <em>user</em>, no on_message_callback será disparado a função para o processamento da informação recebida na fila.</p>
+<p>Com o comando <em>start_consuming,</em> é processado o evento de I/O até que todos as mensagens sejam processadas.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">consume_queue</span>(self):
+        self<span style="color:#f92672">.</span>RMQ<span style="color:#f92672">.</span>channel<span style="color:#f92672">.</span>basic_qos(prefetch_count<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+        self<span style="color:#f92672">.</span>RMQ<span style="color:#f92672">.</span>channel<span style="color:#f92672">.</span>basic_consume(queue<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;user&#39;</span>, on_message_callback<span style="color:#f92672">=</span>self<span style="color:#f92672">.</span>RMQ_WORKER<span style="color:#f92672">.</span>callback)
+
+        <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;     [⇄] Waiting for messages. To exit press CTRL+C&#39;</span>)
+        self<span style="color:#f92672">.</span>RMQ<span style="color:#f92672">.</span>channel<span style="color:#f92672">.</span>start_consuming()
+</code></pre></div><p>Finalizaremos com a chamada do método <em>consume_queue</em> para inicializar o serviço.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;__main__&#39;</span>:
+
+    MA <span style="color:#f92672">=</span> Main()
+    MA<span style="color:#f92672">.</span>consume_queue()
+</code></pre></div><h2 id="resumo">Resumo</h2>
+<p>Nesse Step criamos nosso primeiro microservices para o processamento dos dados recebidos através da fila de usuário. Copiamos os arquivos de conexão <em>database_connection.py</em> e <em>rabbitmq_connection.py</em> da API, visto que é a mesma conexão que precisaremos fazer nos microservices. Também criamos o arquivo <em>main.py</em> que será o responsável por inicializar o serviço e disparar o método <em>consume_queue,</em> que como o próprio nome diz, irá consumir a fila de usuários.</p>
+]]></content>
+        </item>
         
         <item>
             <title>Microservice Project – Step 6</title>

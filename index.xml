@@ -13,6 +13,16 @@
     
     
     <item>
+      <title>Microservice Project – Step 7</title>
+      <link>https://patrickpiccini.github.io/posts/microservice_project_step07/</link>
+      <pubDate>Thu, 14 Jul 2022 09:01:57 -0300</pubDate>
+      
+      <guid>https://patrickpiccini.github.io/posts/microservice_project_step07/</guid>
+      <description>Table of Contents  Config Requeriments Docker-Compose Dockerfile Main.py Resumo   Agora vamos para o próximo nível da nossa aplicação. Como já temos a API pré-configurada com as filas e as tabelas do banco criados, começaremos a criar os microservices para consumi-las. A arquitetura do serviço será bem semelhante ao que criamos na API, contendo requirements, dockerfile, docker-compose, pasta de config e mais algumas coisas.
+Na pasta raiz da aplicação MS-Application, vamos criar os seguintes arquivos:</description>
+    </item>
+    
+    <item>
       <title>Microservice Project – Step 6</title>
       <link>https://patrickpiccini.github.io/posts/microservice_project_step06/</link>
       <pubDate>Thu, 07 Jul 2022 09:01:56 -0300</pubDate>
@@ -96,16 +106,6 @@ No ícone de hamburguer na página inicial do OCI, iremos em &amp;gt; Identity &
       
       <guid>https://patrickpiccini.github.io/posts/spotify_wrapped/</guid>
       <description>Table of Contents  Projeto Spotify Wrapped  O que é spotify wrapped DataSet   Exploratory Data Analysis EDA Extração Exploração Limpeza de Dados Agregação  10 artistas mais escutados. 10 musicas mais escutadas.   Visualização Storytelling   Projeto Spotify Wrapped Recentemente venho estudando a área de Data Analytics, Data Science e as várias derivações de inteligência artificial, e descobri um grande interesse por esse mundo. Foi então que decidi iniciar um pequeno projeto onde eu possa praticar meus conhecimentos adquiridos, e também mostrar como o nosso cotidiano está repleto de tecnologia aplicada sobre inteligência artificial.</description>
-    </item>
-    
-    <item>
-      <title>Email com Google Authentication – Refresh Token</title>
-      <link>https://patrickpiccini.github.io/posts/google_auth-refresh-token/</link>
-      <pubDate>Sun, 22 May 2022 18:00:00 -0300</pubDate>
-      
-      <guid>https://patrickpiccini.github.io/posts/google_auth-refresh-token/</guid>
-      <description>Table of Contents  Introdução  Pré-requisitos   Step 1 – Instalação de bibliotecas Step 2 – Leitura do token.json Step 3 – Função refresh_token Step 4 – Função request_refresh_token Step 5 – Execução Código Completo Conclusão Referências   Introdução Nesse artigo irei continuar o assunto abordado na publicação Email com Google Authentication.
-Visto que no primeiro estágio fizemos apenas uma autenticação, nos deparamos com a criação de um arquivo chamado token.</description>
     </item>
     
   </channel>
