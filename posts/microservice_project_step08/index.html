@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="author" content="map[name:Patrick Piccini]">
+<meta name="description" content="Table of Contents  Tag API Controlador DataBase  Manipulação de datas   Insert_user Show_all_user Métodos Criados Controlador Rabbit Resumo   No passo anterior concluímos a arquitetura do Microsserviço, e fizemos a conexão com os serviços do Rabbit e Postgres. Agora, vamos fazer a lógica do sistema de usuário, onde iremos diferenciar as interações com o banco de dados através de uma tag, enviada pela API, e dependendo da interação de for solicitada, haverá o acionamento de uma função equivalente a solicitação." />
+<meta name="keywords" content="" />
+<meta name="robots" content="noodp" />
+<meta name="theme-color" content="" />
+<link rel="canonical" href="https://patrickpiccini.github.io/posts/microservice_project_step08/" />
+
+
+    <title>
+        
+            Microservice Project – Step 8 :: Patrick Piccini 
+        
+    </title>
+
+
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css" rel="stylesheet"
+    type="text/css">
+
+
+
+<link rel="stylesheet" href="https://patrickpiccini.github.io/main.4e5c639214707eff609bb55fe49e183dee42258a73bc90e4cc7b0a84f900798a.css">
+
+
+
+<link rel="apple-touch-icon" sizes="180x180" href="https://patrickpiccini.github.io/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://patrickpiccini.github.io/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="https://patrickpiccini.github.io/favicon-16x16.png">
+<link rel="manifest" href="https://patrickpiccini.github.io/site.webmanifest">
+<link rel="mask-icon" href="https://patrickpiccini.github.io/safari-pinned-tab.svg" color="">
+<link rel="shortcut icon" href="https://patrickpiccini.github.io/favicon.ico">
+<meta name="msapplication-TileColor" content="">
+
+
+<meta itemprop="name" content="Microservice Project – Step 8">
+<meta itemprop="description" content="Table of Contents  Tag API Controlador DataBase  Manipulação de datas   Insert_user Show_all_user Métodos Criados Controlador Rabbit Resumo   No passo anterior concluímos a arquitetura do Microsserviço, e fizemos a conexão com os serviços do Rabbit e Postgres. Agora, vamos fazer a lógica do sistema de usuário, onde iremos diferenciar as interações com o banco de dados através de uma tag, enviada pela API, e dependendo da interação de for solicitada, haverá o acionamento de uma função equivalente a solicitação.">
+<meta itemprop="datePublished" content="2022-07-21T09:23:00-03:00" />
+<meta itemprop="dateModified" content="2022-07-21T09:23:00-03:00" />
+<meta itemprop="wordCount" content="1579">
+
+
+
+<meta itemprop="keywords" content="" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Microservice Project – Step 8"/>
+<meta name="twitter:description" content="Table of Contents  Tag API Controlador DataBase  Manipulação de datas   Insert_user Show_all_user Métodos Criados Controlador Rabbit Resumo   No passo anterior concluímos a arquitetura do Microsserviço, e fizemos a conexão com os serviços do Rabbit e Postgres. Agora, vamos fazer a lógica do sistema de usuário, onde iremos diferenciar as interações com o banco de dados através de uma tag, enviada pela API, e dependendo da interação de for solicitada, haverá o acionamento de uma função equivalente a solicitação."/>
+
+
+
+
+
+
+
+
+    <meta property="article:published_time" content="2022-07-21 09:23:00 -0300 -03" />
+
+
+
+
+
+
+
+
+
+
+    </head>
+
+    
+        <body>
+    
+    
+        <div class="container">
+            <header class="header">
+    <span class="header__inner">
+        <a href="https://patrickpiccini.github.io/" style="text-decoration: none;">
+    <div class="logo">
+        
+            <span class="logo__mark">&gt;</span>
+            <span class="logo__text">/home/piccini</span>
+            <span class="logo__cursor" style=
+                  "
+                   background-color:#67a2c9;
+                   ">
+            </span>
+        
+    </div>
+</a>
+
+
+        <span class="header__right">
+            
+                <nav class="menu">
+    <ul class="menu__inner"><li><a href="https://patrickpiccini.github.io/codes/">Codes</a></li><li><a href="https://patrickpiccini.github.io/posts/">Posts</a></li><li><a href="https://patrickpiccini.github.io/about/">Whoami</a></li>
+    </ul>
+</nav>
+
+                <span class="menu-trigger">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+                    </svg>
+                </span>
+            
+        </span>
+    </span>
+</header>
+
+
+            <div class="content">
+                
+  <main class="post">
+
+    <div class="post-info">
+      <p>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock">
+          <circle cx="12" cy="12" r="10"></circle>
+          <polyline points="12 6 12 12 16 14"></polyline>
+        </svg>
+        8 minutes
+
+        
+      </p>
+    </div>
+
+    <article>
+      <h1 class="post-title">
+        <a href="https://patrickpiccini.github.io/posts/microservice_project_step08/">Microservice Project – Step 8</a>
+      </h1>
+
+      
+
+      
+
+      
+
+      <div class="post-content">
+        <p><img src="https://patrickpiccini.github.io/images/microservice_project/microservices.png" alt="microservices"></p>
+<h2 id="table-of-contents">Table of Contents</h2>
+<ul>
+<li><a href="#tag-api">Tag API</a></li>
+<li><a href="#controlador-database">Controlador DataBase</a>
+<ul>
+<li><a href="#manipula%C3%A7%C3%A3o-de-datas">Manipulação de datas</a></li>
+</ul>
+</li>
+<li><a href="#insert%5C_user">Insert_user</a></li>
+<li><a href="#show%5C_all%5C_user">Show_all_user</a></li>
+<li><a href="#m%C3%A9todos-criados">Métodos Criados</a></li>
+<li><a href="#controlador-rabbit">Controlador Rabbit</a></li>
+<li><a href="#resumo">Resumo</a></li>
+</ul>
+<hr>
+<p>No passo anterior concluímos a arquitetura do Microsserviço, e fizemos a conexão com os serviços do Rabbit e Postgres. Agora, vamos fazer a lógica do sistema de usuário, onde iremos diferenciar as interações com o banco de dados através de uma tag, enviada pela API, e dependendo da interação de for solicitada, haverá o acionamento de uma função equivalente a solicitação.</p>
+<p>Na pasta raiz da aplicação MS-Application, vamos criar os seguintes arquivos:</p>
+<pre><code class="language-Estrutura" data-lang="Estrutura">MS-application
+└───MS1
+    │   docker-compose-microservice1.yml
+    │   Dockerfile
+    │   main.py
+    │   requirements.txt
+    │
+    ├───config
+    │       database_connection.py
+    │       rabbitmq_connection.py
+    │       __init__.py
+    │
+    ├───database_controller
+    │       postgres_worker.py
+    │       __init__.py
+    │
+    └───rabbitmq_controller
+            rabbit_worker.py
+	     __init__.py
+</code></pre><h2 id="tag-api">Tag API</h2>
+<p>Antes de começarmos a codar, vamos entender o cenário onde paramos. Temos uma API que recebe as informações de uma criação de usuário, por exemplo, e envia essas informações para o microsserviço. Para o microsserviço entender o que deve ser feita com aquelas informações recebidas, a API deverá enviar uma tag juntamente ao corpo das informações, que posteriormente será identificada. Entendendo esse fluxo, vamos voltar ao código da API e fazer essa pequena alteração da inserção da tag.</p>
+<p>No arquivo <em>server.py, vamos</em> ao método de criação de usuário que abordamos nos Steps anteriores, e inserir ao payload que recebemos item chamado <em>type</em>, com o valor <em>create</em>.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#a6e22e">@app.route</span>(<span style="color:#e6db74">&#34;/user/create_user/&#34;</span>, methods<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#39;POST&#39;</span>])
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">create_user</span>():
+        <span style="color:#66d9ef">if</span> request<span style="color:#f92672">.</span>method <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;POST&#39;</span>:
+            payload <span style="color:#f92672">=</span> request<span style="color:#f92672">.</span>get_json()
+            payload[<span style="color:#e6db74">&#39;type&#39;</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;create&#39;</span>
+
+            corr_id <span style="color:#f92672">=</span> rabbit_queues<span style="color:#f92672">.</span>rpc_async(json<span style="color:#f92672">.</span>dumps(payload), <span style="color:#e6db74">&#34;user&#34;</span>)
+            <span style="color:#66d9ef">while</span> rabbit_queues<span style="color:#f92672">.</span>queue[corr_id] <span style="color:#f92672">is</span> None:
+                time<span style="color:#f92672">.</span>sleep(<span style="color:#ae81ff">0.1</span>)
+
+            <span style="color:#66d9ef">return</span> {<span style="color:#e6db74">&#39;Status&#39;</span>: <span style="color:#ae81ff">200</span>, <span style="color:#e6db74">&#39;Message&#39;</span>: json<span style="color:#f92672">.</span>loads(rabbit_queues<span style="color:#f92672">.</span>queue[corr_id])}
+        <span style="color:#66d9ef">else</span>:
+            <span style="color:#66d9ef">return</span> {<span style="color:#e6db74">&#39;Status&#39;</span>: <span style="color:#ae81ff">404</span>, <span style="color:#e6db74">&#39;Message&#39;</span>: <span style="color:#e6db74">&#39;Erro no envio do method&#39;</span>}
+</code></pre></div><h2 id="controlador-database">Controlador DataBase</h2>
+<p>O controlador do database será o responsável por fazer o famoso <strong>CRUD.</strong> CRUD é a composição da primeira letra de 4 funções básicas de um sistema que trabalha com banco de dados:</p>
+<p>✔️ C: Create (criar) - criar um novo registro.</p>
+<p>👀 R: Read (ler) - ler (exibir) as informações de um registro.</p>
+<p>♻️ U: Update (atualizar) - atualizar os dados do registro.</p>
+<p>❌ D: Delete (apagar) - apagar um registro.</p>
+<p>No desenvolvimento desse estágio mostrarei apenas uma interação com o banco de dados, visto que o desenvolvimento é muito complexo, e a leitura ficará muito maçante. O que faremos agora será a inclusão de um usuário ao banco. Para isso, devemos inserir as informações através de um comando SQL.</p>
+<p>Primeiramente devemos importar todas as dependências necessárias, que serão a conexão com o banco, feita no <em>database_connection.py,</em> e a biblioteca datetime.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> config.database_connection <span style="color:#f92672">import</span> ConnectionDatabase
+<span style="color:#f92672">from</span> datetime <span style="color:#f92672">import</span> datetime
+</code></pre></div><p>Vamos criar uma Classe chamada <strong>PostgresWorker</strong> , com o construtor <em>__init__</em> contendo a conexão com o banco, captura do horário atual, e a formatação da data.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">    <span style="color:#66d9ef">def</span> __init__(self):
+        self<span style="color:#f92672">.</span>PSQL <span style="color:#f92672">=</span> ConnectionDatabase()
+        self<span style="color:#f92672">.</span>date_time <span style="color:#f92672">=</span> datetime<span style="color:#f92672">.</span>now()
+        self<span style="color:#f92672">.</span>date_time_formate <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>date_time<span style="color:#f92672">.</span>strftime(<span style="color:#e6db74">&#39;%Y/%m/</span><span style="color:#e6db74">%d</span><span style="color:#e6db74"> %H:%M&#39;</span>)
+</code></pre></div><h3 id="manipulação-de-datas">Manipulação de datas</h3>
+<p>Algo a ser ressaltado! No código que iremos desenvolver, fiz todas as manipulações de datas usando o formato DATE, para uma explicação mais dinâmica e simples. Contudo, em projetos reais é <strong>MUITO RECOMENDADO</strong> a utilizar o padrão <strong>Unix Timestamp.</strong></p>
+<p><strong>Unix Timestamp</strong> é um ponto fixo na história da computação, onde em 1º de janeiro de 1970 às 00:00 foi iniciado a contagem dos segundos. Essa data é considerada o início dos tempos pelo Linux. O motivo da recomendação do uso desse tipo de formato é pelo fato de o valor retornado do timestamp ser um float numeric. Sendo assim, é facilmente manipulado de forma binária e é muito curto e rápido de ser calculado.</p>
+<p>A imagem abaixo mostra como uma determinada data e hora é representada em diferentes formatos.</p>
+<p><img src="https://patrickpiccini.github.io/images/microservice_project/img35.jpg" alt="img35"></p>
+<p>Imagem 1: <a href="https://pynative.com/python-timestamp/">https://pynative.com/python-timestamp/</a></p>
+<p>Agora que entendemos a importância do uso do formato Unix Timestamp, podemos continuar com o desenvolvimento.</p>
+<h2 id="insert_user">Insert_user</h2>
+<p>O que faremos agora será criar uma função chamada <em>insert_user</em> que fará a inserção/criação de usuário no nosso banco de dados. O método receberá como parâmetro <em>data</em>, que serão os dados para fazermos a interação com o banco.</p>
+<p>Dentro do método teremos a variável <em>query_insert</em> que conterá a query para a execução do comando. Na variável <em>vars_query</em> terão as informações recebidas da fila, que serão inseridas da query. A função <em>&quot;cursor.execute(query_update, vars_query)&quot;</em> é responsável pela execução do comando, onde pegará a <em>query_update</em>, inserirá os valores de <em>vars_query,</em> e executará a instrução. A função <em>&quot;connection.commit&quot;</em> é responsável por fazer as alterações do banco para a persistência do database. Por fim, é retornado alguma informação. Tudo isso ficará dentro de um try-except, para caso haja alguma falha na interação com o banco, seja lançado um except com o erro.</p>
+<p>Como esse caso é apenas uma inserção no banco, apenas retornará uma mensagem ao usuário. Entretanto em casos de retorno de alguma informação do banco ao usuário, essas informações serão passadas no return.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">        <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">insert_user</span>(self, data):
+        <span style="color:#66d9ef">try</span>:
+            query_insert <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;INSERT INTO users (full_name, nick_name ,password ,cpf , email, phone_number, created_at, updated_at)VALUES (</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">,</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">,</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">,</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">,</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">,</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">,</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">,</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">)&#39;</span>
+            vars_query <span style="color:#f92672">=</span> (data[<span style="color:#e6db74">&#39;name&#39;</span>], data[<span style="color:#e6db74">&#39;nick_name&#39;</span>], data[<span style="color:#e6db74">&#39;password&#39;</span>], data[<span style="color:#e6db74">&#39;cpf&#39;</span>],
+                          data[<span style="color:#e6db74">&#39;email&#39;</span>], data[<span style="color:#e6db74">&#39;phone_number&#39;</span>], self<span style="color:#f92672">.</span>date_time_formate, self<span style="color:#f92672">.</span>date_time_formate)
+            self<span style="color:#f92672">.</span>PSQL<span style="color:#f92672">.</span>cursor<span style="color:#f92672">.</span>execute(query_insert, vars_query)
+            self<span style="color:#f92672">.</span>PSQL<span style="color:#f92672">.</span>connection<span style="color:#f92672">.</span>commit()
+
+            <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;[✓] INSERTION DONE IN POSTGRES!&#39;</span>)
+            <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#39;[✓] User created successfully! &#39;</span>
+        <span style="color:#66d9ef">except</span> <span style="color:#a6e22e">Exception</span> <span style="color:#66d9ef">as</span> error:
+            <span style="color:#66d9ef">print</span>(error)
+            <span style="color:#66d9ef">return</span> f<span style="color:#e6db74">&#39;[X] ERROR INSERTING IN POSTGRES! {error}&#39;</span>
+        <span style="color:#66d9ef">finally</span>:
+            self<span style="color:#f92672">.</span>PSQL<span style="color:#f92672">.</span>cursor<span style="color:#f92672">.</span>close()
+</code></pre></div><h2 id="show_all_user">Show_all_user</h2>
+<p>Para exemplificar uma situação em que precisamos retornar uma informação do banco de dados para o usuário, vamos criar a função <em>show_all_user.</em> A estrutura da função será muito semelhante a que criamos acima. Teremos somente uma query de instrução que será um select de toda a tabela. Serão capturadas as informações através do comando &quot;cursor.fetchall&quot;, e manipuladas para mostrar mais organizado ao usuário. Tudo isso ficará dentro de um try-except, para caso haja alguma falha na interação com o banco, seja lançado um except com o erro.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">show_all_user</span>(self):
+        <span style="color:#66d9ef">try</span>:
+            sql_select_query <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;SELECT * FROM users&#39;</span>
+            self<span style="color:#f92672">.</span>PSQL<span style="color:#f92672">.</span>cursor<span style="color:#f92672">.</span>execute(sql_select_query)
+            record <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>PSQL<span style="color:#f92672">.</span>cursor<span style="color:#f92672">.</span>fetchall()
+            self<span style="color:#f92672">.</span>PSQL<span style="color:#f92672">.</span>connection<span style="color:#f92672">.</span>commit()
+
+            dict_all_users <span style="color:#f92672">=</span> []
+            <span style="color:#66d9ef">for</span> index <span style="color:#f92672">in</span> range(len(record)):
+                dict_response <span style="color:#f92672">=</span> {
+                    <span style="color:#e6db74">&#39;nick_name&#39;</span>: record[index][<span style="color:#ae81ff">1</span>],
+                    <span style="color:#e6db74">&#39;name&#39;</span>: record[index][<span style="color:#ae81ff">3</span>],
+                    <span style="color:#e6db74">&#39;email&#39;</span>: record[index][<span style="color:#ae81ff">5</span>],
+                    <span style="color:#e6db74">&#39;phone_number&#39;</span>: record[index][<span style="color:#ae81ff">6</span>],
+                    <span style="color:#e6db74">&#39;created_at&#39;</span>: str(record[index][<span style="color:#ae81ff">7</span>]),
+                    <span style="color:#e6db74">&#39;updated_at&#39;</span>: str(record[index][<span style="color:#ae81ff">8</span>])
+                }
+                dict_all_users<span style="color:#f92672">.</span>append(dict_response)
+
+            <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;[✓] SELECT DONE SUCCESSFULLY IN POSTGRES!&#39;</span>)
+            <span style="color:#66d9ef">return</span> {<span style="color:#e6db74">&#39;users&#39;</span>: dict_all_users}
+        <span style="color:#66d9ef">except</span> <span style="color:#a6e22e">Exception</span> <span style="color:#66d9ef">as</span> error:
+            <span style="color:#66d9ef">print</span>(error)
+            <span style="color:#66d9ef">return</span> f<span style="color:#e6db74">&#39;[X] ERROR ON SELECT IN POSTGRES! {error}&#39;</span>
+        <span style="color:#66d9ef">finally</span>:
+            self<span style="color:#f92672">.</span>PSQL<span style="color:#f92672">.</span>cursor<span style="color:#f92672">.</span>close()
+</code></pre></div><p>Com isso, podemos ter uma base de como fazer o nosso CRUD. As demais funções poderão ser visualizadas no repositório git do projeto.</p>
+<h2 id="métodos-criados">Métodos Criados</h2>
+<p>Os métodos precisaremos criar são:</p>
+<ul>
+<li><strong>insert_user</strong> – Criação de usuário;</li>
+<li><strong>alter_user</strong> – Alterar informações do usuário exceto senha;</li>
+<li><strong>alter_password</strong> – Alterar senha do usuário;</li>
+<li><strong>show_all_user</strong> – Mostrar todos os usuários cadastrados;</li>
+<li><strong>show_one_user</strong> – Mostrar informações de um usuário através do NickName;</li>
+<li><strong>delete_user</strong> – Deletar um usuário através do NickName;</li>
+<li><strong>information_user</strong> – Selecionar todas as informações de um usuário;</li>
+<li><strong>take_pass</strong> – Selecionar senha do usuário.</li>
+</ul>
+<h2 id="controlador-rabbit">Controlador Rabbit</h2>
+<p>O controlador do rabbit será o responsável por identificar a tag recebida e irá disparar uma função para a interação com o banco de dados. Contudo o retorno do bando de dados deve ser retornado também ao usuário que consumiu a API, para isso, iremos publicar esse response através da fila de controle que criamos no Step6.</p>
+<p>No arquivo <em>rabbit_worker.py</em> vamos iniciar importando as dependências.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> json<span style="color:#f92672">,</span> pika
+<span style="color:#f92672">from</span> database_controller.postgres_worker <span style="color:#f92672">import</span> PostgresWorker
+</code></pre></div><p>Vamos criar uma classe chamada <strong>RabbitWorker,</strong> e em seu construtor <em>__init__</em> criaremos um atributo vazio chamada <em>self.data.</em></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">RabbitWorker</span>():
+
+    <span style="color:#66d9ef">def</span> __init__(self):
+        self<span style="color:#f92672">.</span>data <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&#39;</span>
+</code></pre></div><p>Logo abaixo, criaremos o método que chamamos no arquivo <em>main.py,</em> chamado de <em>call-back.</em> Ele é o responsável por processar os dados recebidos, e retornar a fila de controle, um response ao usuário. Nos parâmetros iremos deverá ter <em>ch, method, props</em> e <em>body.</em> No atributo <em>self.data</em> iremos carregá-lo com as informações recebidas do body. Logo abaixo, criaremos uma variável onde chamaremos o metodo <em>database_manipulation(self.data)</em> que criaremos posteriormente. Após isso, através do atributo <em>ch</em>, iremos criar a parte da publicação da mensagem de response na fila de controle e dando um ACK na fila de controle.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">callback</span>(self, ch, method, props, body):
+        self<span style="color:#f92672">.</span>data <span style="color:#f92672">=</span> json<span style="color:#f92672">.</span>loads(body)
+        response_work <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>database_manipulation(self<span style="color:#f92672">.</span>data)
+
+        ch<span style="color:#f92672">.</span>basic_publish(exchange<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;&#39;</span>,
+                         routing_key<span style="color:#f92672">=</span>props<span style="color:#f92672">.</span>reply_to,
+                         properties<span style="color:#f92672">=</span>pika<span style="color:#f92672">.</span>BasicProperties(
+                             correlation_id<span style="color:#f92672">=</span>props<span style="color:#f92672">.</span>correlation_id),
+                         body<span style="color:#f92672">=</span>json<span style="color:#f92672">.</span>dumps(response_work))
+        ch<span style="color:#f92672">.</span>basic_ack(delivery_tag<span style="color:#f92672">=</span>method<span style="color:#f92672">.</span>delivery_tag)
+</code></pre></div><p>Como dito anteriormente, agora vamos criar o método <em>database_manipulation</em>, que é responsável por identificar a tag que há no corpo dos dados recebidos da API, e acionar os métodos contidos no arquivo <em>postgres_worker.py</em> para a fazer a ação solicitada da requisição.</p>
+<p>O que faremos é bem simples. Quando for recebido uma mensagem na fila de usuário, a mensagem será consumida. Será identificado o type da mensagem, que no caso é nossa tag, e após isso, chamaremos uma função equivalente ao type, para executar um CRUD no banco de dados.</p>
+<p>Essa identificação será através de um <em>if-elif</em> da informação &quot;type&quot;, contida em data.</p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Function</th>
+<th>Objective</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>create</td>
+<td>insert_user</td>
+<td>Criar usuário</td>
+</tr>
+<tr>
+<td>update</td>
+<td>alter_user</td>
+<td>Alterar informações de usuário</td>
+</tr>
+<tr>
+<td>update_password</td>
+<td>alter_password</td>
+<td>Alterar senha de usuário</td>
+</tr>
+<tr>
+<td>show_all</td>
+<td>show_all_user</td>
+<td>Mostrar todos os usuários</td>
+</tr>
+<tr>
+<td>show_one</td>
+<td>show_one_user</td>
+<td>Mostrar um usuário</td>
+</tr>
+<tr>
+<td>delete_user</td>
+<td>delete_user</td>
+<td>Deletar um usuário</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">database_manipulation</span>(self, data):
+        <span style="color:#75715e"># start connection whith postgres</span>
+        psql <span style="color:#f92672">=</span> PostgresWorker()
+        <span style="color:#66d9ef">if</span> data[<span style="color:#e6db74">&#39;type&#39;</span>] <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;create&#39;</span>:
+            <span style="color:#66d9ef">return</span> psql<span style="color:#f92672">.</span>insert_user(data)
+        <span style="color:#66d9ef">elif</span> data[<span style="color:#e6db74">&#39;type&#39;</span>] <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;update&#39;</span>:
+            <span style="color:#66d9ef">return</span> psql<span style="color:#f92672">.</span>alter_user(data)
+        <span style="color:#66d9ef">elif</span> data[<span style="color:#e6db74">&#39;type&#39;</span>] <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;update_password&#39;</span>:
+            <span style="color:#66d9ef">return</span> psql<span style="color:#f92672">.</span>alter_password(data)
+        <span style="color:#66d9ef">elif</span> data[<span style="color:#e6db74">&#39;type&#39;</span>] <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;show_all&#39;</span>:
+            <span style="color:#66d9ef">return</span> psql<span style="color:#f92672">.</span>show_all_user()
+        <span style="color:#66d9ef">elif</span> data[<span style="color:#e6db74">&#39;type&#39;</span>] <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;show_one&#39;</span>:
+            <span style="color:#66d9ef">return</span> psql<span style="color:#f92672">.</span>show_one_user(data)
+        <span style="color:#66d9ef">elif</span> data[<span style="color:#e6db74">&#39;type&#39;</span>] <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;delete_user&#39;</span>:
+            <span style="color:#66d9ef">return</span> psql<span style="color:#f92672">.</span>delete_user(data)
+</code></pre></div><h2 id="resumo">Resumo</h2>
+<p>Nesse passo fizemos uma pequena alteração na API, inserindo uma nova informação no payload que será o ponto crucial para a identificação da ação que deve ser feita no banco de dados. Criamos o database_worker onde há as funções de interação/manipulação do banco de dados, onde foi feito um CRUD. Foi explicado um pouco sobre o uso do UNIX Timestap para gravação de data-hora no banco de dados. Criamos o rabbit_worker, que é o responsável por identificar o que está sendo solicitado através da tag, pegar as informações recebidas e utiliza-la nas funções contidas no database_worker. Por fim, é publicado na fila auxiliar uma mensagem de response, onde o usuário receberá essa informação já processada.</p>
+
+      </div>
+    </article>
+
+    <hr />
+
+    <div class="post-info">
+      
+      
+
+      <p>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+          <polyline points="14 2 14 8 20 8"></polyline>
+          <line x1="16" y1="13" x2="8" y2="13"></line>
+          <line x1="16" y1="17" x2="8" y2="17"></line>
+          <polyline points="10 9 9 9 8 9"></polyline>
+        </svg>
+        1579 Words
+      </p>
+
+      <p>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar">
+          <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+          <line x1="16" y1="2" x2="16" y2="6"></line>
+          <line x1="8" y1="2" x2="8" y2="6"></line>
+          <line x1="3" y1="10" x2="21" y2="10"></line>
+        </svg>
+        
+          2022-07-21 09:23
+        
+
+         
+          
+        
+      </p>
+    </div>
+
+    
+    <div class="pagination">
+        
+
+        <div class="pagination__buttons">
+            
+
+            
+            <span class="button next">
+                <a href="https://patrickpiccini.github.io/posts/microservice_project_step07/">
+                    <span class="button__text">Microservice Project – Step 7</span>
+                    <span class="button__icon">→</span>
+                </a>
+            </span>
+            
+        </div>
+    </div>
+
+
+    
+
+    
+
+  </main>
+
+            </div>
+
+            
+                <footer class="footer">
+    
+    
+</footer>
+
+            
+        </div>
+
+        
+
+
+
+<script type="text/javascript" src="https://patrickpiccini.github.io/bundle.min.ace63d93098bf623f7c286a9084a4c22bfc482944c734f87fe0b685c7c6c7fa0ad2edb028c3b4b60d3343720c8ab490b320ad7f8edf4f6e9a6b898fc529057a9.js" integrity="sha512-rOY9kwmL9iP3woapCEpMIr/EgpRMc0&#43;H/gtoXHxsf6CtLtsCjDtLYNM0NyDIq0kLMgrX&#43;O309ummuJj8UpBXqQ=="></script>
+
+
+
+    </body>
+</html>

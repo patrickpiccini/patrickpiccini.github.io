@@ -13,6 +13,15 @@
     
     
     <item>
+      <title>Microservice Project – Step 8</title>
+      <link>https://patrickpiccini.github.io/posts/microservice_project_step08/</link>
+      <pubDate>Thu, 21 Jul 2022 09:23:00 -0300</pubDate>
+      
+      <guid>https://patrickpiccini.github.io/posts/microservice_project_step08/</guid>
+      <description>Table of Contents  Tag API Controlador DataBase  Manipulação de datas   Insert_user Show_all_user Métodos Criados Controlador Rabbit Resumo   No passo anterior concluímos a arquitetura do Microsserviço, e fizemos a conexão com os serviços do Rabbit e Postgres. Agora, vamos fazer a lógica do sistema de usuário, onde iremos diferenciar as interações com o banco de dados através de uma tag, enviada pela API, e dependendo da interação de for solicitada, haverá o acionamento de uma função equivalente a solicitação.</description>
+    </item>
+    
+    <item>
       <title>Microservice Project – Step 7</title>
       <link>https://patrickpiccini.github.io/posts/microservice_project_step07/</link>
       <pubDate>Thu, 14 Jul 2022 09:01:57 -0300</pubDate>
@@ -97,15 +106,6 @@ No ícone de hamburguer na página inicial do OCI, iremos em &amp;gt; Identity &
       
       <guid>https://patrickpiccini.github.io/posts/microservice_project_introduction/</guid>
       <description>Table of Contents  Entendimento do problema Objetivo Arquitetura do Projeto Completo   Há um tempo eu desejava entender melhor como os tão famosos microsserviços conseguem trabalhar individualmente, porém todos conectados. Foi então que decidi projetar uma pequena aplicação onde iria me aprofundar nesses conhecimentos, e que também me desafiaria a criar uma aplicação completa seguindo o Software Development Life Circle. Partindo desde a criação da ideia, até o deploy.</description>
-    </item>
-    
-    <item>
-      <title>Data Analytcs - Spotify Wrapped</title>
-      <link>https://patrickpiccini.github.io/posts/spotify_wrapped/</link>
-      <pubDate>Thu, 26 May 2022 09:00:50 -0300</pubDate>
-      
-      <guid>https://patrickpiccini.github.io/posts/spotify_wrapped/</guid>
-      <description>Table of Contents  Projeto Spotify Wrapped  O que é spotify wrapped DataSet   Exploratory Data Analysis EDA Extração Exploração Limpeza de Dados Agregação  10 artistas mais escutados. 10 musicas mais escutadas.   Visualização Storytelling   Projeto Spotify Wrapped Recentemente venho estudando a área de Data Analytics, Data Science e as várias derivações de inteligência artificial, e descobri um grande interesse por esse mundo. Foi então que decidi iniciar um pequeno projeto onde eu possa praticar meus conhecimentos adquiridos, e também mostrar como o nosso cotidiano está repleto de tecnologia aplicada sobre inteligência artificial.</description>
     </item>
     
   </channel>
