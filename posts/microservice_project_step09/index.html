@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="author" content="map[name:Patrick Piccini]">
+<meta name="description" content="Table of Contents  Argon2 Hash de Senha  Encapsulamento   Controlador DataBase Resumo   Nesse step iremos abordar um assunto muito importante, onde devemos sempre reservar um tempo para desenvolvimento, que é a criptografia de informações sensíveis. O que faremos será uma classe para criptografar a senha do usuário antes de salvar no banco de dados.
+Na pasta raiz da aplicação MS-Application, vamos criar os seguintes arquivos:" />
+<meta name="keywords" content="" />
+<meta name="robots" content="noodp" />
+<meta name="theme-color" content="" />
+<link rel="canonical" href="https://patrickpiccini.github.io/posts/microservice_project_step09/" />
+
+
+    <title>
+        
+            Microservice Project – Step 9 :: Patrick Piccini 
+        
+    </title>
+
+
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css" rel="stylesheet"
+    type="text/css">
+
+
+
+<link rel="stylesheet" href="https://patrickpiccini.github.io/main.4e5c639214707eff609bb55fe49e183dee42258a73bc90e4cc7b0a84f900798a.css">
+
+
+
+<link rel="apple-touch-icon" sizes="180x180" href="https://patrickpiccini.github.io/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://patrickpiccini.github.io/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="https://patrickpiccini.github.io/favicon-16x16.png">
+<link rel="manifest" href="https://patrickpiccini.github.io/site.webmanifest">
+<link rel="mask-icon" href="https://patrickpiccini.github.io/safari-pinned-tab.svg" color="">
+<link rel="shortcut icon" href="https://patrickpiccini.github.io/favicon.ico">
+<meta name="msapplication-TileColor" content="">
+
+
+<meta itemprop="name" content="Microservice Project – Step 9">
+<meta itemprop="description" content="Table of Contents  Argon2 Hash de Senha  Encapsulamento   Controlador DataBase Resumo   Nesse step iremos abordar um assunto muito importante, onde devemos sempre reservar um tempo para desenvolvimento, que é a criptografia de informações sensíveis. O que faremos será uma classe para criptografar a senha do usuário antes de salvar no banco de dados.
+Na pasta raiz da aplicação MS-Application, vamos criar os seguintes arquivos:">
+<meta itemprop="datePublished" content="2022-07-28T00:00:00-03:00" />
+<meta itemprop="dateModified" content="2022-07-28T00:00:00-03:00" />
+<meta itemprop="wordCount" content="1044">
+
+
+
+<meta itemprop="keywords" content="" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Microservice Project – Step 9"/>
+<meta name="twitter:description" content="Table of Contents  Argon2 Hash de Senha  Encapsulamento   Controlador DataBase Resumo   Nesse step iremos abordar um assunto muito importante, onde devemos sempre reservar um tempo para desenvolvimento, que é a criptografia de informações sensíveis. O que faremos será uma classe para criptografar a senha do usuário antes de salvar no banco de dados.
+Na pasta raiz da aplicação MS-Application, vamos criar os seguintes arquivos:"/>
+
+
+
+
+
+
+
+
+    <meta property="article:published_time" content="2022-07-28 00:00:00 -0300 -03" />
+
+
+
+
+
+
+
+
+
+
+    </head>
+
+    
+        <body>
+    
+    
+        <div class="container">
+            <header class="header">
+    <span class="header__inner">
+        <a href="https://patrickpiccini.github.io/" style="text-decoration: none;">
+    <div class="logo">
+        
+            <span class="logo__mark">&gt;</span>
+            <span class="logo__text">/home/piccini</span>
+            <span class="logo__cursor" style=
+                  "
+                   background-color:#67a2c9;
+                   ">
+            </span>
+        
+    </div>
+</a>
+
+
+        <span class="header__right">
+            
+                <nav class="menu">
+    <ul class="menu__inner"><li><a href="https://patrickpiccini.github.io/codes/">Codes</a></li><li><a href="https://patrickpiccini.github.io/posts/">Posts</a></li><li><a href="https://patrickpiccini.github.io/about/">Whoami</a></li>
+    </ul>
+</nav>
+
+                <span class="menu-trigger">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+                    </svg>
+                </span>
+            
+        </span>
+    </span>
+</header>
+
+
+            <div class="content">
+                
+  <main class="post">
+
+    <div class="post-info">
+      <p>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock">
+          <circle cx="12" cy="12" r="10"></circle>
+          <polyline points="12 6 12 12 16 14"></polyline>
+        </svg>
+        5 minutes
+
+        
+      </p>
+    </div>
+
+    <article>
+      <h1 class="post-title">
+        <a href="https://patrickpiccini.github.io/posts/microservice_project_step09/">Microservice Project – Step 9</a>
+      </h1>
+
+      
+
+      
+
+      
+
+      <div class="post-content">
+        <p><img src="https://patrickpiccini.github.io/images/microservice_project/microservices.png" alt="microservices"></p>
+<h2 id="table-of-contents">Table of Contents</h2>
+<ul>
+<li><a href="#argon2">Argon2</a></li>
+<li><a href="#hash-de-senha">Hash de Senha</a>
+<ul>
+<li><a href="#encapsulamento">Encapsulamento</a></li>
+</ul>
+</li>
+<li><a href="#controlador-database">Controlador DataBase</a></li>
+<li><a href="#resumo">Resumo</a></li>
+</ul>
+<hr>
+<p>Nesse step iremos abordar um assunto muito importante, onde devemos sempre reservar um tempo para desenvolvimento, que é a criptografia de informações sensíveis. O que faremos será uma classe para criptografar a senha do usuário antes de salvar no banco de dados.</p>
+<p>Na pasta raiz da aplicação MS-Application, vamos criar os seguintes arquivos:</p>
+<pre><code class="language-Estrutura" data-lang="Estrutura">MS-application
+└───MS1
+    │   docker-compose-microservice1.yml
+    │   Dockerfile
+    │   main.py
+    │   requirements.txt
+    │
+    ├───config
+    │       database_connection.py
+    │       rabbitmq_connection.py
+    │       __init__.py
+    │
+    ├───criptografy
+    │       hash_password.py
+    │       __init__.py
+    │
+    ├───database_controller
+    │       postgres_worker.py
+    │       __init__.py
+    │
+    └───rabbitmq_controller
+            rabbit_worker.py
+	         __init__.py
+</code></pre><h2 id="argon2">Argon2</h2>
+<p>Para o hash de senhas, utilizaremos um algoritmo campeão da competição de Hashing de Senha em julho de 2015. Argon2 é um algoritmo de hash de senha seguro. Ele foi projetado para ter um tempo de execução configurável e consumo de memória. Isso significa que você pode decidir quanto tempo leva para fazer o hash de uma senha e quanta memória é necessária.</p>
+<p>[argon2: <a href="https://argon2-cffi.readthedocs.io/en/stable/argon2.html">https://argon2-cffi.readthedocs.io/en/stable/argon2.html</a>]</p>
+<h2 id="hash-de-senha">Hash de Senha</h2>
+<p>O tema de criptografia de senha pode ser muitas vezes assustador, contudo, nos dias atuais temos diferentes algoritmos e bibliotecas que podem nos auxiliar a aplicar uma complexidade maior no nível de segurança das informações. Por isso, faremos uma implementação simples usando a biblioteca <strong>argon2</strong> e iremos usar um conceito básico de O.O(Orientação a Objetos), que será o encapsulamento de dados.</p>
+<h3 id="encapsulamento">Encapsulamento</h3>
+<p>O encapsulamento consiste em evitar que esses dados sofram modificações ou acessos indevidos. Para isso, é criada uma estrutura que contém métodos chamados <em><strong>getters</strong></em> e <em><strong>setters</strong></em>, que poderão ser utilizados em qualquer outra classe, sem causar inconsistência na criação do código.</p>
+<p><em><strong>Getter</strong></em> – O método getter tem como objetivo retornar o valor que foi solicitado, porém, de forma que não prejudique a exatidão do dado.</p>
+<p><em><strong>Setter</strong></em> – O método setter, recebe um valor como atributo de qualquer tipo suportado pela linguagem, podendo assim, acessar o dado bloqueado e fazer sua devida modificação.</p>
+<p>Agora que temos conhecimento do que iremos utilizar, vamos para o desenvolvimento.</p>
+<p>Primeiramente importaremos a biblioteca para fazer o hash das senhas</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> argon2 <span style="color:#f92672">import</span> PasswordHasher
+</code></pre></div><p>Vamos criar uma classe chamada <strong>EncriptPassword</strong> e em seu constructor __init__ iremos instanciar a biblioteca <strong>PasswordHasher.</strong> Tambémcriaremos os atributo <em>self.__password</em> e <em>self.__hash_password</em> sendo privados, utilizando o &quot;__&quot;<em>.</em> É nesses atributos que serão encapsulados.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">    <span style="color:#66d9ef">def</span> __init__(self, password):
+        self<span style="color:#f92672">.</span>ph <span style="color:#f92672">=</span> PasswordHasher()
+        self<span style="color:#f92672">.</span>__password <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&#39;</span>
+        self<span style="color:#f92672">.</span>__hash_password <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&#39;</span>
+</code></pre></div><p>Agora criaremos os construtores getters e setters da senha e do hash da senha.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">    <span style="color:#75715e">#password</span>
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_pass</span>(self):
+        <span style="color:#66d9ef">return</span> self<span style="color:#f92672">.</span>__password
+    
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">set_pass</span>(self, password_imput):
+        self<span style="color:#f92672">.</span>__password <span style="color:#f92672">=</span> password_imput
+
+    <span style="color:#75715e">#hash password</span>
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_hash_pass</span>(self):
+        <span style="color:#66d9ef">return</span> self<span style="color:#f92672">.</span>__hash_password
+    
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">set_hash_pass</span>(self, hash_pass):
+        self<span style="color:#f92672">.</span>__hash_password <span style="color:#f92672">=</span> hash_pass
+</code></pre></div><p>Nesse momento, criaremos o método que fará o hash da senha. Para isso usaremos a função <em>hash</em> e passaremos o <em>self.__password</em> como atributo. Essa senha será hasheada e atribuída ao atributo privado <em>__hash_password.</em> Assim, classes externas não poderão alterar a senha já criptografada.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">hash_password</span>(self):
+        self<span style="color:#f92672">.</span>__hash_password <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>ph<span style="color:#f92672">.</span>hash(self<span style="color:#f92672">.</span>__password)
+</code></pre></div><p>Criaremos também um método que será responsável por comparar se a senha hasheada é equivalente à senha normal. Esse método será muito importante para troca de senha, edição das informações do usuário e deletar usuário, onde será verificado se a senha postada na requisição é compatível com a senha existente no banco de dados.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">   <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">verify_hash</span>(self):
+        <span style="color:#66d9ef">try</span>:
+            <span style="color:#66d9ef">return</span> self<span style="color:#f92672">.</span>ph<span style="color:#f92672">.</span>verify(self<span style="color:#f92672">.</span>__hash_password, self<span style="color:#f92672">.</span>__password)
+        <span style="color:#66d9ef">except</span> <span style="color:#a6e22e">Exception</span> <span style="color:#66d9ef">as</span> error:
+            <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;Erro in verify hash&#39;</span>,error)
+            <span style="color:#66d9ef">return</span> False
+</code></pre></div><h2 id="controlador-database">Controlador DataBase</h2>
+<p>Agora que temos nossa classe para criptografar as senhas, precisaremos criar alguns métodos a mais em nosso <em>postgres_worker</em>.</p>
+<p>Devemos lembrar de importar a classe <strong>EncriptPassword</strong> ¸ ao arquivo_postgres_worker.py.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> config.database_connection <span style="color:#f92672">import</span> ConnectionDatabase
+<span style="color:#f92672">from</span> criptografy.hash_password <span style="color:#f92672">import</span> EncriptPassword
+<span style="color:#f92672">from</span> datetime <span style="color:#f92672">import</span> datetime
+</code></pre></div><p>O primeiro método é o <em>verify_password_database(self, db_password, old_pass).</em> Ele será o responsável por receber como parâmetro a senha já criptografada, e a senha normal em formato string. Como resultado, nos retornará um valor booleano que será o que nos autorizará a continuar com algumas funções do sistema como: alterar a senha, alterar as informações do usuário e deletar um usuário. Caso a senha seja incompatível com a que há no banco de dados, a modificação será negada, e o usuário receberá um aviso como response.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">verify_password_database</span>(self, db_password, old_pass):
+        <span style="color:#66d9ef">try</span>:
+            EP <span style="color:#f92672">=</span> EncriptPassword()
+            EP<span style="color:#f92672">.</span>set_pass(old_pass)
+            EP<span style="color:#f92672">.</span>set_hash_pass(db_password[<span style="color:#ae81ff">0</span>])
+            response_verify <span style="color:#f92672">=</span> EP<span style="color:#f92672">.</span>verify_hash()
+
+            <span style="color:#66d9ef">if</span> response_verify <span style="color:#f92672">is</span> True:
+                <span style="color:#66d9ef">return</span> True
+            <span style="color:#66d9ef">return</span> False
+        <span style="color:#66d9ef">except</span> <span style="color:#a6e22e">Exception</span> <span style="color:#66d9ef">as</span> error:
+            <span style="color:#66d9ef">print</span>(error)
+</code></pre></div><p>Também será criado um método para criptografar a senha, onde novamente utilizaremos as funções da classe <strong>EncriptPassword.</strong> O retorno desse método deverá ser a senha já hasheada, visto que será ela que colocaremos no banco de dados.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">encript_password</span>(self, data):
+        <span style="color:#66d9ef">try</span>:
+            HS <span style="color:#f92672">=</span> EncriptPassword()
+            HS<span style="color:#f92672">.</span>set_pass(data)
+            HS<span style="color:#f92672">.</span>hash_password()
+            <span style="color:#66d9ef">return</span> HS<span style="color:#f92672">.</span>get_hash_pass()
+        <span style="color:#66d9ef">except</span> <span style="color:#a6e22e">Exception</span> <span style="color:#66d9ef">as</span> error:
+            <span style="color:#66d9ef">print</span>(error)
+            <span style="color:#66d9ef">return</span> f<span style="color:#e6db74">&#39;[X] ERROR ON INCRIPTED PASSWORD! </span><span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span><span style="color:#e6db74">        {error}&#39;</span>
+
+</code></pre></div><p>Como exemplo de onde usaríamos esses novos métodos, deixarei abaixo um exemplo de uma criação de usuário, em que precisaremos colocar a senha. E a função de deletar um usuário, onde só será deletado caso a senha seja a mesma contida no banco de dados.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">insert_user</span>(self, data):
+            <span style="color:#66d9ef">try</span>:
+                encripted_password <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>encript_password(data[<span style="color:#e6db74">&#39;password&#39;</span>])
+
+                query_insert <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;INSERT INTO users (full_name, nick_name ,password ,cpf , email, phone_number, created_at, updated_at)VALUES (</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">,</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">,</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">,</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">,</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">,</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">,</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">,</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">)&#39;</span>
+                vars_query <span style="color:#f92672">=</span> (data[<span style="color:#e6db74">&#39;name&#39;</span>], data[<span style="color:#e6db74">&#39;nick_name&#39;</span>], encripted_password, data[<span style="color:#e6db74">&#39;cpf&#39;</span>],
+                              data[<span style="color:#e6db74">&#39;email&#39;</span>], data[<span style="color:#e6db74">&#39;phone_number&#39;</span>], self<span style="color:#f92672">.</span>date_time_formate, self<span style="color:#f92672">.</span>date_time_formate)
+                self<span style="color:#f92672">.</span>PSQL<span style="color:#f92672">.</span>cursor<span style="color:#f92672">.</span>execute(query_insert, vars_query)
+                self<span style="color:#f92672">.</span>PSQL<span style="color:#f92672">.</span>connection<span style="color:#f92672">.</span>commit()
+
+                <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;[✓] INSERTION DONE IN POSTGRES!&#39;</span>)
+                <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#39;[✓] User created successfully! &#39;</span>
+            <span style="color:#66d9ef">except</span> <span style="color:#a6e22e">Exception</span> <span style="color:#66d9ef">as</span> error:
+                <span style="color:#66d9ef">print</span>(error)
+                <span style="color:#66d9ef">return</span> f<span style="color:#e6db74">&#39;[X] ERROR INSERTING IN POSTGRES! {error}&#39;</span>
+            <span style="color:#66d9ef">finally</span>:
+                self<span style="color:#f92672">.</span>PSQL<span style="color:#f92672">.</span>cursor<span style="color:#f92672">.</span>close()
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">delete_user</span>(self, data):
+            <span style="color:#66d9ef">try</span>:
+                result_psw <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>take_pass(data[<span style="color:#e6db74">&#39;nick_name&#39;</span>])
+                verify <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>verify_password_database(
+                    result_psw, data[<span style="color:#e6db74">&#39;password&#39;</span>])
+
+                <span style="color:#66d9ef">if</span> verify <span style="color:#f92672">==</span> False:
+                    <span style="color:#66d9ef">return</span> f<span style="color:#e6db74">&#39;[X] PASSWORD NOT EQUAL!&#39;</span>
+
+                sql_delete_query <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;DELETE FROM users WHERE nick_name=</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#39;</span>
+                vars_query_select <span style="color:#f92672">=</span> data[<span style="color:#e6db74">&#39;nick_name&#39;</span>]
+                self<span style="color:#f92672">.</span>PSQL<span style="color:#f92672">.</span>cursor<span style="color:#f92672">.</span>execute(sql_delete_query, (vars_query_select,))
+                row_count <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>PSQL<span style="color:#f92672">.</span>cursor<span style="color:#f92672">.</span>rowcount
+                self<span style="color:#f92672">.</span>PSQL<span style="color:#f92672">.</span>connection<span style="color:#f92672">.</span>commit()
+
+                <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;[✓] DELETE DONE SUCCESSFULLY IN POSTGRES!&#39;</span>)
+                <span style="color:#66d9ef">return</span> {<span style="color:#e6db74">&#39;Altered Lines&#39;</span>: row_count}
+            <span style="color:#66d9ef">except</span> <span style="color:#a6e22e">Exception</span> <span style="color:#66d9ef">as</span> error:
+                <span style="color:#66d9ef">print</span>(error)
+                <span style="color:#66d9ef">return</span> f<span style="color:#e6db74">&#39;[X] ERROR ON DELETE IN POSTGRES! {error}&#39;</span>
+            <span style="color:#66d9ef">finally</span>:
+                self<span style="color:#f92672">.</span>PSQL<span style="color:#f92672">.</span>cursor<span style="color:#f92672">.</span>close()
+</code></pre></div><p>OBS: lembrando novamente que todas as funções de interação com o banco de dados estão disponíveis no repositório git do projeto.</p>
+<h2 id="resumo">Resumo</h2>
+<p>Nesse passo abordamos assuntos muito importantes como a criptografia da senha do usuário e um ramo da Programação Orientada a Objetos (POO), chamada de encapsulamento. Criamos os métodos de criptografia de senha usando o algoritmo argon2. Por fim, implementamos novas funções no <em>postgres_worker.py,</em> que serão responsáveis por verificar a senha contida no banco, e também criptografar a senha para salvar no banco de dados.</p>
+<p>Aqui, terminamos o desenvolvimento do primeiro Microservice (MS1). Na próxima etapa do projeto, iremos desenvolver o segundo Microservice (MS2), que será responsável por criar as orders no banco de dados.</p>
+
+      </div>
+    </article>
+
+    <hr />
+
+    <div class="post-info">
+      
+      
+
+      <p>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+          <polyline points="14 2 14 8 20 8"></polyline>
+          <line x1="16" y1="13" x2="8" y2="13"></line>
+          <line x1="16" y1="17" x2="8" y2="17"></line>
+          <polyline points="10 9 9 9 8 9"></polyline>
+        </svg>
+        1044 Words
+      </p>
+
+      <p>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar">
+          <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+          <line x1="16" y1="2" x2="16" y2="6"></line>
+          <line x1="8" y1="2" x2="8" y2="6"></line>
+          <line x1="3" y1="10" x2="21" y2="10"></line>
+        </svg>
+        
+          2022-07-28 00:00
+        
+
+         
+          
+        
+      </p>
+    </div>
+
+    
+    <div class="pagination">
+        
+
+        <div class="pagination__buttons">
+            
+
+            
+            <span class="button next">
+                <a href="https://patrickpiccini.github.io/posts/microservice_project_step08/">
+                    <span class="button__text">Microservice Project – Step 8</span>
+                    <span class="button__icon">→</span>
+                </a>
+            </span>
+            
+        </div>
+    </div>
+
+
+    
+
+    
+
+  </main>
+
+            </div>
+
+            
+                <footer class="footer">
+    
+    
+</footer>
+
+            
+        </div>
+
+        
+
+
+
+<script type="text/javascript" src="https://patrickpiccini.github.io/bundle.min.ace63d93098bf623f7c286a9084a4c22bfc482944c734f87fe0b685c7c6c7fa0ad2edb028c3b4b60d3343720c8ab490b320ad7f8edf4f6e9a6b898fc529057a9.js" integrity="sha512-rOY9kwmL9iP3woapCEpMIr/EgpRMc0&#43;H/gtoXHxsf6CtLtsCjDtLYNM0NyDIq0kLMgrX&#43;O309ummuJj8UpBXqQ=="></script>
+
+
+
+    </body>
+</html>
